@@ -3,6 +3,12 @@ import java.util.*;
 
 class CountriesReader
 {	
+	/**
+	 * This is a constant that describes how many characters are grouped in level one directory.
+	 */
+	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
+	
+	
 	private SortedSet<String> namesOfCountries = new TreeSet<String>();
 	private SortedSet<String> firstLetters = new TreeSet<String>();
 	private String path;	
@@ -43,15 +49,15 @@ class CountriesReader
 		int counter = 0;
 		String threeLetters = "";
 		
-		for(String i : namesOfCountries)
+		for(String country : namesOfCountries)
 		{
-			if(!firstLetters.contains(i.substring(0,1)))
+			if(!firstLetters.contains(getFirstLetter(country)))
 			{
 				counter++;
-				firstLetters.add(i.substring(0,1));
-				threeLetters += i.substring(0,1);
+				firstLetters.add(getFirstLetter(country));
+				threeLetters += getFirstLetter(country);
 				
-				if(counter%3 == 0)
+				if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0)
 				{
 					String letters = (path + File.separator + threeLetters);
 					File fileLetters = new File(letters);
@@ -59,7 +65,7 @@ class CountriesReader
 					
 					for(String j : namesOfCountries)
 					{
-						if(threeLetters.contains(j.substring(0,1)))
+						if(threeLetters.contains(getFirstLetter(j)))
 						{
 							
 							String countries = (letters + File.separator + j);
@@ -72,7 +78,13 @@ class CountriesReader
 				
 			}
 		}
-	}	
+	}
+
+
+	private String getFirstLetter(String country) {
+		return country.substring(0,1);
+	}
+	
 }
 
 
