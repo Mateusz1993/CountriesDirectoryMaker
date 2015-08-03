@@ -20,23 +20,18 @@ class CountriesReader
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
-			
 			while((line = bufferedReader.readLine()) != null)
 			{
 				namesOfCountries.add(line);
 			}
-			
 		} 
 		catch (FileNotFoundException e) 
 		{
 			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	void createFiles()
 	{
