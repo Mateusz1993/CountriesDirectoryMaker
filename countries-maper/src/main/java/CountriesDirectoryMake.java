@@ -1,6 +1,28 @@
 import java.io.*;
 import java.util.*;
 
+import org.codehaus.plexus.util.FileUtils;
+
+
+public class CountriesDirectoryMake
+{	
+	public static void main(String[] args) 
+	{
+		CountriesReader test = new CountriesReader();
+		test.readCountries();
+		test.createFiles();
+
+	}
+}
+
+
+
+interface Creator
+{
+	void CreateDirectories(SortedSet<String> sortedListOfCountries);
+}
+
+
 class CountriesReader
 {	
 	/**
@@ -42,60 +64,86 @@ class CountriesReader
 			e.printStackTrace();
 		}
 	}
-	
+
 	
 	void createFiles()
 	{
 		int counter = 0;
+		int counterForHashtable = 0;
 		String threeLetters = "";
+		Vector<String> collectionOfThreeLetters = new Vector<String>();
+		Hashtable<String, Integer> justLettersOfAlphabet = new Hashtable<String, Integer>();
+		SortedSet<String> directoriesToCreate = new TreeSet<String>();
 		
-		for(String country : namesOfCountries)
-		{
-			if(!firstLetters.contains(getFirstLetter(country)))
+	
+		//This 'for' takes all letters of alphabet to 'Hashtable' and divide them into smaller parts to 'Vector'.
+		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
+		{		
+			threeLetters += alphabet;
+			counter++;
+			String oneLetter = "";
+			oneLetter += alphabet;
+			Integer position = new Integer(counterForHashtable);
+			justLettersOfAlphabet.put(oneLetter, position);
+
+			if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0 || alphabet == 'Z')
 			{
-				counter++;
-				firstLetters.add(getFirstLetter(country));
-				threeLetters += getFirstLetter(country);
-				
-				if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0)
-				{
-					String letters = (path + File.separator + threeLetters);
-					File fileLetters = new File(letters);
-					fileLetters.mkdirs();
-					
-					for(String j : namesOfCountries)
-					{
-						if(threeLetters.contains(getFirstLetter(j)))
-						{
-							
-							String countries = (letters + File.separator + j);
-							File fileCountries = new File(countries);
-							fileCountries.mkdirs();		
-						}
-					}			
-					threeLetters = "";
-				}
-				
+				collectionOfThreeLetters.add(threeLetters);
+				threeLetters = "";
+				counterForHashtable++;
 			}
 		}
+		
+		
+		//This 'for' checks on which letters countries we have in our 'txt' file and it also makes list of directories to create.
+		for(String country : namesOfCountries)
+		{
+			String firstLetterOfCountry = getFirstLetter(country);
+			int numberOfPositionInVector = justLettersOfAlphabet.get(firstLetterOfCountry);
+			directoriesToCreate.add(collectionOfThreeLetters.elementAt(numberOfPositionInVector));
+		}
+		
+		
+		//This 'for' delete old directories.
+		for(String directoryToDelete : directoriesToCreate)
+		{
+			String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
+			File tempfile = new File(pathOfGorupDirectory);
+			try 
+			{
+				FileUtils.deleteDirectory(tempfile);
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		//This 'for' create new directories for each group of countries.
+		for(String dir : directoriesToCreate)
+		{
+			String nameOfDirectory = (path + File.separator + dir);
+			File groupFile = new File(nameOfDirectory);
+			groupFile.mkdirs();
+		}
+	
+		//This 'for' make directory for each country which '.txt' file contains.
+		for(String country : namesOfCountries)
+		{
+			String firstLetter = getFirstLetter(country);
+			int positionOfLetterInVector = justLettersOfAlphabet.get(firstLetter);
+			String x = collectionOfThreeLetters.elementAt(positionOfLetterInVector);
+	
+			String pathForDirectoryToCreate = (path + File.separator + x + File.separator + country);
+			File directoryForCountry = new File(pathForDirectoryToCreate);
+			directoryForCountry.mkdirs();		
+		}
 	}
-
-
+	
+	
 	private String getFirstLetter(String country) {
 		return country.substring(0,1);
 	}
-	
 }
 
 
-public class CountriesDirectoryMake
-{
-	
-	public static void main(String[] args) 
-	{
-		CountriesReader test = new CountriesReader();
-		test.readCountries();
-		test.createFiles();
-
-	}
-}

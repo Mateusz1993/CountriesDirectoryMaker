@@ -1,3 +1,9 @@
 1438614995699	Move compilation unit
 1438615436529	Rename local variable 'i'
 1438615500363	Extract method 'getFirstLetter'
+1438674678904	Rename local variable 'c'
+1438674784199	Rename local variable 'justLetters'
+1438674832287	Rename local variable 'test2'
+1438675259635	Rename local variable 'justLettersOfAlphabet'
+1438675267647	Rename local variable 'collectionOfThreeLetters'
+1438675279651	Rename local variable 'justLettersOfAlphabet2'
