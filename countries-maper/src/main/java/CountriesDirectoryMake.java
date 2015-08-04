@@ -1,9 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-import org.codehaus.plexus.util.FileUtils;
-
-
 public class CountriesDirectoryMake
 {	
 	public static void main(String[] args) 
@@ -109,14 +106,8 @@ class CountriesReader
 		{
 			String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
 			File tempfile = new File(pathOfGorupDirectory);
-			try 
-			{
-				FileUtils.deleteDirectory(tempfile);
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
+			
+			deleteDirectory(tempfile);
 		}
 		
 		//This 'for' create new directories for each group of countries.
@@ -139,6 +130,24 @@ class CountriesReader
 			directoryForCountry.mkdirs();		
 		}
 	}
+
+	
+	public static boolean deleteDirectory(File dir) {
+        if (dir.isDirectory()) 
+        {
+            File[] children = dir.listFiles();
+            for (int i = 0; i < children.length; i++) 
+            {
+                boolean success = deleteDirectory(children[i]);
+                if (!success) 
+                {
+                    return false;
+                }
+            }
+        }
+      return dir.delete();
+    }
+	
 	
 	
 	private String getFirstLetter(String country) {
