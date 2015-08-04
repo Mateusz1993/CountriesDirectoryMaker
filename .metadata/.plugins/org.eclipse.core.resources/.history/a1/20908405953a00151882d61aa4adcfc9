@@ -13,8 +13,9 @@ public class CountriesDirectoryMake
 		else
 		{
 			CountriesReader test = new CountriesReader();
-			SortedSet<String> test2 = test.readCountries(args[0]);
-			test.createFiles(args[1], test2);
+			test.readCountries(args[0]);
+			test.createFiles(args[1]);
+	
 		}
 	}
 }
@@ -36,9 +37,9 @@ class CountriesReader
 	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
 	
 	
-	//private SortedSet<String> namesOfCountries = new TreeSet<String>();
+	private SortedSet<String> namesOfCountries = new TreeSet<String>();
 	
-/*	void readCountries(String userPath)
+	void readCountries(String userPath)
 	{
 		String path = userPath;
 		System.out.println("Your path to CountriesList.txt is: " + path);			
@@ -64,47 +65,11 @@ class CountriesReader
 		{
 			e.printStackTrace();
 		}
-	}*/
+	}
 
 	
-	SortedSet<String> readCountries(String userPath)
+	void createFiles(String userPath)
 	{
-		String path = userPath;
-		System.out.println("Your path to CountriesList.txt is: " + path);			
-		
-		SortedSet<String> namesOfCountries = new TreeSet<String>();
-		
-		try 
-		{
-			File file = new File(path + File.separator + "CountriesList.txt");
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			String line;
-			
-			while((line = bufferedReader.readLine()) != null)
-			{
-				namesOfCountries.add(line);
-			}
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		return namesOfCountries;
-	}
-	
-	
-	
-	
-	
-	void createFiles(String userPath, SortedSet<String> countriesFromUser)
-	{
-		
-		SortedSet<String> namesOfCountries = countriesFromUser;
 		SortedSet<String> firstLetters = new TreeSet<String>();
 		int counter = 0;
 		int counterForHashtable = 0;
