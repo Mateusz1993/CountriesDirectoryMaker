@@ -7,3 +7,10 @@
 1438675259635	Rename local variable 'justLettersOfAlphabet'
 1438675267647	Rename local variable 'collectionOfThreeLetters'
 1438675279651	Rename local variable 'justLettersOfAlphabet2'
+1438689209964	Extract method 'testThrow'
+1438690995739	Delete element
+1438691111461	Move compilation unit
+1438691573682	Move compilation unit
+1438692971559	Encapsulate field 'NUMBER_OF_GROUPED_CHARACTERS'
+1438693476265	Rename local variable 'positionOfLetterInVector'
+1438693492287	Rename local variable 'numberOfPositionInVector'

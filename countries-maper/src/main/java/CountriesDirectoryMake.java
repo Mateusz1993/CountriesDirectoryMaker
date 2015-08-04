@@ -1,8 +1,14 @@
+
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CountriesDirectoryMake
 {	
+	
+	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
+	
 	public static void main(String[] args) 
 	{
 		if(args.length < 2)
@@ -17,11 +23,16 @@ public class CountriesDirectoryMake
 				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
 				DirectoriesMaker directories = new DirectoriesMaker();
 				directories.createFiles(args[1], sortedCountries);			
-			}
-			catch(NullPointerException e)
+			} 
+			catch (FileNotFoundException e) 
 			{
-				System.out.println("Program returned null object.");
-				//e.printStackTrace();
+				System.out.println("Provided file path is wrong. Please provide correct file path.");
+				LOGGER.log(Level.FINE, "Provided file path is wrong. Please provide correct file path.", e);
+			} 
+			catch (IOException e) 
+			{
+				System.out.println("There was a problem while reading a file. Please make sure given file is correct and run application again");
+				LOGGER.log(Level.FINE, "There was a problem while reading a file.", e);
 			}
 		}
 	}
@@ -48,12 +59,16 @@ abstract class Creator
         }
       return dir.delete();
     }
-	
-	protected String getFirstLetter(String country) {
-		return country.substring(0,1);
-	}
 }
 
+
+class StringUtils 
+{
+	public static String getFirstLetter(String country) 
+	{
+		return country.substring(0,1);
+	} 
+}
 
 
 class CountriesReader
@@ -63,20 +78,20 @@ class CountriesReader
 	 */
 	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
 	
-	SortedSet<String> readCountries(String userPath)
+	SortedSet<String> readCountries(String userPath) throws FileNotFoundException, IOException
 	{
 		String path = userPath;
-		System.out.println("Your path to CountriesList.txt is: " + path);			
+		System.out.println("Your path to .txt file is: " + path);			
 		
 		SortedSet<String> namesOfCountries = new TreeSet<String>();
 		
-		try 
-		{
-			File file = new File(path + File.separator + "CountriesList.txt");
+		File file = new File(path);
+		String line;
+		
+		BufferedReader bufferedReader = null;
+		try {
 			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			String line;
-					
+			bufferedReader = new BufferedReader(fileReader);
 			while((line = bufferedReader.readLine()) != null)
 			{				
 				if(!line.isEmpty())
@@ -84,20 +99,16 @@ class CountriesReader
 					namesOfCountries.add(line);
 				}
 			}
-		} 
-		catch (FileNotFoundException e) 
-		{
-			System.out.println("It was given wrong path to file.");
-			//e.printStackTrace();
-			return null;
-		} 
-		catch (IOException e) 
-		{
-			System.out.println("It was something wrong with I/O operation.");
-			//e.printStackTrace();
-			return null;
+		} finally {
+			if (bufferedReader != null) {
+				bufferedReader.close();
+			}
 		}
 		return namesOfCountries;
+	}
+
+	public static int getNumberOfGroupedCharacters() {
+		return NUMBER_OF_GROUPED_CHARACTERS;
 	}
 		
 }
@@ -115,20 +126,18 @@ class DirectoriesMaker extends Creator{
 	public void createFiles(String userPath, SortedSet<String> countriesFromUser)
 	{
 		SortedSet<String> namesOfCountries = countriesFromUser;
-		SortedSet<String> firstLetters = new TreeSet<String>();
 		int counter = 0;
 		int counterForHashtable = 0;
 		String threeLetters = "";
 		String path = userPath;
-		Vector<String> collectionOfThreeLetters = new Vector<String>();
-		Hashtable<String, Integer> justLettersOfAlphabet = new Hashtable<String, Integer>();
+		ArrayList<String> collectionOfThreeLetters = new ArrayList<String>();
+		HashMap<String, Integer> justLettersOfAlphabet = new HashMap<String, Integer>();
 		SortedSet<String> directoriesToCreate = new TreeSet<String>();
 
-		
 		System.out.print("Your directories will be created in: ");
 		System.out.println(path);
 	
-		//This 'for' takes all letters of alphabet to 'Hashtable' and divide them into smaller parts to 'Vector'.
+		//This 'for' takes all letters of alphabet to 'HashMap' and divide them into smaller parts to 'ArrayList'.
 		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
 		{		
 			threeLetters += alphabet;
@@ -150,16 +159,28 @@ class DirectoriesMaker extends Creator{
 		//This 'for' checks on which letters countries we have in our 'txt' file and it also makes list of directories to create.
 		for(String country : namesOfCountries)
 		{
-			String firstLetterOfCountry = getFirstLetter(country);
-			int numberOfPositionInVector = justLettersOfAlphabet.get(firstLetterOfCountry);
-			directoriesToCreate.add(collectionOfThreeLetters.elementAt(numberOfPositionInVector));
+			String firstLetterOfCountry = StringUtils.getFirstLetter(country);
+			int numberOfPositionInArrayList = justLettersOfAlphabet.get(firstLetterOfCountry);			
+			directoriesToCreate.add(collectionOfThreeLetters.get(numberOfPositionInArrayList));
 		}
 		
 		
 		//Here user can chose if he want to delete all directories or just these, which he will make new one.
-		Scanner scanner = new Scanner (System.in);
-		System.out.print("Do you want do delete all your directories? [Y/N]: " );
-		String userDecision = scanner.next();
+		Scanner scanner = null;
+		String userDecision = "n";
+		scanner = new Scanner (System.in);
+		try
+		{
+			System.out.print("Do you want do delete all your directories? [Y/N]: " );
+			userDecision = scanner.next();
+		}
+		finally
+		{
+			if(scanner != null)
+			{
+				scanner.close();
+			}
+		}
 		
 		if(userDecision.equals("Y") || userDecision.equals("y"))
 		{
@@ -193,9 +214,9 @@ class DirectoriesMaker extends Creator{
 		//This 'for' make directory for each country which '.txt' file contains.
 		for(String country : namesOfCountries)
 		{
-			String firstLetter = getFirstLetter(country);
-			int positionOfLetterInVector = justLettersOfAlphabet.get(firstLetter);
-			String x = collectionOfThreeLetters.elementAt(positionOfLetterInVector);
+			String firstLetter = StringUtils.getFirstLetter(country);
+			int positionOfLetterInArrayList = justLettersOfAlphabet.get(firstLetter);
+			String x = collectionOfThreeLetters.get(positionOfLetterInArrayList);
 	
 			String pathForDirectoryToCreate = (path + File.separator + x + File.separator + country);
 			File directoryForCountry = new File(pathForDirectoryToCreate);
