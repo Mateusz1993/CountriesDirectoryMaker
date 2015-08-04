@@ -12,17 +12,9 @@ public class CountriesDirectoryMake
 		}
 		else
 		{
-			CountriesReader countriesReader = new CountriesReader();
-			try
-			{
-				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
-				countriesReader.createFiles(args[1], sortedCountries);
-			}
-			catch(NullPointerException e)
-			{
-				System.out.println("Program returned null object.");
-				//e.printStackTrace();
-			}
+			CountriesReader test = new CountriesReader();
+			SortedSet<String> test2 = test.readCountries(args[0]);
+			test.createFiles(args[1], test2);
 		}
 	}
 }
@@ -43,6 +35,38 @@ class CountriesReader
 	 */
 	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
 	
+	
+	//private SortedSet<String> namesOfCountries = new TreeSet<String>();
+	
+/*	void readCountries(String userPath)
+	{
+		String path = userPath;
+		System.out.println("Your path to CountriesList.txt is: " + path);			
+		
+		
+		try 
+		{
+			File file = new File(path + File.separator + "CountriesList.txt");
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			
+			while((line = bufferedReader.readLine()) != null)
+			{
+				namesOfCountries.add(line);
+			}
+		} 
+		catch (FileNotFoundException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}*/
+
+	
 	SortedSet<String> readCountries(String userPath)
 	{
 		String path = userPath;
@@ -57,27 +81,18 @@ class CountriesReader
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
 			
-			
-			
 			while((line = bufferedReader.readLine()) != null)
-			{				
-				if(!line.isEmpty())
-				{
-					namesOfCountries.add(line);
-				}
+			{
+				namesOfCountries.add(line);
 			}
 		} 
 		catch (FileNotFoundException e) 
 		{
-			System.out.println("It was given wrong path to file.");
-			//e.printStackTrace();
-			return null;
+			e.printStackTrace();
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("It was something wrong with I/O operation.");
-			//e.printStackTrace();
-			return null;
+			e.printStackTrace();
 		}
 		return namesOfCountries;
 	}

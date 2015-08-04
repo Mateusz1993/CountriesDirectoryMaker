@@ -15,13 +15,13 @@ public class CountriesDirectoryMake
 			CountriesReader countriesReader = new CountriesReader();
 			try
 			{
-				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
-				countriesReader.createFiles(args[1], sortedCountries);
+			SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
+			countriesReader.createFiles(args[1], sortedCountries);
 			}
 			catch(NullPointerException e)
 			{
 				System.out.println("Program returned null object.");
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 	}

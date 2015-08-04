@@ -15,13 +15,12 @@ public class CountriesDirectoryMake
 			CountriesReader countriesReader = new CountriesReader();
 			try
 			{
-				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
-				countriesReader.createFiles(args[1], sortedCountries);
+			SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
+			countriesReader.createFiles(args[1], sortedCountries);
 			}
 			catch(NullPointerException e)
 			{
 				System.out.println("Program returned null object.");
-				//e.printStackTrace();
 			}
 		}
 	}
@@ -69,14 +68,13 @@ class CountriesReader
 		} 
 		catch (FileNotFoundException e) 
 		{
-			System.out.println("It was given wrong path to file.");
+			System.out.println("Podano zla sciezke do pliku.");
 			//e.printStackTrace();
 			return null;
 		} 
 		catch (IOException e) 
 		{
-			System.out.println("It was something wrong with I/O operation.");
-			//e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 		return namesOfCountries;
