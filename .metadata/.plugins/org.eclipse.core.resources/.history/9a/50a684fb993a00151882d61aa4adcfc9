@@ -5,6 +5,7 @@ public class CountriesDirectoryMake
 {	
 	public static void main(String[] args) 
 	{
+
 		if(args.length < 2)
 		{
 			System.out.println("You must to write minimum two arguments.");
@@ -15,8 +16,11 @@ public class CountriesDirectoryMake
 			try
 			{
 				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
-				DirectoriesMaker directories = new DirectoriesMaker();
-				directories.createFiles(args[1], sortedCountries);			
+				//countriesReader.createFiles(args[1], sortedCountries);
+				
+				Test test = new Test();
+				test.createFiles(args[1], sortedCountries);
+				
 			}
 			catch(NullPointerException e)
 			{
@@ -31,8 +35,6 @@ public class CountriesDirectoryMake
 
 abstract class Creator
 {
-	public abstract void createFiles(String userPath, SortedSet<String> countriesFromUser);
-	
 	protected static boolean deleteDirectory(File dir) {
         if (dir.isDirectory()) 
         {
@@ -49,9 +51,14 @@ abstract class Creator
       return dir.delete();
     }
 	
+	
 	protected String getFirstLetter(String country) {
 		return country.substring(0,1);
 	}
+	
+	
+	public abstract void createFiles(String userPath, SortedSet<String> countriesFromUser);
+	
 }
 
 
@@ -76,7 +83,9 @@ class CountriesReader
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
-					
+			
+			
+			
 			while((line = bufferedReader.readLine()) != null)
 			{				
 				if(!line.isEmpty())
@@ -103,7 +112,7 @@ class CountriesReader
 }
 
 
-class DirectoriesMaker extends Creator{
+class Test extends Creator{
 	
 	/**
 	 * This is a constant that describes how many characters are grouped in level one directory.
@@ -114,6 +123,7 @@ class DirectoriesMaker extends Creator{
 	
 	public void createFiles(String userPath, SortedSet<String> countriesFromUser)
 	{
+		
 		SortedSet<String> namesOfCountries = countriesFromUser;
 		SortedSet<String> firstLetters = new TreeSet<String>();
 		int counter = 0;

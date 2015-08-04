@@ -31,8 +31,6 @@ public class CountriesDirectoryMake
 
 abstract class Creator
 {
-	public abstract void createFiles(String userPath, SortedSet<String> countriesFromUser);
-	
 	protected static boolean deleteDirectory(File dir) {
         if (dir.isDirectory()) 
         {
@@ -49,9 +47,14 @@ abstract class Creator
       return dir.delete();
     }
 	
+	
 	protected String getFirstLetter(String country) {
 		return country.substring(0,1);
 	}
+	
+	
+	public abstract void createFiles(String userPath, SortedSet<String> countriesFromUser);
+	
 }
 
 
@@ -76,7 +79,9 @@ class CountriesReader
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
-					
+			
+			
+			
 			while((line = bufferedReader.readLine()) != null)
 			{				
 				if(!line.isEmpty())

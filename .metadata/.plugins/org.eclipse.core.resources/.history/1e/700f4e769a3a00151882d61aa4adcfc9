@@ -49,6 +49,7 @@ abstract class Creator
       return dir.delete();
     }
 	
+	
 	protected String getFirstLetter(String country) {
 		return country.substring(0,1);
 	}
@@ -76,7 +77,9 @@ class CountriesReader
 			FileReader fileReader = new FileReader(file);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			String line;
-					
+			
+			
+			
 			while((line = bufferedReader.readLine()) != null)
 			{				
 				if(!line.isEmpty())
