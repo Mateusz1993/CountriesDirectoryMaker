@@ -14,8 +14,9 @@ public class CountriesDirectoryMake
 		{
 			CountriesReader test = new CountriesReader();
 			test.readCountries(args[0]);
-			test.createFiles(args[1]);
-	
+			test.createFiles();
+
+			System.out.println(args[1]);	
 		}
 	}
 }
@@ -38,11 +39,15 @@ class CountriesReader
 	
 	
 	private SortedSet<String> namesOfCountries = new TreeSet<String>();
+	private String path;	
 	
-	void readCountries(String userPath)
+	void readCountries(String path)
 	{
-		String path = userPath;
-		System.out.println("Your path to CountriesList.txt is: " + path);			
+//		Scanner scanner = new Scanner (System.in);
+//		System.out.print("Enter path to list of countries: ");
+//		path = scanner.next();
+		this.path = path;
+		System.out.println("Your path is: " + path);			
 		
 		
 		try 
@@ -56,6 +61,7 @@ class CountriesReader
 			{
 				namesOfCountries.add(line);
 			}
+			
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -68,20 +74,16 @@ class CountriesReader
 	}
 
 	
-	void createFiles(String userPath)
+	void createFiles()
 	{
 		SortedSet<String> firstLetters = new TreeSet<String>();
 		int counter = 0;
 		int counterForHashtable = 0;
 		String threeLetters = "";
-		String path = userPath;
 		Vector<String> collectionOfThreeLetters = new Vector<String>();
 		Hashtable<String, Integer> justLettersOfAlphabet = new Hashtable<String, Integer>();
 		SortedSet<String> directoriesToCreate = new TreeSet<String>();
-
 		
-		System.out.print("Your directories will be created in: ");
-		System.out.println(path);
 	
 		//This 'for' takes all letters of alphabet to 'Hashtable' and divide them into smaller parts to 'Vector'.
 		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)

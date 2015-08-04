@@ -42,7 +42,7 @@ class CountriesReader
 	void readCountries(String userPath)
 	{
 		String path = userPath;
-		System.out.println("Your path to CountriesList.txt is: " + path);			
+		System.out.println("Your path is: " + path);			
 		
 		
 		try 
@@ -56,6 +56,9 @@ class CountriesReader
 			{
 				namesOfCountries.add(line);
 			}
+			
+			System.out.println(namesOfCountries);
+			
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -80,7 +83,6 @@ class CountriesReader
 		SortedSet<String> directoriesToCreate = new TreeSet<String>();
 
 		
-		System.out.print("Your directories will be created in: ");
 		System.out.println(path);
 	
 		//This 'for' takes all letters of alphabet to 'Hashtable' and divide them into smaller parts to 'Vector'.
@@ -143,6 +145,8 @@ class CountriesReader
 			String nameOfDirectory = (path + File.separator + dir);
 			File groupFile = new File(nameOfDirectory);
 			groupFile.mkdirs();
+			
+			System.out.println(dir);
 		}
 	
 		//This 'for' make directory for each country which '.txt' file contains.
