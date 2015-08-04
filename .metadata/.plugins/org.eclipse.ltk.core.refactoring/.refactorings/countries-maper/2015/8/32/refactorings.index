@@ -14,3 +14,6 @@
 1438692971559	Encapsulate field 'NUMBER_OF_GROUPED_CHARACTERS'
 1438693476265	Rename local variable 'positionOfLetterInVector'
 1438693492287	Rename local variable 'numberOfPositionInVector'
+1438694495532	Delete element
+1438695103897	Move compilation unit
+1438695147785	Delete element
