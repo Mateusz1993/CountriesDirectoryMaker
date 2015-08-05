@@ -11,19 +11,19 @@ import de.heinfricke.countriesmapper.utils.UserInputs;
 
 public class FileDeleter {
 	
-	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
+	public void deleteDirectories(Map<String, List<Country>> organisedCountriesMap, String userPath)
 	{
-		boolean userDecision = UserInputs.decisionAboutDeletingDirectories();
-		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
+		int userDecision = UserInputs.userDecision();
+		Map<String, List<Country>> organisedCountries = organisedCountriesMap;
 		String path = userPath;
 		List<String> collectionOfThreeLetters = new ArrayList<String>();
 		
-		for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
+		for(Map.Entry<String, List<Country>> set : organisedCountries.entrySet())
 		{
 			collectionOfThreeLetters.add(set.getKey());
 		}
 		
-		if(userDecision == true)
+		if(userDecision == 1)
 		{
 			for(String directoryToDelete : GroupsPreparer.returnThreeLettersGroups())
 			{

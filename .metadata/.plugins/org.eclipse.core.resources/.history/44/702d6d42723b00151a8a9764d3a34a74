@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static boolean decisionAboutDeletingDirectories()
+	public static boolean userDecision()
 	{
 		Scanner scanner = null;
 		String userDecision = "n";

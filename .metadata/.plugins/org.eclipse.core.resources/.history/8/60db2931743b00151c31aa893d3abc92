@@ -73,7 +73,7 @@ public class GroupsPreparer {
 		Map<String, Integer> justLettersOfAlphabet = returnLettersOfAlphabet();
 		List<String> threeLettersGroups = returnThreeLettersGroups();
 		List<Country> listOfCountriesForEachGroup = new ArrayList<Country>();
-		Map<String, List<Country>> countriesOrganizedInGroups = new HashMap<String, List<Country>>();
+		Map<String, List<Country>> countriesOrganisedInGroups = new HashMap<String, List<Country>>();
 		
 		int numberOfAddedCountries = 0;
 		String nameOfFirstCountry = namesOfCountries.iterator().next().getName();
@@ -95,14 +95,14 @@ public class GroupsPreparer {
 				
 				if(numberOfAddedCountries >= namesOfCountries.size())
 				{
-					countriesOrganizedInGroups.put(threeLettersGroups.get(positionInList), listOfCountriesForEachGroup);
+					countriesOrganisedInGroups.put(threeLettersGroups.get(positionInList), listOfCountriesForEachGroup);
 				}
 			}
 			else
 			{
 				String firstLetterOfLastCountry = StringUtils.getFirstLetter(listOfCountriesForEachGroup.get(listOfCountriesForEachGroup.size() - 1).getName());
 				int firstLetterOfLastCountryPosition = justLettersOfAlphabet.get(firstLetterOfLastCountry);	
-				countriesOrganizedInGroups.put(threeLettersGroups.get(firstLetterOfLastCountryPosition), listOfCountriesForEachGroup);
+				countriesOrganisedInGroups.put(threeLettersGroups.get(firstLetterOfLastCountryPosition), listOfCountriesForEachGroup);
 				listOfCountriesForEachGroup = new ArrayList<Country>();
 				listOfCountriesForEachGroup.add(newCountry);
 				numberOfAddedCountries++;
@@ -110,10 +110,10 @@ public class GroupsPreparer {
 				
 				if(numberOfAddedCountries >= namesOfCountries.size())
 				{
-					countriesOrganizedInGroups.put(threeLettersGroups.get(positionInList), listOfCountriesForEachGroup);
+					countriesOrganisedInGroups.put(threeLettersGroups.get(positionInList), listOfCountriesForEachGroup);
 				}
 			}			
 		}	
-		return countriesOrganizedInGroups;
+		return countriesOrganisedInGroups;
 	}
 }

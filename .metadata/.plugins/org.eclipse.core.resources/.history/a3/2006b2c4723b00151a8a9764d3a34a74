@@ -11,10 +11,10 @@ import de.heinfricke.countriesmapper.utils.UserInputs;
 
 public class FileDeleter {
 	
-	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
+	public void deleteDirectories(Map<String, List<Country>> organisedCountriesMap, String userPath)
 	{
 		boolean userDecision = UserInputs.decisionAboutDeletingDirectories();
-		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
+		Map<String, List<Country>> organizedCountries = organisedCountriesMap;
 		String path = userPath;
 		List<String> collectionOfThreeLetters = new ArrayList<String>();
 		

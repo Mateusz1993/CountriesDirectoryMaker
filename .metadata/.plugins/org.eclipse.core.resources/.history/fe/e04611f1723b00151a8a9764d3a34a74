@@ -10,10 +10,10 @@ public class FileMaker {
 
 	public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
 	{
-		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
+		Map<String, List<Country>> organisedCountries = organizedCountriesMap;
 		String path = userPath;
 		
-		for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
+		for(Map.Entry<String, List<Country>> set : organisedCountries.entrySet())
 		{
 			String groupDirectory = set.getKey();
 			List<Country> listOfCountriesInEachGroup = set.getValue();

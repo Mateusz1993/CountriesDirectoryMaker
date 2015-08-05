@@ -8,12 +8,12 @@ import de.heinfricke.countriesmapper.country.Country;
 
 public class FileMaker {
 
-	public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
+	public void createDirectories(Map<String, List<Country>> organisedCountriesMap, String userPath)
 	{
-		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
+		Map<String, List<Country>> organisedCountries = organisedCountriesMap;
 		String path = userPath;
 		
-		for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
+		for(Map.Entry<String, List<Country>> set : organisedCountries.entrySet())
 		{
 			String groupDirectory = set.getKey();
 			List<Country> listOfCountriesInEachGroup = set.getValue();

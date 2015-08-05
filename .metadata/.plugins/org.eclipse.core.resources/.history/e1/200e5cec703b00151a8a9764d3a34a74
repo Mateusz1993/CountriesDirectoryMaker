@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static boolean decisionAboutDeletingDirectories()
+	public static int userDecision()
 	{
 		Scanner scanner = null;
 		String userDecision = "n";
@@ -25,11 +25,17 @@ public class UserInputs {
 		
 		if(userDecision.equals("Y") || userDecision.equals("y"))
 		{
-			return true;
+			return 1;
 		}
 		else
 		{
-			return false;
+			return 0;
 		}
+	}
+	
+	public static enum UserDecision {
+		
+		
+		
 	}
 }

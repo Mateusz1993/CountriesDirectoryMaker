@@ -26,8 +26,8 @@ public class CountriesDirectoryMake
 				Set<Country> sortedCountries = countriesReader.readCountries(args[0]);
 				
 				//Prepare groups of countries (for example: ABC = (Albania, Czech Republic), PQR = (Poland, Qatar)).
-				GroupsPreparer groupsPreparer = new GroupsPreparer();
-				Map<String, List<Country>> groupsOfCountries = groupsPreparer.organiesCountriesInGroups(sortedCountries);
+				GroupsPreparer test = new GroupsPreparer();
+				Map<String, List<Country>> groupsOfCountries = test.organiesCountriesInGroups(sortedCountries);
 				
 				//Delete old directories.
 				FileDeleter fileDeleter = new FileDeleter();
