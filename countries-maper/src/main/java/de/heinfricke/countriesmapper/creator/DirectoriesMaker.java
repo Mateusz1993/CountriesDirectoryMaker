@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.utils.*;
 
 
@@ -17,10 +19,9 @@ public class DirectoriesMaker extends Creator{
 	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
 	
 	
-	
-	public void createFiles(String userPath, SortedSet<String> countriesFromUser)
+	public void createFiles(String userPath, TreeSet<Country> countriesFromUser)
 	{
-		SortedSet<String> namesOfCountries = countriesFromUser;
+		TreeSet<Country> namesOfCountries = countriesFromUser;
 		int counter = 0;
 		int counterForHashtable = 0;
 		String threeLetters = "";
@@ -52,9 +53,10 @@ public class DirectoriesMaker extends Creator{
 		
 		
 		//This 'for' checks on which letters countries we have in our 'txt' file and it also makes list of directories to create.
-		for(String country : namesOfCountries)
+		for(Country country : namesOfCountries)
 		{
-			String firstLetterOfCountry = StringUtils.getFirstLetter(country);
+			String countryName = country.getName();
+			String firstLetterOfCountry = StringUtils.getFirstLetter(countryName);
 			int numberOfPositionInArrayList = justLettersOfAlphabet.get(firstLetterOfCountry);			
 			directoriesToCreate.add(collectionOfThreeLetters.get(numberOfPositionInArrayList));
 		}
@@ -68,6 +70,7 @@ public class DirectoriesMaker extends Creator{
 		{
 			System.out.print("Do you want do delete all your directories? [Y/N]: " );
 			userDecision = scanner.next();
+			System.out.println();
 		}
 		finally
 		{
@@ -76,6 +79,7 @@ public class DirectoriesMaker extends Creator{
 				scanner.close();
 			}
 		}
+		
 		
 		if(userDecision.equals("Y") || userDecision.equals("y"))
 		{
@@ -107,15 +111,17 @@ public class DirectoriesMaker extends Creator{
 		}
 	
 		//This 'for' make directory for each country which '.txt' file contains.
-		for(String country : namesOfCountries)
+		for(Country country : namesOfCountries)
 		{
-			String firstLetter = StringUtils.getFirstLetter(country);
+			String countryName = country.getName();
+			String firstLetter = StringUtils.getFirstLetter(countryName);
 			int positionOfLetterInArrayList = justLettersOfAlphabet.get(firstLetter);
 			String x = collectionOfThreeLetters.get(positionOfLetterInArrayList);
 	
-			String pathForDirectoryToCreate = (path + File.separator + x + File.separator + country);
+			String pathForDirectoryToCreate = (path + File.separator + x + File.separator + countryName);
 			File directoryForCountry = new File(pathForDirectoryToCreate);
 			directoryForCountry.mkdirs();		
 		}
 	}
+	
 }

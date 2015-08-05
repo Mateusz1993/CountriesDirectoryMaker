@@ -1,0 +1,10 @@
+package de.heinfricke.countriesmapper.country;
+
+public class Country {
+	String name;
+	
+	Country(String name)
+	{
+		this.name = name;
+	}
+}

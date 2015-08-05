@@ -1,0 +1,5 @@
+package de.heinfricke.countriesmapper.country;
+
+public class Country {
+
+}

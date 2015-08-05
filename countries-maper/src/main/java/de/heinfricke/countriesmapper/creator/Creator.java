@@ -1,12 +1,15 @@
 package de.heinfricke.countriesmapper.creator;
 
 import java.io.File;
-import java.util.SortedSet;
+import java.util.TreeSet;
+
+import de.heinfricke.countriesmapper.country.Country;
 
 public abstract class Creator
 {
-	public abstract void createFiles(String userPath, SortedSet<String> countriesFromUser);
-	
+	public abstract void createFiles(String userPath, TreeSet<Country> countriesFromUser);
+
+
 	public static boolean deleteDirectory(File dir) {
         if (dir.isDirectory()) 
         {

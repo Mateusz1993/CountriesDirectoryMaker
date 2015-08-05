@@ -3,6 +3,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import de.heinfricke.countriesmapper.reader.*;
+import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.creator.*;
 
 
@@ -25,9 +26,9 @@ public class CountriesDirectoryMake
 			CountriesReader countriesReader = new CountriesReader();
 			try
 			{
-				SortedSet<String> sortedCountries = countriesReader.readCountries(args[0]);
+				TreeSet<Country> sortedCountries = countriesReader.readCountries(args[0]);
 				DirectoriesMaker directories = new DirectoriesMaker();
-				directories.createFiles(args[1], sortedCountries);			
+				directories.createFiles(args[1], sortedCountries);
 			} 
 			catch (FileNotFoundException e) 
 			{
