@@ -7,12 +7,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 import de.heinfricke.countriesmapper.country.*;
 
 public class CountriesReader
 {		
-	public TreeSet<Country> readCountries(String userPath) throws FileNotFoundException, IOException
+	public Set<Country> readCountries(String userPath) throws FileNotFoundException, IOException
 	{
 		String path = userPath;
 		System.out.println("\nYour path to .txt file is: " + path);			
@@ -43,10 +44,9 @@ public class CountriesReader
 			}
 		}
 		
-		TreeSet<Country> treeSet = new TreeSet<Country>();
+		Set<Country> treeSet = new TreeSet<Country>();
 		treeSet.addAll(namesOfCountries);
 		
 		return treeSet;
 	}
-	
 }

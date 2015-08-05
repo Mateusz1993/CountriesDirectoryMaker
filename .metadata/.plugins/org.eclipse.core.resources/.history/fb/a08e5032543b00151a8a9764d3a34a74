@@ -1,0 +1,78 @@
+package de.heinfricke.countriesmapper.creator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeSet;
+
+import de.heinfricke.countriesmapper.country.Country;
+
+public class GroupsPreparer {
+	
+	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
+	
+	public Map<String, Integer> returnLettersOfAlphabet()
+	{
+		int counter = 0;
+		int counterForHashtable = 0;	
+		Map<String, Integer> justLettersOfAlphabet = new HashMap<String, Integer>();
+		
+		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
+		{		
+			String oneLetter = "";
+			oneLetter += alphabet;
+			Integer position = new Integer(counterForHashtable);
+			justLettersOfAlphabet.put(oneLetter, position);
+			counter++;
+			
+			if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0 || alphabet == 'Z')
+			{
+				counterForHashtable++;
+			}
+		}
+		
+		System.out.println(justLettersOfAlphabet);
+		
+		return justLettersOfAlphabet;
+	}
+	
+	
+	public List<String> returnThreeLettersGroups(Map<String, Integer> alphabet)
+	{
+	
+		List<String> threeLettersGroup = new ArrayList<String>();
+		Map<String, Integer> justLettersOfAlphabet = alphabet;
+		int counterForValueOfMap = 0;
+		int counterToCheckHowManyTimesForWasDone = 0;
+		String threeLetters = "";
+		
+		
+		for(Map.Entry<String, Integer> set : justLettersOfAlphabet.entrySet())
+		{
+			counterToCheckHowManyTimesForWasDone++;
+			if(set.getValue() == counterForValueOfMap && (counterToCheckHowManyTimesForWasDone < justLettersOfAlphabet.size()))
+			{
+				threeLetters += set.getKey();
+			}
+			else
+			{
+				threeLettersGroup.add(threeLetters);
+				counterForValueOfMap++;
+				threeLetters = "";
+				threeLetters += set.getKey();
+			}
+		}
+		
+		System.out.println(justLettersOfAlphabet.size());
+		
+		
+		System.out.println(threeLettersGroup);
+		
+		return threeLettersGroup;
+	}
+	
+}

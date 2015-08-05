@@ -1,0 +1,10 @@
+package de.heinfricke.countriesmapper.fileoperations;
+
+import java.util.Set;
+
+import de.heinfricke.countriesmapper.country.Country;
+
+public interface Creator 
+{
+	public void createFiles(String userPath, Set<Country> countriesFromUser);	
+}

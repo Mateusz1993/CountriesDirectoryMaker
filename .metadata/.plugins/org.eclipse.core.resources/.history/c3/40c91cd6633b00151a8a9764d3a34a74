@@ -1,0 +1,188 @@
+package de.heinfricke.countriesmapper.creator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
+import java.util.TreeSet;
+
+import de.heinfricke.countriesmapper.country.Country;
+import de.heinfricke.countriesmapper.utils.StringUtils;
+
+public class GroupsPreparer {
+	
+	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
+	
+	private Map<String, Integer> returnLettersOfAlphabet()
+	{
+		int counter = 0;
+		int counterForHashtable = 0;	
+		Map<String, Integer> justLettersOfAlphabet = new HashMap<String, Integer>();
+		
+		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
+		{		
+			String oneLetter = "";
+			oneLetter += alphabet;
+			Integer position = new Integer(counterForHashtable);
+			justLettersOfAlphabet.put(oneLetter, position);
+			counter++;
+			
+			if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0 || alphabet == 'Z')
+			{
+				counterForHashtable++;
+			}
+		}
+		return justLettersOfAlphabet;
+	}
+	
+	
+	private List<String> returnThreeLettersGroups()
+	{
+		List<String> threeLettersGroup = new ArrayList<String>();
+		Map<String, Integer> justLettersOfAlphabet = returnLettersOfAlphabet();
+		int counterForValueOfMap = 0;
+		int counterToCheckHowManyTimesForWasDone = 0;
+		String threeLetters = "";
+		
+		for(Map.Entry<String, Integer> set : justLettersOfAlphabet.entrySet())
+		{
+			counterToCheckHowManyTimesForWasDone++;
+			if(set.getValue() == counterForValueOfMap)
+			{
+				threeLetters += set.getKey();
+				if(counterToCheckHowManyTimesForWasDone == justLettersOfAlphabet.size())
+				{
+					threeLettersGroup.add(threeLetters);
+				}
+			}
+			else
+			{
+				threeLettersGroup.add(threeLetters);
+				counterForValueOfMap++;
+				threeLetters = "";
+				threeLetters += set.getKey();
+			}
+		}
+		
+		return threeLettersGroup;
+	}
+	
+	
+	
+	public Map<Country, String> organiesCountriesInGroups(Set<Country> countriesFromUser)
+	{
+		Map<Country, String> countriesOrganisedInGroups = new HashMap<Country, String>();
+		
+		Set<Country> namesOfCountries = countriesFromUser;
+		Map<String, Integer> justLettersOfAlphabet = returnLettersOfAlphabet();
+		List<String> threeLettersGroups = returnThreeLettersGroups();
+		
+		List<Country> test2 = new ArrayList<Country>();
+		
+		
+		Map<String, List<Country>> test8 = new HashMap<String, List<Country>>();
+		
+		int numberOfAddedCountries = 0;
+		
+		
+		String nameOfFirstCountry = namesOfCountries.iterator().next().getName();
+		String numberOfGroupPositionOfFirstCountry = StringUtils.getFirstLetter(nameOfFirstCountry);
+		
+		int counter = justLettersOfAlphabet.get(numberOfGroupPositionOfFirstCountry);
+		
+		
+		for(Country country : namesOfCountries)
+		{
+			String countryName = country.getName();
+			//System.out.println(countryName);
+			String firstLetterOfCountry = StringUtils.getFirstLetter(countryName);
+			int numberOfPositionInArrayList = justLettersOfAlphabet.get(firstLetterOfCountry);
+			//System.out.println(numberOfPositionInArrayList);
+			System.out.println("TEST: ");
+			System.out.println(numberOfPositionInArrayList);
+			
+			Country test = new Country(countryName);
+			countriesOrganisedInGroups.put(test, threeLettersGroups.get(numberOfPositionInArrayList));
+			int xyz;
+			
+			
+			if(numberOfPositionInArrayList == counter)
+			{
+				test2.add(test);
+				xyz = counter;
+				numberOfAddedCountries++;
+				System.out.println("NumberOfAddedCountries = " + numberOfAddedCountries);
+				if(numberOfAddedCountries >= namesOfCountries.size())
+				{
+					System.out.print("Kiedy to sie wykona?");
+					test8.put(threeLettersGroups.get(numberOfPositionInArrayList), test2);
+				}
+			}
+			else
+			{
+				System.out.println("tescik " + threeLettersGroups.get(numberOfPositionInArrayList));
+				test8.put(threeLettersGroups.get(counter), test2);
+				test2 = new ArrayList<Country>();
+				test2.add(test);
+				numberOfAddedCountries++;
+				System.out.println("NumberOfAddedCountries = " + numberOfAddedCountries);
+				System.out.println(test.getName());
+				if(numberOfAddedCountries >= namesOfCountries.size())
+				{
+					System.out.print("A kiedy to sie wykona?");
+					test8.put(threeLettersGroups.get(numberOfPositionInArrayList), test2);
+				}
+			}
+			
+			
+		}
+		
+		
+/*		for(Map.Entry<Country, String> set : countriesOrganisedInGroups.entrySet())
+		{
+			Country test = set.getKey();
+			System.out.println(test.getName() + "<-- nazwa kraju i zaraz klucz | grupa -->" + set.getValue());
+		}*/
+		
+		System.out.println("\n\n\nTEST2: ");
+		
+		for(Map.Entry<String, List<Country>> set : test8.entrySet())
+		{
+			List<Country> test20 = set.getValue();
+			for(Country foo : test20)
+			{
+				System.out.println(foo.getName());
+			}
+			
+		}
+		
+		
+/*		Map<String, List<String>> x = new HashMap<String, List<String>>();
+		List<String> ggg = new ArrayList<String>();
+		x.put("test", ggg);
+	*/	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return countriesOrganisedInGroups;
+	}
+	
+	
+}

@@ -17,3 +17,22 @@
 1438694495532	Delete element
 1438695103897	Move compilation unit
 1438695147785	Delete element
+1438762262186	Extract method 'extractUserDecision'
+1438772787503	Rename local variable 'test301'
+1438774491626	Rename local variable 'test2'
+1438774513155	Rename local variable 'test8'
+1438774555271	Rename local variable 'test'
+1438774709420	Rename local variable 'countriesOrganisedInGroups'
+1438774718918	Rename local variable 'groupsOfCountries'
+1438774803588	Rename local variable 'numberOfPositionInArrayList'
+1438774844846	Rename local variable 'test505435'
+1438775162741	Rename package 'de.heinfricke.countriesmapper.creator'
+1438775314313	Move compilation unit
+1438776112287	Rename type 'Creator'
+1438776897105	Rename local variable 'test4'
+1438776924303	Rename local variable 'test19'
+1438777099376	Rename local variable 'collectionOfThreeLetters'
+1438777458399	Rename local variable 'mainDirectory'
+1438778160195	Delete element
+1438778226745	Rename local variable 'test20'
+1438778248699	Delete element

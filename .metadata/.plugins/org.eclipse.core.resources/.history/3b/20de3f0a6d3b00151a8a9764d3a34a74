@@ -1,0 +1,31 @@
+package de.heinfricke.countriesmapper.fileoperations;
+
+import java.util.List;
+import java.util.Map;
+
+import de.heinfricke.countriesmapper.country.Country;
+
+public class FileMaker {
+
+	public void createDirectories(Map<String, List<Country>> organisedCountriesMap, String userPath)
+	{
+		Map<String, List<Country>> organisedCountries = organisedCountriesMap;
+		String path = userPath;
+		
+		for(Map.Entry<String, List<Country>> set : organisedCountries.entrySet())
+		{
+			String mainDirectory = set.getKey();
+			List<Country> test20 = set.getValue();
+			for(Country countries : test20)
+			{
+				System.out.println(countries.getName());
+			}
+		}
+		
+		
+		
+		
+		
+	}
+	
+}

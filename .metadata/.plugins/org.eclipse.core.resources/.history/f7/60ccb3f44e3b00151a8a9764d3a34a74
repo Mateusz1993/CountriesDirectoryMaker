@@ -1,0 +1,54 @@
+package de.heinfricke.countriesmapper.creator;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
+
+import de.heinfricke.countriesmapper.country.Country;
+
+public class GroupsPreparer {
+	
+	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
+	
+	Hashtable<String, Country> test(TreeSet<Country> test)
+	{
+			
+		Hashtable<String, Country> x = new Hashtable<String, Country>();
+		TreeSet<Country> y = test;
+
+		int counter = 0;
+		int counterForHashtable = 0;
+		
+		List<String> collectionOfThreeLetters = new ArrayList<String>();
+		String threeLetters = "";
+		Map<String, Integer> justLettersOfAlphabet = new HashMap<String, Integer>();
+		
+		//This 'for' takes all letters of alphabet to 'HashMap' and divide them into smaller parts to 'ArrayList'.
+		for(char alphabet = 'A'; alphabet <= 'Z'; alphabet++)
+		{		
+			threeLetters += alphabet;
+			counter++;
+			String oneLetter = "";
+			oneLetter += alphabet;
+			Integer position = new Integer(counterForHashtable);
+			justLettersOfAlphabet.put(oneLetter, position);
+
+			if(counter % NUMBER_OF_GROUPED_CHARACTERS == 0 || alphabet == 'Z')
+			{
+				collectionOfThreeLetters.add(threeLetters);
+				threeLetters = "";
+				counterForHashtable++;
+			}
+		}
+		
+		
+		
+		
+		
+		return x;
+	}
+	
+}
