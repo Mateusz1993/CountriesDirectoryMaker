@@ -49,3 +49,6 @@
 1438846825276	Rename method 'userDecisionAboutDirectories'
 1438846839032	Rename local variable 'userDecision'
 1438847128523	Rename type 'whatWantUserDoWithHisDirectories'
+1438847835782	Rename local variable 'collectionOfThreeLetters'
+1438847879783	Rename local variable 'threeLettersGroupsDirectoriesToCreate'
+1438848263203	Rename local variable 'threeLettersGroupsDirectoriesToReplace'

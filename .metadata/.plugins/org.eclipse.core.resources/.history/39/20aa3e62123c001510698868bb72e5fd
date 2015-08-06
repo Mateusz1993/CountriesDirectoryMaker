@@ -41,6 +41,35 @@ public class FileDeleter {
 				deleteDirectory(tempfile);
 			}
 		}
+		
+		/*
+		
+		for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
+		{
+			threeLettersGroupsDirectoriesToReplace.add(set.getKey());
+		}
+		
+		if(userDecizion == WhatWantUserToDoWithHisDirectories.DELETE)
+		{
+			for(String directoryToDelete : GroupsPreparer.returnThreeLettersGroups())
+			{
+				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
+				File tempfile = new File(pathOfGorupDirectory);
+				
+				deleteDirectory(tempfile);
+			}
+		}
+		else if (userDecizion == WhatWantUserToDoWithHisDirectories.REPLACE)
+		{
+			for(String directoryToDelete : threeLettersGroupsDirectoriesToReplace)
+			{
+				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
+				File tempfile = new File(pathOfGorupDirectory);
+				
+				deleteDirectory(tempfile);
+			}
+		}
+		*/
 	}
 
 	

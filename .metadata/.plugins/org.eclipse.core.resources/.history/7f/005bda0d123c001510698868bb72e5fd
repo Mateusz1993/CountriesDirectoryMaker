@@ -17,23 +17,16 @@ public class FileDeleter {
 		WhatWantUserToDoWithHisDirectories userDecizion = UserInputs.userDecizionAboutDirectories();
 		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
 		String path = userPath;
-		List<String> listOfThreeLettersGroups = new ArrayList<String>();
-				
+		List<String> threeLettersGroupsDirectoriesToReplace = new ArrayList<String>();
+		
+		for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
+		{
+			threeLettersGroupsDirectoriesToReplace.add(set.getKey());
+		}
+		
 		if(userDecizion == WhatWantUserToDoWithHisDirectories.DELETE)
 		{
-			listOfThreeLettersGroups = GroupsPreparer.returnThreeLettersGroups();
-		}
-		else if (userDecizion == WhatWantUserToDoWithHisDirectories.REPLACE)
-		{
-			for(Map.Entry<String, List<Country>> set : organizedCountries.entrySet())
-			{
-				listOfThreeLettersGroups.add(set.getKey());
-			}
-		}
-
-		if((userDecizion == WhatWantUserToDoWithHisDirectories.DELETE) || (userDecizion == WhatWantUserToDoWithHisDirectories.REPLACE))
-		{
-			for(String directoryToDelete : listOfThreeLettersGroups)
+			for(String directoryToDelete : GroupsPreparer.returnThreeLettersGroups())
 			{
 				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
 				File tempfile = new File(pathOfGorupDirectory);
@@ -41,6 +34,17 @@ public class FileDeleter {
 				deleteDirectory(tempfile);
 			}
 		}
+		else if (userDecizion == WhatWantUserToDoWithHisDirectories.REPLACE)
+		{
+			for(String directoryToDelete : threeLettersGroupsDirectoriesToReplace)
+			{
+				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
+				File tempfile = new File(pathOfGorupDirectory);
+				
+				deleteDirectory(tempfile);
+			}
+		}
+		
 	}
 
 	
