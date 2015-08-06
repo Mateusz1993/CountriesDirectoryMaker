@@ -44,3 +44,7 @@
 1438780593201	Rename local variable 'countriesOrganisedInGroups'
 1438844612398	Rename method 'returnLettersOfAlphabet'
 1438845068243	Delete element
+1438845396973	Rename method 'decisionAboutDeletingDirectories'
+1438846818076	Rename local variable 'userDecision'
+1438846825276	Rename method 'userDecisionAboutDirectories'
+1438846839032	Rename local variable 'userDecision'

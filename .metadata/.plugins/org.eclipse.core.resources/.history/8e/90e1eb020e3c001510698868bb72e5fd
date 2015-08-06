@@ -8,13 +8,12 @@ import java.util.Map;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupsPreparer;
 import de.heinfricke.countriesmapper.utils.UserInputs;
-import de.heinfricke.countriesmapper.utils.UserInputs.whatWantUserDoWithHisDirectories;
 
 public class FileDeleter {
 	
 	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
 	{
-		whatWantUserDoWithHisDirectories userDecizion = UserInputs.userDecizionAboutDirectories();
+		boolean userDecision = UserInputs.userDecisionAboutDirectories();
 		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
 		String path = userPath;
 		List<String> collectionOfThreeLetters = new ArrayList<String>();
@@ -24,7 +23,7 @@ public class FileDeleter {
 			collectionOfThreeLetters.add(set.getKey());
 		}
 		
-		if(userDecizion == whatWantUserDoWithHisDirectories.DELETE)
+		if(userDecision == true)
 		{
 			for(String directoryToDelete : GroupsPreparer.returnThreeLettersGroups())
 			{
@@ -34,7 +33,7 @@ public class FileDeleter {
 				deleteDirectory(tempfile);
 			}
 		}
-		else if (userDecizion == whatWantUserDoWithHisDirectories.REPLACE)
+		else
 		{
 			for(String directoryToDelete : collectionOfThreeLetters)
 			{

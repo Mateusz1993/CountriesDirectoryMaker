@@ -4,19 +4,18 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static whatWantUserDoWithHisDirectories userDecizionAboutDirectories()
+	public static boolean userDecisionAboutDirectories()
 	{
 		Scanner scanner = null;
-		String userDecizion = "n";
+		String userDecision = "n";
 		scanner = new Scanner (System.in);
 		try
 		{
-			System.out.println("What do you want to do with your directories?");
+			System.out.print("What do you want to do with your directories?");
 			System.out.println("D - Delete all my group directories.");
 			System.out.println("R - Repleace only these group directories which have new contents.");
 			System.out.println("A - Add new contents to my old directories.");
-			System.out.print("Decizion [D/R/A]: ");
-			userDecizion = scanner.next();
+			userDecision = scanner.next();
 			System.out.println();
 		}
 		finally
@@ -27,22 +26,22 @@ public class UserInputs {
 			}
 		}
 		
-		if(userDecizion.equals("D") || userDecizion.equals("d"))
+		if(userDecision.equals("D") || userDecision.equals("d"))
 		{
-			return whatWantUserDoWithHisDirectories.DELETE;
+			return true;
 		}
-		else if(userDecizion.equals("R") || userDecizion.equals("r"))
+		else if(userDecision.equals("R") || userDecision.equals("r"))
 		{
-			return whatWantUserDoWithHisDirectories.REPLACE;
+			return false;
 		}
 		else
 		{
-			return whatWantUserDoWithHisDirectories.ADD_NEW_CONTENTS;
+			return false;
 		}
 	}
 	
 	
-	public enum whatWantUserDoWithHisDirectories
+	public static enum userDecisionAboutDirectories
 	{
 		DELETE, REPLACE, ADD_NEW_CONTENTS;
 	}

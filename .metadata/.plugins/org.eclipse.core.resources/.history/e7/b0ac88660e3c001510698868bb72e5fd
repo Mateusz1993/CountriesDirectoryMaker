@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static whatWantUserDoWithHisDirectories userDecizionAboutDirectories()
+	public static whatWantUserDoWithHisDirectories userDecisionAboutDirectories()
 	{
 		Scanner scanner = null;
 		String userDecizion = "n";

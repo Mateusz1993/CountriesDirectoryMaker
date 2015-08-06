@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static whatWantUserDoWithHisDirectories userDecizionAboutDirectories()
+	public static whatWantUserDoWithHisDirectories userDecisionAboutDirectories()
 	{
 		Scanner scanner = null;
-		String userDecizion = "n";
+		String userDecision = "n";
 		scanner = new Scanner (System.in);
 		try
 		{
@@ -16,7 +16,7 @@ public class UserInputs {
 			System.out.println("R - Repleace only these group directories which have new contents.");
 			System.out.println("A - Add new contents to my old directories.");
 			System.out.print("Decizion [D/R/A]: ");
-			userDecizion = scanner.next();
+			userDecision = scanner.next();
 			System.out.println();
 		}
 		finally
@@ -27,11 +27,11 @@ public class UserInputs {
 			}
 		}
 		
-		if(userDecizion.equals("D") || userDecizion.equals("d"))
+		if(userDecision.equals("D") || userDecision.equals("d"))
 		{
 			return whatWantUserDoWithHisDirectories.DELETE;
 		}
-		else if(userDecizion.equals("R") || userDecizion.equals("r"))
+		else if(userDecision.equals("R") || userDecision.equals("r"))
 		{
 			return whatWantUserDoWithHisDirectories.REPLACE;
 		}

@@ -1,4 +1,5 @@
 package de.heinfricke.countriesmapper.fileoperations;
+import de.heinfricke.countriesmapper.utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class FileDeleter {
 	
 	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath)
 	{
-		whatWantUserDoWithHisDirectories userDecizion = UserInputs.userDecizionAboutDirectories();
+		whatWantUserDoWithHisDirectories userDecision = UserInputs.userDecisionAboutDirectories();
 		Map<String, List<Country>> organizedCountries = organizedCountriesMap;
 		String path = userPath;
 		List<String> collectionOfThreeLetters = new ArrayList<String>();
@@ -24,7 +25,7 @@ public class FileDeleter {
 			collectionOfThreeLetters.add(set.getKey());
 		}
 		
-		if(userDecizion == whatWantUserDoWithHisDirectories.DELETE)
+		if(userDecision == whatWantUserDoWithHisDirectories.DELETE)
 		{
 			for(String directoryToDelete : GroupsPreparer.returnThreeLettersGroups())
 			{
@@ -34,7 +35,7 @@ public class FileDeleter {
 				deleteDirectory(tempfile);
 			}
 		}
-		else if (userDecizion == whatWantUserDoWithHisDirectories.REPLACE)
+		else if (userDecision == whatWantUserDoWithHisDirectories.REPLACE)
 		{
 			for(String directoryToDelete : collectionOfThreeLetters)
 			{
