@@ -2,16 +2,29 @@ package de.heinfricke.countriesmapper.utils;
 
 import java.util.Scanner;
 
+/**
+ * This class contains everything what requires user's interaction.
+ * 
+ * @author Mateusz
+ *
+ */
 public class UserInputs {
 
-    public static WhatWantUserToDoWithHisDirectories userDecisionAboutDirectories() {
+    /**
+     * In this method user makes decision about his directories. He can delete
+     * all his group directories, replace only these which have new contents or
+     * add new contents to existing directories.
+     * 
+     * @return User decision about future of his directories.
+     */
+    public static DirectoriesActivity userDecisionAboutDirectories() {
         Scanner scanner = null;
         String userDecision = "A";
         scanner = new Scanner(System.in);
         try {
             System.out.println("\nWhat do you want to do with your directories?");
             System.out.println("D - Delete all my group directories.");
-            System.out.println("R - Repleace only these group directories which have new contents.");
+            System.out.println("R - Replace only these group directories which have new contents.");
             System.out.println("A - Add new contents to my old directories.");
             System.out.print("Decision [D/R/A]: ");
             userDecision = scanner.next();
@@ -23,15 +36,15 @@ public class UserInputs {
         }
 
         if (userDecision.equalsIgnoreCase("D")) {
-            return WhatWantUserToDoWithHisDirectories.DELETE;
+            return DirectoriesActivity.DELETE;
         } else if (userDecision.equalsIgnoreCase("R")) {
-            return WhatWantUserToDoWithHisDirectories.REPLACE;
+            return DirectoriesActivity.REPLACE;
         } else {
-            return WhatWantUserToDoWithHisDirectories.ADD_NEW_CONTENTS;
+            return DirectoriesActivity.ADD_NEW_CONTENTS;
         }
     }
 
-    public enum WhatWantUserToDoWithHisDirectories {
+    public enum DirectoriesActivity {
         DELETE, REPLACE, ADD_NEW_CONTENTS;
     }
 }

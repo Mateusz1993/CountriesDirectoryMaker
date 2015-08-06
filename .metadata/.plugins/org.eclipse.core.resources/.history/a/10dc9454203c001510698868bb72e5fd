@@ -1,0 +1,15 @@
+package de.heinfricke.countriesmapper.utils;
+
+/**
+ * @author mateusz
+ *
+ */
+public class StringUtils {
+    /**
+     * @param country
+     * @return
+     */
+    public static String getFirstLetter(String country) {
+        return country.substring(0, 1);
+    }
+}

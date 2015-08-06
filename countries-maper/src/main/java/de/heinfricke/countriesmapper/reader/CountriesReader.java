@@ -9,7 +9,24 @@ import java.util.Set;
 import java.util.TreeSet;
 import de.heinfricke.countriesmapper.country.*;
 
+/**
+ * This class contains methods which are used to read files's contents.
+ * 
+ * @author mateusz
+ *
+ */
 public class CountriesReader {
+    /**
+     * This method reads list of countries from file, makes new 'Country'
+     * objects where each one contains name of country and returns these objects
+     * as Set.
+     * 
+     * @param userPath
+     *            Path to file with list of countries.
+     * @return Set of 'Country' objects.
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public Set<Country> readCountries(String userPath) throws FileNotFoundException, IOException {
         String path = userPath;
         System.out.println("\nYour path to .txt file is: " + path);

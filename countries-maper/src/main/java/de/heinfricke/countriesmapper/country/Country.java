@@ -1,5 +1,12 @@
 package de.heinfricke.countriesmapper.country;
 
+/**
+ * Country are objects which contains information about countries. For now it
+ * contains only countries's names.
+ * 
+ * @author mateusz
+ *
+ */
 public class Country implements Comparable<Country> {
     String name;
 
