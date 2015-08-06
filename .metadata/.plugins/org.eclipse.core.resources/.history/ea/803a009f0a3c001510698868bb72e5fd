@@ -69,7 +69,7 @@ public class GroupsPreparer {
 		int numberOfAddedCountries = 0;
 		String nameOfFirstCountry = namesOfCountries.iterator().next().getName();
 		String numberOfGroupPositionOfFirstCountry = StringUtils.getFirstLetter(nameOfFirstCountry);
-		int counter = justLettersOfAlphabet.get(numberOfGroupPositionOfFirstCountry.charAt(0));
+		int counter = justLettersOfAlphabet.get(numberOfGroupPositionOfFirstCountry);
 		
 		for(Country country : namesOfCountries)
 		{

@@ -1,0 +1,13 @@
+import static org.junit.Assert.*;
+import de.heinfricke.countriesmapper.*;
+import org.junit.Test;
+
+public class MyFirstTest {
+
+	@Test
+	public void test() {
+		String str = "Juint is working fine";
+		assertEquals("Juint is working fine", str);
+	}
+
+}

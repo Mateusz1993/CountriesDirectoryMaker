@@ -42,3 +42,5 @@
 1438780045677	Rename local variable 'organisedCountriesMap'
 1438780056191	Rename local variable 'organisedCountries'
 1438780593201	Rename local variable 'countriesOrganisedInGroups'
+1438844612398	Rename method 'returnLettersOfAlphabet'
+1438845068243	Delete element

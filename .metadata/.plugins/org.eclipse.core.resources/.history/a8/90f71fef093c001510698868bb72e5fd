@@ -69,7 +69,7 @@ public class GroupsPreparer {
 		int numberOfAddedCountries = 0;
 		String nameOfFirstCountry = namesOfCountries.iterator().next().getName();
 		String numberOfGroupPositionOfFirstCountry = StringUtils.getFirstLetter(nameOfFirstCountry);
-		int counter = justLettersOfAlphabet.get(numberOfGroupPositionOfFirstCountry.charAt(0));
+		int counter = justLettersOfAlphabet.get(numberOfGroupPositionOfFirstCountry);
 		
 		for(Country country : namesOfCountries)
 		{
@@ -92,7 +92,7 @@ public class GroupsPreparer {
 			else
 			{
 				String firstLetterOfLastCountry = StringUtils.getFirstLetter(listOfCountriesForEachGroup.get(listOfCountriesForEachGroup.size() - 1).getName());
-				int firstLetterOfLastCountryPosition = justLettersOfAlphabet.get(firstLetterOfLastCountry.charAt(0));	
+				int firstLetterOfLastCountryPosition = justLettersOfAlphabet.get(firstLetterOfLastCountry);	
 				countriesOrganizedInGroups.put(threeLettersGroups.get(firstLetterOfLastCountryPosition), listOfCountriesForEachGroup);
 				listOfCountriesForEachGroup = new ArrayList<Country>();
 				listOfCountriesForEachGroup.add(newCountry);
