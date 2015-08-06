@@ -11,9 +11,6 @@ public class CountriesDirectoryMake {
     private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
     public static void main(String[] args) {
-
-        System.out.println("TEST. (Czy pojawia się to w branchu, czy także w master?)");
-        
         if (args.length < 2) {
             System.out.println("You must to write minimum two arguments.");
         } else {
