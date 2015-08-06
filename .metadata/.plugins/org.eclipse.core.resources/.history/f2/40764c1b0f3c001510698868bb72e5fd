@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UserInputs {
 
-	public static WhatWantUserToDoWithHisDirectories userDecizionAboutDirectories()
+	public static whatWantUserDoWithHisDirectories userDecizionAboutDirectories()
 	{
 		Scanner scanner = null;
 		String userDecizion = "n";
@@ -29,20 +29,20 @@ public class UserInputs {
 		
 		if(userDecizion.equals("D") || userDecizion.equals("d"))
 		{
-			return WhatWantUserToDoWithHisDirectories.DELETE;
+			return whatWantUserDoWithHisDirectories.DELETE;
 		}
 		else if(userDecizion.equals("R") || userDecizion.equals("r"))
 		{
-			return WhatWantUserToDoWithHisDirectories.REPLACE;
+			return whatWantUserDoWithHisDirectories.REPLACE;
 		}
 		else
 		{
-			return WhatWantUserToDoWithHisDirectories.ADD_NEW_CONTENTS;
+			return whatWantUserDoWithHisDirectories.ADD_NEW_CONTENTS;
 		}
 	}
 	
 	
-	public enum WhatWantUserToDoWithHisDirectories
+	public enum whatWantUserDoWithHisDirectories
 	{
 		DELETE, REPLACE, ADD_NEW_CONTENTS;
 	}

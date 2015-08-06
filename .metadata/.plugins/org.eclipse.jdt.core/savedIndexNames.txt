@@ -73,4 +73,3 @@ INDEX VERSION 1.127+/home/mateusz/Dokumenty/GIT/Countries/.metadata/.plugins/org
 2428145792.index
 236551093.index
 1331694850.index
-950715972.index
