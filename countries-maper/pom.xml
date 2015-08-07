@@ -5,7 +5,8 @@
 	<artifactId>countries-mapper</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CountriesMapper</name>
-
+    <packaging>jar</packaging>
+    
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -63,7 +64,7 @@
 			<plugin>
 			    <artifactId>appassembler-maven-plugin</artifactId>
                 <groupId>org.codehaus.mojo</groupId>
-                <version>1.3</version>
+                <version>1.7</version>
                 <configuration>
                     <programs>
                         <program>
@@ -72,6 +73,14 @@
                         </program>
                     </programs>    
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
