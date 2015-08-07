@@ -6,25 +6,11 @@ import java.util.Map;
 
 import de.heinfricke.countriesmapper.country.Country;
 
-/**
- * This class contains methods which are used to make new files and directories.
- * 
- * @author mateusz
- *
- */
-public class FileMaker implements MakerInterface {
+public class FTPFileMaker implements MakerInterface {
 
-    /**
-     * This method creates new 'groups' and 'country names' directories.
-     * 
-     * @param organizedCountriesMap
-     *            This method takes as parameter Map where keys are names of
-     *            letter's group and values are Lists of Country objects.
-     * @param userPath
-     *            Second parameter is path to directory where new directories
-     *            will be created.
-     */
+    
     public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
+    
         Map<String, List<Country>> organizedCountries = organizedCountriesMap;
         String path = userPath;
 
@@ -42,4 +28,5 @@ public class FileMaker implements MakerInterface {
             }
         }
     }
+    
 }

@@ -16,7 +16,7 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
  * @author mateusz
  *
  */
-public class FileDeleter {
+public class FileDeleter implements DeleterInterface {
 
     /**
      * This method is used to delete directories. In body of this method we run
