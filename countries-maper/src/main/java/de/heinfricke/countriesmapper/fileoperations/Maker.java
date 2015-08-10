@@ -11,7 +11,7 @@ import de.heinfricke.countriesmapper.country.Country;
  * @author mateusz
  *
  */
-public interface MakerInterface {
+public interface Maker {
     /**
      * This method creates new 'groups' and 'country names' directories.
      * 

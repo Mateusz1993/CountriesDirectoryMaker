@@ -11,7 +11,7 @@ import de.heinfricke.countriesmapper.country.Country;
  * @author mateusz
  *
  */
-public interface DeleterInterface {
+public interface Deleter {
     /**
      * This method is used to delete directories. In body of this method we run
      * other method which return user's decision about future of directories.

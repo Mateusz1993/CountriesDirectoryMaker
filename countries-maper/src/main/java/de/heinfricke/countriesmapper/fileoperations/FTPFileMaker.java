@@ -19,14 +19,14 @@ import org.apache.commons.net.ftp.FTPClient;
  * @author mateusz
  *
  */
-public class FTPFileMaker implements MakerInterface {
+public class FTPFileMaker implements Maker {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
 	/* (non-Javadoc)
 	 * @see de.heinfricke.countriesmapper.fileoperations.MakerInterface#createDirectories(java.util.Map, java.lang.String)
 	 */
 	public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
-		FTPClient ftpClient = FTPConnect.ftpConnection();
+		FTPClient ftpClient = FTPConnect.connect();
 		try {
 			Map<String, List<Country>> organizedCountries = organizedCountriesMap;
 			String path = userPath;

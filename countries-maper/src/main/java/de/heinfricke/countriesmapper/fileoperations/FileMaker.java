@@ -12,7 +12,7 @@ import de.heinfricke.countriesmapper.country.Country;
  * @author mateusz
  *
  */
-public class FileMaker implements MakerInterface {
+public class FileMaker implements Maker {
 
 	/* (non-Javadoc)
 	 * @see de.heinfricke.countriesmapper.fileoperations.MakerInterface#createDirectories(java.util.Map, java.lang.String)

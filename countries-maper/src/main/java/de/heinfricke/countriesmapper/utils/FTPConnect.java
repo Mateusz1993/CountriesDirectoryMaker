@@ -61,7 +61,7 @@ public class FTPConnect {
 	 * 
 	 * @return This method return FTPClient object.
 	 */
-	public static FTPClient ftpConnection() {
+	public static FTPClient connect() {
 		FTPClient ftpClient = new FTPClient();
 		try {
 			ftpClient.connect(host, port);

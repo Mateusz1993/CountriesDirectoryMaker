@@ -24,14 +24,14 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
  * @author mateusz
  *
  */
-public class FTPFileDeleter implements DeleterInterface {
+public class FTPFileDeleter implements Deleter {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
 	/* (non-Javadoc)
 	 * @see de.heinfricke.countriesmapper.fileoperations.DeleterInterface#deleteDirectories(java.util.Map, java.lang.String)
 	 */
 	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
-		FTPClient ftpClient = FTPConnect.ftpConnection();
+		FTPClient ftpClient = FTPConnect.connect();
 		try {
 			Map<String, List<Country>> organizedCountries = organizedCountriesMap;
 			String path = userPath;

@@ -16,7 +16,7 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
  * @author mateusz
  *
  */
-public class FileDeleter implements DeleterInterface {
+public class FileDeleter implements Deleter {
 
 	/* (non-Javadoc)
      * @see de.heinfricke.countriesmapper.fileoperations.DeleterInterface#deleteDirectories(java.util.Map, java.lang.String)
