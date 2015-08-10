@@ -24,7 +24,8 @@ public class CountriesDirectoryMake {
                 .addOption("f", "ftp", false, "Make directories in your FTP Server.")
                 .addOption("i", "inputFile", true, "Path to your input file.")
                 .addOption("o", "outputDir", true, "Path to your output directory.")
-                .addOption("h", "host", true, "FTP host.").addOption("p", "port", true, "FTP port.")
+                .addOption("h", "host", true, "FTP host.")
+                .addOption("p", "port", true, "FTP port.")
                 .addOption("u", "ftpUser", true, "FTP user name.")
                 .addOption("pw", "ftpPassword", true, "FTP user password.")
                 .addOption("fp", "ftpPath", true, "Path on FTP.");
@@ -80,6 +81,20 @@ public class CountriesDirectoryMake {
                     FileMaker fileMaker = new FileMaker();
                     fileMaker.createDirectories(groupsOfCountries, cmd.getOptionValue("o"));
                 }
+                else if (cmd.hasOption("f"))
+                {
+                	
+
+                	//Delete old directories on FTP Server.
+                	FTPFileDeleter ftpFileDeleter = new FTPFileDeleter(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"), cmd.getOptionValue("pw"));
+                	ftpFileDeleter.deleteDirectories(groupsOfCountries, cmd.getOptionValue("fp"));
+                	
+                	
+                	//Make new directories on FTP Server.
+                	FTPFileMaker ftpFileMaker = new FTPFileMaker(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"), cmd.getOptionValue("pw"));
+                	ftpFileMaker.createDirectories(groupsOfCountries, cmd.getOptionValue("fp"));
+                	
+                	}
             } catch (FileNotFoundException e) {
                 System.out.println("Provided file path is wrong. Please provide correct file path.");
                 LOGGER.log(Level.FINE, "Provided file path is wrong. Please provide correct file path.", e);
