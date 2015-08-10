@@ -151,7 +151,7 @@ public class CountriesDirectoryMake {
 	/**
 	 * Enum to chose what program have to do.
 	 * 
-	 * @author mateusz
+	 * @author Mateusz
 	 *
 	 */
 	public enum ProgramTask {
