@@ -21,18 +21,18 @@ public class CountriesDirectoryMake {
 			cmd = readFromCommandLine(args, options);
 			ProgramTask programTask = returnProgramTask(cmd);
 			handleHelp(options, programTask);
-			
-			CountriesReader countriesReader = new CountriesReader();
+
 			// Read all countries to "Set".
+			CountriesReader countriesReader = new CountriesReader();
 			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"));
 
 			// Prepare groups of countries (for example: ABC = (Albania,
 			// Czech Republic), PQR = (Poland, Qatar)).
-			GroupsPreparer groupsPreparer = new GroupsPreparer();
-			Map<String, List<Country>> groupsOfCountries = groupsPreparer.organizeCountriesInGroups(sortedCountries);
+			List<GroupOfCountries> listOfGroupedCountriesClasses = GroupOfCountries
+					.organizeCountriesInGroups(sortedCountries);
 
 			// Delete and create directories.
-			executeTask(cmd, options, programTask, groupsOfCountries);
+			executeTask(cmd, options, programTask, listOfGroupedCountriesClasses);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Provided file path is wrong. Please provide correct file path.");
@@ -58,29 +58,27 @@ public class CountriesDirectoryMake {
 	 * @param programTask
 	 *            As third parameter it takes program task (decision about what
 	 *            program have to do).
-	 * @param groupsOfCountries
-	 *            As fourth parameter it takes map of Country objects organized
-	 *            in groups. Keys are names of groups and values are Lists of
-	 *            Country objects.
-	 * @throws IOException 
+	 * @param listOfGroupedCountriesClasses
+	 *            As fourth parameter it takes list of GroupOfCountries objects.
+	 * @throws IOException
 	 */
 	private static void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
-			Map<String, List<Country>> groupsOfCountries) throws IOException {
+			List<GroupOfCountries> listOfGroupedCountriesClasses) throws IOException {
 		if (programTask == ProgramTask.ERROR_INFO) {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
 			Deleter deleter = new FileDeleter();
 			Maker maker = new FileMaker();
 			if (programTask == ProgramTask.WORK_ON_FTP) {
-				//Make connection with FTP Server.
+				// Make connection with FTP Server.
 				FTPConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
 				maker = new FTPFileMaker();
 				deleter = new FTPFileDeleter();
 			}
-			deleter.deleteDirectories(groupsOfCountries, cmd.getOptionValue("o"));
-			maker.createDirectories(groupsOfCountries, cmd.getOptionValue("o"));
-			if(programTask == ProgramTask.WORK_ON_FTP){
+			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+			maker.createDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+			if (programTask == ProgramTask.WORK_ON_FTP) {
 				FTPConnection.makeDisconnection();
 			}
 		}
@@ -143,8 +141,8 @@ public class CountriesDirectoryMake {
 	private static void handleHelp(Options options, ProgramTask programTask) {
 		if (programTask == ProgramTask.SHOW_HELP) {
 			System.out.println("\nTo make directories on your local system please use: ");
-			System.out
-					.println("./CountriesDirectoryMake -l -i path/to/your/local/file.txt -o /path/to/your/input/directory");
+			System.out.println(
+					"./CountriesDirectoryMake -l -i path/to/your/local/file.txt -o /path/to/your/input/directory");
 			System.out.println("\nTo make directories on your FTP server please use: ");
 			System.out.println(
 					"./CountriesDirectoryMake -f -i path/to/your/input/file.txt -h host -p port -u ftpUserName -pw FTPUserPasswrd -o /FTP/path \n");

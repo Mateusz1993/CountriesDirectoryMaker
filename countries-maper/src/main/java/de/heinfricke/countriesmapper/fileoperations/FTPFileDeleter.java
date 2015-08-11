@@ -4,15 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.net.ftp.FTPFile;
 
 import de.heinfricke.countriesmapper.CountriesDirectoryMake;
-import de.heinfricke.countriesmapper.country.Country;
-import de.heinfricke.countriesmapper.preparer.GroupsPreparer;
+import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
@@ -26,19 +24,23 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 public class FTPFileDeleter implements Deleter {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
-	/* (non-Javadoc)
-	 * @see de.heinfricke.countriesmapper.fileoperations.DeleterInterface#deleteDirectories(java.util.Map, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Deleter#deleteDirectories(
+	 * java.util.List, java.lang.String)
 	 */
-	public void deleteDirectories(Map<String, List<Country>> organizedCountries, String path) {
+	public void deleteDirectories(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		try {
 			DirectoriesActivity userDecision = UserInputs.userDecisionAboutDirectories();
 			List<String> listOfThreeLettersGroups = new ArrayList<String>();
 
 			if (userDecision == DirectoriesActivity.DELETE) {
-				listOfThreeLettersGroups = GroupsPreparer.returnLettersGroups();
+				listOfThreeLettersGroups = GroupOfCountries.returnLettersGroups();
 			} else if (userDecision == DirectoriesActivity.REPLACE) {
-				for (Map.Entry<String, List<Country>> set : organizedCountries.entrySet()) {
-					listOfThreeLettersGroups.add(set.getKey());
+				for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
+					listOfThreeLettersGroups.add(groupedCountries.getName());
 				}
 			}
 
@@ -59,4 +61,5 @@ public class FTPFileDeleter implements Deleter {
 			System.exit(0);
 		}
 	}
+
 }

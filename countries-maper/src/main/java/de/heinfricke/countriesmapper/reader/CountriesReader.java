@@ -16,41 +16,40 @@ import de.heinfricke.countriesmapper.country.*;
  *
  */
 public class CountriesReader {
-    /**
-     * This method reads list of countries from file, makes new 'Country'
-     * objects where each one contains name of country and returns these objects
-     * as Set.
-     * 
-     * @param path
-     *            Path to file with list of countries.
-     * @return Set of 'Country' objects.
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    public Set<Country> readCountries(String path) throws FileNotFoundException, IOException {
-        System.out.println("\nYour path to .txt file is: " + path);
+	/**
+	 * This method reads list of countries from file, makes new 'Country'
+	 * objects where each one contains name of country and returns these objects
+	 * as Set.
+	 * 
+	 * @param path
+	 *            Path to file with list of countries.
+	 * @return Set of 'Country' objects.
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public Set<Country> readCountries(String path) throws FileNotFoundException, IOException {
+		System.out.println("\nYour path to .txt file is: " + path);
 
-        Set<Country> namesOfCountries = new TreeSet<Country>();
+		Set<Country> namesOfCountries = new TreeSet<Country>();
 
-        File file = new File(path);
-        String line;
+		File file = new File(path);
+		String line;
 
-        BufferedReader bufferedReader = null;
-        try {
-            FileReader fileReader = new FileReader(file);
-            bufferedReader = new BufferedReader(fileReader);
-            while ((line = bufferedReader.readLine()) != null) {
-                if (!line.isEmpty()) {
-                    Country test = new Country(line);
-                    namesOfCountries.add(test);
-                }
-            }
-        } 
-        finally {
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
-        }
-        return namesOfCountries;
-    }
+		BufferedReader bufferedReader = null;
+		try {
+			FileReader fileReader = new FileReader(file);
+			bufferedReader = new BufferedReader(fileReader);
+			while ((line = bufferedReader.readLine()) != null) {
+				if (!line.isEmpty()) {
+					Country test = new Country(line);
+					namesOfCountries.add(test);
+				}
+			}
+		} finally {
+			if (bufferedReader != null) {
+				bufferedReader.close();
+			}
+		}
+		return namesOfCountries;
+	}
 }

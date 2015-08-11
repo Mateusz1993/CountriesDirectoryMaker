@@ -3,12 +3,12 @@ package de.heinfricke.countriesmapper.fileoperations;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.heinfricke.countriesmapper.CountriesDirectoryMake;
 import de.heinfricke.countriesmapper.country.Country;
+import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
 
 /**
@@ -20,18 +20,19 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
 public class FTPFileMaker implements Maker {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
-	/* (non-Javadoc)
-	 * @see de.heinfricke.countriesmapper.fileoperations.MakerInterface#createDirectories(java.util.Map, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Maker#createDirectories(java
+	 * .util.List, java.lang.String)
 	 */
-	public void createDirectories(Map<String, List<Country>> organizedCountries, String path) {
+	public void createDirectories(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		try {
-			for (Map.Entry<String, List<Country>> set : organizedCountries.entrySet()) {
-				String groupDirectory = set.getKey();
-				List<Country> listOfCountriesInEachGroup = set.getValue();
-
-				String pathToGroupFolder = (path + File.separator + groupDirectory);
+			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
+				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
 				FTPConnection.makeDirectory(pathToGroupFolder);
-				for (Country countries : listOfCountriesInEachGroup) {
+				for (Country countries : groupedCountries.getCountriesList()) {
 					String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
 					FTPConnection.makeDirectory(pathToSingleFile);
 				}
