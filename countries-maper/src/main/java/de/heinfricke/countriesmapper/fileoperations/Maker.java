@@ -15,12 +15,12 @@ public interface Maker {
     /**
      * This method creates new 'groups' and 'country names' directories.
      * 
-     * @param organizedCountriesMap
+     * @param organizedCountries
      *            This method takes as parameter Map where keys are names of
      *            letter's group and values are Lists of Country objects.
-     * @param userPath
+     * @param path
      *            Second parameter is path to directory where new directories
      *            will be created.
      */
-    public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath);
+    public void createDirectories(Map<String, List<Country>> organizedCountries, String path);
 }

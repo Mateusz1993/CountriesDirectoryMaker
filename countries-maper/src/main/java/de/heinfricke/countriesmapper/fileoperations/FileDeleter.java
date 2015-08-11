@@ -21,10 +21,8 @@ public class FileDeleter implements Deleter {
 	/* (non-Javadoc)
      * @see de.heinfricke.countriesmapper.fileoperations.DeleterInterface#deleteDirectories(java.util.Map, java.lang.String)
      */
-    public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
+    public void deleteDirectories(Map<String, List<Country>> organizedCountries, String path) {
         DirectoriesActivity userDecision = UserInputs.userDecisionAboutDirectories();
-        Map<String, List<Country>> organizedCountries = organizedCountriesMap;
-        String path = userPath;
         List<String> listOfThreeLettersGroups = new ArrayList<String>();
 
         if (userDecision == DirectoriesActivity.DELETE) {

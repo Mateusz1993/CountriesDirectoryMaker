@@ -8,13 +8,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 import de.heinfricke.countriesmapper.CountriesDirectoryMake;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupsPreparer;
-import de.heinfricke.countriesmapper.utils.FTPConnect;
+import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 
@@ -30,11 +29,8 @@ public class FTPFileDeleter implements Deleter {
 	/* (non-Javadoc)
 	 * @see de.heinfricke.countriesmapper.fileoperations.DeleterInterface#deleteDirectories(java.util.Map, java.lang.String)
 	 */
-	public void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
-		FTPClient ftpClient = FTPConnect.connect();
+	public void deleteDirectories(Map<String, List<Country>> organizedCountries, String path) {
 		try {
-			Map<String, List<Country>> organizedCountries = organizedCountriesMap;
-			String path = userPath;
 			DirectoriesActivity userDecision = UserInputs.userDecisionAboutDirectories();
 			List<String> listOfThreeLettersGroups = new ArrayList<String>();
 
@@ -49,17 +45,13 @@ public class FTPFileDeleter implements Deleter {
 			if ((userDecision == DirectoriesActivity.DELETE) || (userDecision == DirectoriesActivity.REPLACE)) {
 				for (String directoryToDelete : listOfThreeLettersGroups) {
 					String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
-					FTPFile[] files = ftpClient.listDirectories(pathOfGorupDirectory);
+					FTPFile[] files = FTPConnection.listDirectories(pathOfGorupDirectory);
 					for (FTPFile file : files) {
-						ftpClient.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
+						FTPConnection.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
 					}
-					ftpClient.removeDirectory(pathOfGorupDirectory);
+					FTPConnection.removeDirectory(pathOfGorupDirectory);
 				}
 			}
-
-			ftpClient.logout();
-			ftpClient.disconnect();
-
 		} catch (IOException e) {
 			System.out.println(
 					"There was a problem while connecting to server. Please make sure given host, port, username and password are correct and run application again");

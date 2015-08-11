@@ -21,14 +21,13 @@ public class CountriesReader {
      * objects where each one contains name of country and returns these objects
      * as Set.
      * 
-     * @param userPath
+     * @param path
      *            Path to file with list of countries.
      * @return Set of 'Country' objects.
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public Set<Country> readCountries(String userPath) throws FileNotFoundException, IOException {
-        String path = userPath;
+    public Set<Country> readCountries(String path) throws FileNotFoundException, IOException {
         System.out.println("\nYour path to .txt file is: " + path);
 
         Set<Country> namesOfCountries = new TreeSet<Country>();

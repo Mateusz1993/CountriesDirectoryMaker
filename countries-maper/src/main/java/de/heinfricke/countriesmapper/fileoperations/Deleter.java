@@ -21,12 +21,12 @@ public interface Deleter {
      * replace old group's directories, it will be known which directories
      * methods must to delete.
      * 
-     * @param organizedCountriesMap
+     * @param organizedCountries
      *            Map of Country objects organized in groups. Keys are names of
      *            groups and values are Lists of Country objects.
-     * @param userPath
+     * @param path
      *            Path to directory where new directories will be created so
      *            also here old ones will be deleted.
      */
-    void deleteDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath);
+    void deleteDirectories(Map<String, List<Country>> organizedCountries, String path);
 }

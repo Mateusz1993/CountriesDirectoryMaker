@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import de.heinfricke.countriesmapper.reader.*;
-import de.heinfricke.countriesmapper.utils.FTPConnect;
+import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.fileoperations.*;
 import de.heinfricke.countriesmapper.preparer.*;
@@ -20,7 +20,8 @@ public class CountriesDirectoryMake {
 			Options options = new Options();
 			cmd = readFromCommandLine(args, options);
 			ProgramTask programTask = returnProgramTask(cmd);
-
+			handleHelp(options, programTask);
+			
 			CountriesReader countriesReader = new CountriesReader();
 			// Read all countries to "Set".
 			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"));
@@ -61,25 +62,27 @@ public class CountriesDirectoryMake {
 	 *            As fourth parameter it takes map of Country objects organized
 	 *            in groups. Keys are names of groups and values are Lists of
 	 *            Country objects.
+	 * @throws IOException 
 	 */
 	private static void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
-			Map<String, List<Country>> groupsOfCountries) {
-		if (programTask == ProgramTask.SHOW_HELP) {
-			handleHelp(options);
-		} else if (programTask == ProgramTask.ERROR_INFO) {
+			Map<String, List<Country>> groupsOfCountries) throws IOException {
+		if (programTask == ProgramTask.ERROR_INFO) {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
 			Deleter deleter = new FileDeleter();
 			Maker maker = new FileMaker();
 			if (programTask == ProgramTask.WORK_ON_FTP) {
-				// Make connection with FTP Server.
-				new FTPConnect(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
+				//Make connection with FTP Server.
+				FTPConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
-				deleter = new FTPFileDeleter();
 				maker = new FTPFileMaker();
+				deleter = new FTPFileDeleter();
 			}
 			deleter.deleteDirectories(groupsOfCountries, cmd.getOptionValue("o"));
 			maker.createDirectories(groupsOfCountries, cmd.getOptionValue("o"));
+			if(programTask == ProgramTask.WORK_ON_FTP){
+				FTPConnection.makeDisconnection();
+			}
 		}
 	}
 
@@ -137,15 +140,18 @@ public class CountriesDirectoryMake {
 	 * @param options
 	 *            It takes as parameter Options object.
 	 */
-	private static void handleHelp(Options options) {
-		System.out.println("\nTo make directories on your local system please use: ");
-		System.out
-				.println("./CountriesDirectoryMake -l -i path/to/your/local/file.txt -o /path/to/your/input/directory");
-		System.out.println("\nTo make directories on your FTP server please use: ");
-		System.out.println(
-				"./CountriesDirectoryMake -f -i path/to/your/input/file.txt -h host -p port -u ftpUserName -pw FTPUserPasswrd -o /FTP/path \n");
-		HelpFormatter formater = new HelpFormatter();
-		formater.printHelp("Options:", options);
+	private static void handleHelp(Options options, ProgramTask programTask) {
+		if (programTask == ProgramTask.SHOW_HELP) {
+			System.out.println("\nTo make directories on your local system please use: ");
+			System.out
+					.println("./CountriesDirectoryMake -l -i path/to/your/local/file.txt -o /path/to/your/input/directory");
+			System.out.println("\nTo make directories on your FTP server please use: ");
+			System.out.println(
+					"./CountriesDirectoryMake -f -i path/to/your/input/file.txt -h host -p port -u ftpUserName -pw FTPUserPasswrd -o /FTP/path \n");
+			HelpFormatter formater = new HelpFormatter();
+			formater.printHelp("Options:", options);
+			System.exit(0);
+		}
 	}
 
 	/**

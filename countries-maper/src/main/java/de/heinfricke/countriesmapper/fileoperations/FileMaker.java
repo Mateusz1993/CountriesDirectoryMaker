@@ -17,10 +17,7 @@ public class FileMaker implements Maker {
 	/* (non-Javadoc)
 	 * @see de.heinfricke.countriesmapper.fileoperations.MakerInterface#createDirectories(java.util.Map, java.lang.String)
 	 */
-    public void createDirectories(Map<String, List<Country>> organizedCountriesMap, String userPath) {
-        Map<String, List<Country>> organizedCountries = organizedCountriesMap;
-        String path = userPath;
-
+    public void createDirectories(Map<String, List<Country>> organizedCountries, String path) {
         for (Map.Entry<String, List<Country>> set : organizedCountries.entrySet()) {
             String groupDirectory = set.getKey();
             List<Country> listOfCountriesInEachGroup = set.getValue();

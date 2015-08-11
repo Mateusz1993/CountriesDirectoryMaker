@@ -73,13 +73,12 @@ public class GroupsPreparer {
      * each group of letter is added to Map as key and as value they have List
      * of their Country objects.
      * 
-     * @param countriesFromUser
+     * @param namesOfCountries
      *            As parameter it takes Set of Country objects.
      * @return Map where groups of countries are keys and List of Country
      *         objects are values.
      */
-    public Map<String, List<Country>> organizeCountriesInGroups(Set<Country> countriesFromUser) {
-        Set<Country> namesOfCountries = countriesFromUser;
+    public Map<String, List<Country>> organizeCountriesInGroups(Set<Country> namesOfCountries) {
         Map<Character, Integer> justLettersOfAlphabet = mapLettersOnIds();
         List<String> threeLettersGroups = returnLettersGroups();
         List<Country> listOfCountriesForEachGroup = new ArrayList<Country>();
