@@ -8,27 +8,31 @@ import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.utils.StringUtils;
 
 /**
+ * This method contains everything what is necessary to create groups of
+ * countries.
+ * 
  * @author mateusz
  *
  */
 public class GroupOfCountries {
-	/**
-	 * 
-	 */
 	private static final int NUMBER_OF_GROUPED_CHARACTERS = 3;
 
 	/**
-	 * 
+	 * Name of group.
 	 */
 	String name;
 	/**
-	 * 
+	 * List of countries assigned to the group.
 	 */
 	List<Country> countriesList;
 
 	/**
+	 * This constructor set name of group and countriesList for new object.
+	 * 
 	 * @param name
+	 *            Name of countrie's group.
 	 * @param countriesList
+	 *            List of Country objects.
 	 */
 	public GroupOfCountries(String name, List<Country> countriesList) {
 		this.name = name;
@@ -44,7 +48,10 @@ public class GroupOfCountries {
 	}
 
 	/**
-	 * @return
+	 * This function divide alphabet for X letters and return List of these
+	 * letters groups.
+	 * 
+	 * @return List of groups of letters.
 	 */
 	public static List<String> returnLettersGroups() {
 		List<String> lettersGroups = new ArrayList<String>();
@@ -63,8 +70,14 @@ public class GroupOfCountries {
 	}
 
 	/**
+	 * This function check for each list of Country objects if it isn't empty.
+	 * If not, it check on what letter countries we have in our list. Later it
+	 * creates GroupOfCountries object where name is the same like name of
+	 * letters group and it also adds list of correct countries to new object.
+	 * 
 	 * @param namesOfCountries
-	 * @return
+	 *            As first parameter it takes set of all countries .
+	 * @return It return List of GroupOfCountries objects.
 	 */
 	public static List<GroupOfCountries> organizeCountriesInGroups(Set<Country> namesOfCountries) {
 		List<String> lettersGroups = returnLettersGroups();
@@ -73,7 +86,7 @@ public class GroupOfCountries {
 
 		createEmptyListForEachGroup(lettersGroups, listOfListsOfCountries);
 		addCountryToListOfLists(namesOfCountries, lettersGroups, listOfListsOfCountries);
-		
+
 		for (List<Country> oneListOfCountries : listOfListsOfCountries) {
 			if (!oneListOfCountries.isEmpty()) {
 				String firstLetter = StringUtils.getFirstLetter(oneListOfCountries.get(0).getName());
@@ -91,9 +104,14 @@ public class GroupOfCountries {
 	}
 
 	/**
+	 * This method add countries to correct list.
+	 * 
 	 * @param namesOfCountries
+	 *            As first parameter it takes set of countries.
 	 * @param lettersGroups
+	 *            As second parameter it takes List of X letters groups.
 	 * @param listOfListsOfCountries
+	 *            As third parameter it takes list of lists of countries.
 	 */
 	private static void addCountryToListOfLists(Set<Country> namesOfCountries, List<String> lettersGroups,
 			List<ArrayList<Country>> listOfListsOfCountries) {
@@ -109,8 +127,12 @@ public class GroupOfCountries {
 	}
 
 	/**
+	 * This method create empty list for each group of letters.
+	 * 
 	 * @param lettersGroups
+	 *            As first parameter it takes List of X letters groups.
 	 * @param listOfListsOfCountries
+	 *            As second parameter it takes lists of lists of countries.
 	 */
 	private static void createEmptyListForEachGroup(List<String> lettersGroups,
 			List<ArrayList<Country>> listOfListsOfCountries) {
