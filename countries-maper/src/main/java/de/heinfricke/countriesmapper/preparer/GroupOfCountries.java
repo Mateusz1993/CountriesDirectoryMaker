@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.internal.runners.TestClass;
+
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.utils.StringUtils;
 
@@ -63,9 +65,7 @@ public class GroupOfCountries {
 			}
 			sb.append(character);
 		}
-		if (sb.length() > 0) {
 			lettersGroups.add(sb.toString());
-		}
 		return lettersGroups;
 	}
 
@@ -83,10 +83,10 @@ public class GroupOfCountries {
 		List<String> lettersGroups = returnLettersGroups();
 		List<ArrayList<Country>> listOfListsOfCountries = new ArrayList<ArrayList<Country>>();
 		List<GroupOfCountries> listOfGroupedCountriesClasses = new ArrayList<GroupOfCountries>();
-
+		
 		createEmptyListForEachGroup(lettersGroups, listOfListsOfCountries);
 		addCountryToListOfLists(namesOfCountries, lettersGroups, listOfListsOfCountries);
-
+		
 		for (List<Country> oneListOfCountries : listOfListsOfCountries) {
 			if (!oneListOfCountries.isEmpty()) {
 				String firstLetter = StringUtils.getFirstLetter(oneListOfCountries.get(0).getName());

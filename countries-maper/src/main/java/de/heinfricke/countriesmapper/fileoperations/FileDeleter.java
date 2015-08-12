@@ -38,10 +38,14 @@ public class FileDeleter implements Deleter {
 		if ((userDecision == DirectoriesActivity.DELETE) || (userDecision == DirectoriesActivity.REPLACE)) {
 			for (String directoryToDelete : listOfThreeLettersGroups) {
 				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
-				File tempfile = new File(pathOfGorupDirectory);
+				File tempfile = createFile(pathOfGorupDirectory);
 				deleteDirectory(tempfile);
 			}
 		}
+	}
+
+	protected File createFile(String pathOfGorupDirectory) {
+		return new File(pathOfGorupDirectory);
 	}
 
 	/**
