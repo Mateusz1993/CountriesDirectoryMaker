@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="maven-archiver-2.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/appassembler/repo/org/apache/maven/maven-archiver/2.6/maven-archiver-2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

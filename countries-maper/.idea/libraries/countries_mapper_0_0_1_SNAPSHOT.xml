@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="countries-mapper-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/appassembler/repo/de/heinfricke/countries-mapper/0.0.1-SNAPSHOT/countries-mapper-0.0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

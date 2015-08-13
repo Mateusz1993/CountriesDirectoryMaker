@@ -17,7 +17,7 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 public class FileDeleter implements Deleter {
 
 	private UserInputs userInputs;
-	
+
 	public FileDeleter(UserInputs userInputs) {
 		this.userInputs = userInputs;
 	}

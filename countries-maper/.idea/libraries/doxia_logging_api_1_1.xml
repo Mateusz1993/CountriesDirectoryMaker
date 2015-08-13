@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="doxia-logging-api-1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/appassembler/repo/org/apache/maven/doxia/doxia-logging-api/1.1/doxia-logging-api-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

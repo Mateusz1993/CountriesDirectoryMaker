@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="plexus-utils-1.5.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/appassembler/repo/org/codehaus/plexus/plexus-utils/1.5.7/plexus-utils-1.5.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
