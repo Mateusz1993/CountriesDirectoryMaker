@@ -1,4 +1,4 @@
-package junit;
+package de.heinfricke.countriesmapper.preparer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -194,6 +194,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(4).getCountriesList().get(2).getName(), is("Uganda"));
 	}
 
+	@Test
 	public void countriesFromEachGroup() {
 		GroupOfCountries groupOfCountries = new GroupOfCountries();
 		Set<Country> countries = new TreeSet<Country>();
@@ -244,7 +245,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(2), is(notNullValue()));
 		assertThat(groups.get(2).getName(), is("GHI"));
 		assertThat(groups.get(2).getCountriesList(), is(notNullValue()));
-		assertThat(groups.get(2).getCountriesList().size(), is(1));
+		assertThat(groups.get(2).getCountriesList().size(), is(2));
 		assertThat(groups.get(2).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(2).getCountriesList().get(0).getName(), is("Gabon"));
 		assertThat(groups.get(2).getCountriesList().get(1), is(notNullValue()));
@@ -253,7 +254,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(3), is(notNullValue()));
 		assertThat(groups.get(3).getName(), is("JKL"));
 		assertThat(groups.get(3).getCountriesList(), is(notNullValue()));
-		assertThat(groups.get(3).getCountriesList().size(), is(1));
+		assertThat(groups.get(3).getCountriesList().size(), is(2));
 		assertThat(groups.get(3).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(3).getCountriesList().get(0).getName(), is("Japan"));
 		assertThat(groups.get(3).getCountriesList().get(1), is(notNullValue()));
@@ -262,7 +263,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(4), is(notNullValue()));
 		assertThat(groups.get(4).getName(), is("MNO"));
 		assertThat(groups.get(4).getCountriesList(), is(notNullValue()));
-		assertThat(groups.get(4).getCountriesList().size(), is(1));
+		assertThat(groups.get(4).getCountriesList().size(), is(2));
 		assertThat(groups.get(4).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(4).getCountriesList().get(0).getName(), is("Madagascar"));
 		assertThat(groups.get(4).getCountriesList().get(1), is(notNullValue()));
@@ -271,7 +272,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(5), is(notNullValue()));
 		assertThat(groups.get(5).getName(), is("PQR"));
 		assertThat(groups.get(5).getCountriesList(), is(notNullValue()));
-		assertThat(groups.get(5).getCountriesList().size(), is(1));
+		assertThat(groups.get(5).getCountriesList().size(), is(2));
 		assertThat(groups.get(5).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(5).getCountriesList().get(0).getName(), is("Poland"));
 		assertThat(groups.get(5).getCountriesList().get(1), is(notNullValue()));
@@ -280,7 +281,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(6), is(notNullValue()));
 		assertThat(groups.get(6).getName(), is("STU"));
 		assertThat(groups.get(6).getCountriesList(), is(notNullValue()));
-		assertThat(groups.get(6).getCountriesList().size(), is(1));
+		assertThat(groups.get(6).getCountriesList().size(), is(4));
 		assertThat(groups.get(6).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(6).getCountriesList().get(0).getName(), is("Samoa"));
 		assertThat(groups.get(6).getCountriesList().get(1), is(notNullValue()));
@@ -420,6 +421,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(5).getCountriesList().get(0).getName(), is("Wales"));
 	}
 
+	@Test
 	public void countryOnEachLetter() {
 		GroupOfCountries groupOfCountries = new GroupOfCountries();
 		Set<Country> countries = new TreeSet<Country>();
@@ -493,7 +495,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(2).getCountriesList().get(0), is(notNullValue()));
 		assertThat(groups.get(2).getCountriesList().get(0).getName(), is("Gabon"));
 		assertThat(groups.get(2).getCountriesList().get(1), is(notNullValue()));
-		assertThat(groups.get(2).getCountriesList().get(1).getName(), is("Hondruas"));
+		assertThat(groups.get(2).getCountriesList().get(1).getName(), is("Honduras"));
 		assertThat(groups.get(2).getCountriesList().get(2), is(notNullValue()));
 		assertThat(groups.get(2).getCountriesList().get(2).getName(), is("Israel"));
 
@@ -543,9 +545,9 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(6).getCountriesList().get(2), is(notNullValue()));
 		assertThat(groups.get(6).getCountriesList().get(2).getName(), is("Togo"));
 		assertThat(groups.get(6).getCountriesList().get(3), is(notNullValue()));
-		assertThat(groups.get(6).getCountriesList().get(3).getName(), is("Uzbekistan"));
+		assertThat(groups.get(6).getCountriesList().get(3).getName(), is("Uruguay"));
 		assertThat(groups.get(6).getCountriesList().get(4), is(notNullValue()));
-		assertThat(groups.get(6).getCountriesList().get(4).getName(), is("Uruguay"));
+		assertThat(groups.get(6).getCountriesList().get(4).getName(), is("Uzbekistan"));
 
 		assertThat(groups.get(7), is(notNullValue()));
 		assertThat(groups.get(7).getName(), is("VWX"));
@@ -556,7 +558,7 @@ public class GroupOfCountriesTest {
 		assertThat(groups.get(7).getCountriesList().get(1), is(notNullValue()));
 		assertThat(groups.get(7).getCountriesList().get(1).getName(), is("Venezuela"));
 		assertThat(groups.get(7).getCountriesList().get(2), is(notNullValue()));
-		assertThat(groups.get(7).getCountriesList().get(2).getName(), is("wales"));
+		assertThat(groups.get(7).getCountriesList().get(2).getName(), is("Wales"));
 
 		assertThat(groups.get(8), is(notNullValue()));
 		assertThat(groups.get(8).getName(), is("YZ"));
