@@ -23,26 +23,26 @@ public class FTPConnection {
 	/**
 	 * FTP Server host.
 	 */
-	static String host;
+	String host;
 	/**
 	 * FTP server port.
 	 */
-	static int port;
+	int port;
 	/**
 	 * FTP user name.
 	 */
-	static String username;
+	String username;
 	/**
 	 * FTP user password.
 	 */
-	static String password;
+	String password;
 	/**
 	 * FPTClient object.
 	 */
-	static FTPClient client;
+	FTPClient client;
 
 	/**
-	 * This method just set all static variables.
+	 * This method just set all variables.
 	 * 
 	 * @param userHost
 	 *            FTP server host.
@@ -53,13 +53,13 @@ public class FTPConnection {
 	 * @param userPassword
 	 *            FTP user password.
 	 */
-	public static void setAllVariables(String userHost, String userPort, String userName, String userPassword) {
+	public void setAllVariables(String userHost, String userPort, String userName, String userPassword) {
 		int usersPort = Integer.parseInt(userPort);
-		host = userHost;
-		port = usersPort;
-		username = userName;
-		password = userPassword;
-		client = new FTPClient();
+		this.host = userHost;
+		this.port = usersPort;
+		this.username = userName;
+		this.password = userPassword;
+		this.client = new FTPClient();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class FTPConnection {
 	 * @param userPassword
 	 *            FTP user password.
 	 */
-	public static void makeConnection(String userHost, String userPort, String userName, String userPassword) {
+	public void makeConnection(String userHost, String userPort, String userName, String userPassword) {
 		try {
 
 			setAllVariables(userHost, userPort, userName, userPassword);
@@ -114,7 +114,7 @@ public class FTPConnection {
 	 *            Path where new directory must to be created.
 	 * @throws IOException
 	 */
-	public static void makeDirectory(String pathToDirectory) throws IOException {
+	public void makeDirectory(String pathToDirectory) throws IOException {
 		client.makeDirectory(pathToDirectory);
 	}
 
@@ -125,7 +125,7 @@ public class FTPConnection {
 	 *            Path to directory which must be deleted.
 	 * @throws IOException
 	 */
-	public static void removeDirectory(String pathToDirectory) throws IOException {
+	public void removeDirectory(String pathToDirectory) throws IOException {
 		client.removeDirectory(pathToDirectory);
 	}
 
@@ -138,7 +138,7 @@ public class FTPConnection {
 	 * @return It returns array of FTOFiles.
 	 * @throws IOException
 	 */
-	public static FTPFile[] listDirectories(String pathToDirectory) throws IOException {
+	public FTPFile[] listDirectories(String pathToDirectory) throws IOException {
 		FTPFile[] files = client.listDirectories(pathToDirectory);
 		return files;
 	}
@@ -148,7 +148,7 @@ public class FTPConnection {
 	 * 
 	 * @throws IOException
 	 */
-	public static void makeDisconnection() throws IOException {
+	public void makeDisconnection() throws IOException {
 		client.logout();
 		client.disconnect();
 	}

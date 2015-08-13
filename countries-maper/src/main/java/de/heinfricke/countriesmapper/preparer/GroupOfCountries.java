@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.internal.runners.TestClass;
-
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.utils.StringUtils;
 
@@ -28,6 +26,10 @@ public class GroupOfCountries {
 	 */
 	List<Country> countriesList;
 
+	public GroupOfCountries(){
+		//empty Constructor;
+	};
+	
 	/**
 	 * This constructor set name of group and countriesList for new object.
 	 * 
@@ -55,7 +57,7 @@ public class GroupOfCountries {
 	 * 
 	 * @return List of groups of letters.
 	 */
-	public static List<String> returnLettersGroups() {
+	public List<String> returnLettersGroups() {
 		List<String> lettersGroups = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		for (char character = 'A'; character <= 'Z'; character++) {
@@ -79,7 +81,7 @@ public class GroupOfCountries {
 	 *            As first parameter it takes set of all countries .
 	 * @return It return List of GroupOfCountries objects.
 	 */
-	public static List<GroupOfCountries> organizeCountriesInGroups(Set<Country> namesOfCountries) {
+	public List<GroupOfCountries> organizeCountriesInGroups(Set<Country> namesOfCountries) {
 		List<String> lettersGroups = returnLettersGroups();
 		List<ArrayList<Country>> listOfListsOfCountries = new ArrayList<ArrayList<Country>>();
 		List<GroupOfCountries> listOfGroupedCountriesClasses = new ArrayList<GroupOfCountries>();
@@ -89,7 +91,8 @@ public class GroupOfCountries {
 		
 		for (List<Country> oneListOfCountries : listOfListsOfCountries) {
 			if (!oneListOfCountries.isEmpty()) {
-				String firstLetter = StringUtils.getFirstLetter(oneListOfCountries.get(0).getName());
+				StringUtils stringUtils = new StringUtils();
+				String firstLetter = stringUtils.getFirstLetter(oneListOfCountries.get(0).getName());
 				for (String oneGroup : lettersGroups) {
 					if (oneGroup.contains(firstLetter.toUpperCase())) {
 						GroupOfCountries organizedCountries = new GroupOfCountries(
@@ -113,10 +116,11 @@ public class GroupOfCountries {
 	 * @param listOfListsOfCountries
 	 *            As third parameter it takes list of lists of countries.
 	 */
-	private static void addCountryToListOfLists(Set<Country> namesOfCountries, List<String> lettersGroups,
+	private void addCountryToListOfLists(Set<Country> namesOfCountries, List<String> lettersGroups,
 			List<ArrayList<Country>> listOfListsOfCountries) {
 		for (Country country : namesOfCountries) {
-			String firstLetterOfCountry = StringUtils.getFirstLetter(country.getName());
+			StringUtils stringUtils = new StringUtils();
+			String firstLetterOfCountry = stringUtils.getFirstLetter(country.getName());
 			for (String oneGroup : lettersGroups) {
 				if (oneGroup.contains(firstLetterOfCountry.toUpperCase())) {
 					listOfListsOfCountries.get(lettersGroups.indexOf(oneGroup)).add(country);
@@ -134,7 +138,7 @@ public class GroupOfCountries {
 	 * @param listOfListsOfCountries
 	 *            As second parameter it takes lists of lists of countries.
 	 */
-	private static void createEmptyListForEachGroup(List<String> lettersGroups,
+	private void createEmptyListForEachGroup(List<String> lettersGroups,
 			List<ArrayList<Country>> listOfListsOfCountries) {
 		ArrayList<Country> listOfGroupedCountries;
 		int numberOfCreatedEmptyLists = 0;

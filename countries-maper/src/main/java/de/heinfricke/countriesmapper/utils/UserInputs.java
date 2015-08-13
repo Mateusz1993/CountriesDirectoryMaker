@@ -17,7 +17,7 @@ public class UserInputs {
 	 * 
 	 * @return User decision about future of his directories.
 	 */
-	public static DirectoriesActivity userDecisionAboutDirectories() {
+	public DirectoriesActivity userDecisionAboutDirectories() {
 		Scanner scanner = null;
 		String userDecision = "A";
 		scanner = new Scanner(System.in);

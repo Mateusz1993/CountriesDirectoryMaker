@@ -24,6 +24,12 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 public class FTPFileDeleter implements Deleter {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
+	FTPConnection ftpConnection;
+	
+	public FTPFileDeleter(FTPConnection ftpConnection){
+		this.ftpConnection = ftpConnection;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -33,11 +39,13 @@ public class FTPFileDeleter implements Deleter {
 	 */
 	public void deleteDirectories(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		try {
-			DirectoriesActivity userDecision = UserInputs.userDecisionAboutDirectories();
+			UserInputs userInputs = new UserInputs();
+			DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
 			List<String> listOfThreeLettersGroups = new ArrayList<String>();
-
+			//FTPConnection ftpConnection = new FTPConnection();
 			if (userDecision == DirectoriesActivity.DELETE) {
-				listOfThreeLettersGroups = GroupOfCountries.returnLettersGroups();
+				GroupOfCountries groupOfCountries = new GroupOfCountries();
+				listOfThreeLettersGroups = groupOfCountries.returnLettersGroups();
 			} else if (userDecision == DirectoriesActivity.REPLACE) {
 				for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 					listOfThreeLettersGroups.add(groupedCountries.getName());
@@ -47,11 +55,11 @@ public class FTPFileDeleter implements Deleter {
 			if ((userDecision == DirectoriesActivity.DELETE) || (userDecision == DirectoriesActivity.REPLACE)) {
 				for (String directoryToDelete : listOfThreeLettersGroups) {
 					String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
-					FTPFile[] files = FTPConnection.listDirectories(pathOfGorupDirectory);
+					FTPFile[] files = ftpConnection.listDirectories(pathOfGorupDirectory);
 					for (FTPFile file : files) {
-						FTPConnection.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
+						ftpConnection.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
 					}
-					FTPConnection.removeDirectory(pathOfGorupDirectory);
+					ftpConnection.removeDirectory(pathOfGorupDirectory);
 				}
 			}
 		} catch (IOException e) {

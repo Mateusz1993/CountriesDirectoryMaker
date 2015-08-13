@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import de.heinfricke.countriesmapper.country.*;
@@ -16,6 +18,12 @@ import de.heinfricke.countriesmapper.country.*;
  *
  */
 public class CountriesReader {
+	
+	public Set<Country> readCountries(InputStream is) throws FileNotFoundException, IOException {
+		//TODO real implementation
+		return new HashSet<Country>();
+	}
+	
 	/**
 	 * This method reads list of countries from file, makes new 'Country'
 	 * objects where each one contains name of country and returns these objects

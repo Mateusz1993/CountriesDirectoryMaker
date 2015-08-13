@@ -20,6 +20,12 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
 public class FTPFileMaker implements Maker {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
+	FTPConnection ftpConnection;
+		
+	public FTPFileMaker(FTPConnection ftpConnection){
+		this.ftpConnection = ftpConnection;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -31,10 +37,10 @@ public class FTPFileMaker implements Maker {
 		try {
 			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
-				FTPConnection.makeDirectory(pathToGroupFolder);
+				ftpConnection.makeDirectory(pathToGroupFolder);
 				for (Country countries : groupedCountries.getCountriesList()) {
 					String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
-					FTPConnection.makeDirectory(pathToSingleFile);
+					ftpConnection.makeDirectory(pathToSingleFile);
 				}
 			}
 		} catch (IOException e) {

@@ -14,7 +14,7 @@ public class StringUtils {
 	 *            From this word will be taken first letter.
 	 * @return First letter of word given as parameter.
 	 */
-	public static String getFirstLetter(String country) {
+	public String getFirstLetter(String country) {
 		return country.substring(0, 1);
 	}
 }

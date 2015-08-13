@@ -16,6 +16,12 @@ import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
  */
 public class FileDeleter implements Deleter {
 
+	private UserInputs userInputs;
+	
+	public FileDeleter(UserInputs userInputs) {
+		this.userInputs = userInputs;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -24,11 +30,12 @@ public class FileDeleter implements Deleter {
 	 * java.util.List, java.lang.String)
 	 */
 	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path) {
-		DirectoriesActivity userDecision = UserInputs.userDecisionAboutDirectories();
+		DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
 		List<String> listOfThreeLettersGroups = new ArrayList<String>();
 
 		if (userDecision == DirectoriesActivity.DELETE) {
-			listOfThreeLettersGroups = GroupOfCountries.returnLettersGroups();
+			GroupOfCountries groupOfCountries = new GroupOfCountries();
+			listOfThreeLettersGroups = groupOfCountries.returnLettersGroups();
 		} else if (userDecision == DirectoriesActivity.REPLACE) {
 			for (GroupOfCountries groupedCountries : organizedCountries) {
 				listOfThreeLettersGroups.add(groupedCountries.getName());
@@ -55,7 +62,7 @@ public class FileDeleter implements Deleter {
 	 *            As parameter it takes File object.
 	 * @return It returns dir.delete().
 	 */
-	private static boolean deleteDirectory(File dir) {
+	private boolean deleteDirectory(File dir) {
 		if (dir.isDirectory()) {
 			File[] children = dir.listFiles();
 			for (int i = 0; i < children.length; i++) {

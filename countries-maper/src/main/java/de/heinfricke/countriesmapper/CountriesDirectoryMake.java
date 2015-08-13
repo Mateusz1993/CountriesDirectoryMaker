@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import de.heinfricke.countriesmapper.reader.*;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
+import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.fileoperations.*;
 import de.heinfricke.countriesmapper.preparer.*;
@@ -16,11 +17,12 @@ public class CountriesDirectoryMake {
 
 	public static void main(String[] args) {
 		try {
+			CountriesDirectoryMake countriesDirectoryMake = new CountriesDirectoryMake();
 			CommandLine cmd = null;
 			Options options = new Options();
-			cmd = readFromCommandLine(args, options);
-			ProgramTask programTask = returnProgramTask(cmd);
-			handleHelp(options, programTask);
+			cmd = countriesDirectoryMake.readFromCommandLine(args, options);
+			ProgramTask programTask = countriesDirectoryMake.returnProgramTask(cmd);
+			countriesDirectoryMake.handleHelp(options, programTask);
 
 			// Read all countries to "Set".
 			CountriesReader countriesReader = new CountriesReader();
@@ -28,11 +30,12 @@ public class CountriesDirectoryMake {
 
 			// Prepare groups of countries (for example: ABC = (Albania,
 			// Czech Republic), PQR = (Poland, Qatar)).
-			List<GroupOfCountries> listOfGroupedCountriesClasses = GroupOfCountries
+			GroupOfCountries groupOfCountries = new GroupOfCountries();
+			List<GroupOfCountries> listOfGroupedCountriesClasses = groupOfCountries
 					.organizeCountriesInGroups(sortedCountries);
 
 			// Delete and create directories.
-			executeTask(cmd, options, programTask, listOfGroupedCountriesClasses);
+			countriesDirectoryMake.executeTask(cmd, options, programTask, listOfGroupedCountriesClasses);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Provided file path is wrong. Please provide correct file path.");
@@ -62,24 +65,26 @@ public class CountriesDirectoryMake {
 	 *            As fourth parameter it takes list of GroupOfCountries objects.
 	 * @throws IOException
 	 */
-	private static void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
+	private void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
 			List<GroupOfCountries> listOfGroupedCountriesClasses) throws IOException {
 		if (programTask == ProgramTask.ERROR_INFO) {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
-			Deleter deleter = new FileDeleter();
+			UserInputs userInputs = new UserInputs();
+			Deleter deleter = new FileDeleter(userInputs);
 			Maker maker = new FileMaker();
+			FTPConnection ftpConnection = new FTPConnection();
 			if (programTask == ProgramTask.WORK_ON_FTP) {
 				// Make connection with FTP Server.
-				FTPConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
+				ftpConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
-				maker = new FTPFileMaker();
-				deleter = new FTPFileDeleter();
+				maker = new FTPFileMaker(ftpConnection);
+				deleter = new FTPFileDeleter(ftpConnection);
 			}
 			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 			maker.createDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 			if (programTask == ProgramTask.WORK_ON_FTP) {
-				FTPConnection.makeDisconnection();
+				ftpConnection.makeDisconnection();
 			}
 		}
 	}
@@ -94,7 +99,7 @@ public class CountriesDirectoryMake {
 	 * @return It returns CommandLine object.
 	 * @throws ParseException
 	 */
-	private static CommandLine readFromCommandLine(String[] args, Options options) throws ParseException {
+	private CommandLine readFromCommandLine(String[] args, Options options) throws ParseException {
 		CommandLine cmd;
 		CommandLineParser parser = new DefaultParser();
 
@@ -118,7 +123,7 @@ public class CountriesDirectoryMake {
 	 *            As parameter it takes CommandLine object.
 	 * @return It return decision from ProgramTask enum.
 	 */
-	private static ProgramTask returnProgramTask(CommandLine cmd) {
+	private ProgramTask returnProgramTask(CommandLine cmd) {
 		if ((cmd.hasOption("l") && cmd.hasOption("i") && cmd.hasOption("o"))) {
 			return ProgramTask.WORK_ON_LOCAL_FILES;
 		} else if (cmd.hasOption("f") && cmd.hasOption("h") && cmd.hasOption("p") && cmd.hasOption("u")
@@ -138,7 +143,7 @@ public class CountriesDirectoryMake {
 	 * @param options
 	 *            It takes as parameter Options object.
 	 */
-	private static void handleHelp(Options options, ProgramTask programTask) {
+	private void handleHelp(Options options, ProgramTask programTask) {
 		if (programTask == ProgramTask.SHOW_HELP) {
 			System.out.println("\nTo make directories on your local system please use: ");
 			System.out.println(
