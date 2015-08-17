@@ -71,15 +71,15 @@ public class CountriesDirectoryMake {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
 			UserInputs userInputs = new UserInputs();
-			Deleter deleter = new FileDeleter(userInputs);
+			
+			FileDeleter deleter = new FileDeleter(userInputs);
 			Maker maker = new FileMaker();
 			FTPConnection ftpConnection = new FTPConnection();
 			if (programTask == ProgramTask.WORK_ON_FTP) {
-				// Make connection with FTP Server.
 				ftpConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
 				maker = new FTPFileMaker(ftpConnection);
-				deleter = new FTPFileDeleter(ftpConnection);
+				deleter = new FileDeleter(ftpConnection, userInputs);
 			}
 			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 			maker.createDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));

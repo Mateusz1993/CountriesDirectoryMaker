@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -49,7 +48,7 @@ public class FileDeleterTest {
 	}
 	
 	@Test
-	public void test() {
+	public void test() throws IOException {
 		File[] fileChildrenEmpty = new File[0];
 		File[] fileChildrenWithMockChild = new File[] { childFile };
 		doReturn(true).when(file).isDirectory();
@@ -123,7 +122,7 @@ public class FileDeleterTest {
 	}
 	
 	@Test
-	public void deleteDirectoriesTest(){
+	public void deleteDirectoriesTest() throws IOException{
 		File[] fileChildrenEmpty = new File[0];
 		File[] fileChildrenWithMockChild = new File[] { childFile };
 		File[] fileChildrenWithSecondMockChild = new File[] { secondChildFile };
