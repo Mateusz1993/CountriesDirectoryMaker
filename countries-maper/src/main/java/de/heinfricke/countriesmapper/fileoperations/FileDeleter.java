@@ -12,17 +12,34 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 
+/**
+ * This class contains methods which are used to delete old files and directories.
+ * 
+ * @author mateusz
+ *
+ */
 public class FileDeleter {
 
 	private UserInputs userInputs;
 	private FilesLocalization filesLocalization;
 	private FTPConnection ftpConnection;
 
+	/**
+	 * This constructor is used when we want delete local files.
+	 * 
+	 * @param userInputs
+	 */
 	public FileDeleter(UserInputs userInputs) {
 		this.userInputs = userInputs;
 		this.filesLocalization = FilesLocalization.LOCAL;
 	}
 
+	/**
+	 * This constructor is used when we want to delete files on FTP server.
+	 * 
+	 * @param ftpConnection
+	 * @param userInputs
+	 */
 	public FileDeleter(FTPConnection ftpConnection, UserInputs userInputs) {
 		this.userInputs = userInputs;
 		this.filesLocalization = FilesLocalization.FTPSERVER;
@@ -46,16 +63,9 @@ public class FileDeleter {
 	 */
 	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path) throws IOException {
 		DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
-		List<String> listOfThreeLettersGroups = new ArrayList<String>();
+		List<String> listOfThreeLettersGroups;
 
-		if (userDecision == DirectoriesActivity.DELETE) {
-			GroupOfCountries groupOfCountries = new GroupOfCountries();
-			listOfThreeLettersGroups = groupOfCountries.returnLettersGroups();
-		} else if (userDecision == DirectoriesActivity.REPLACE) {
-			for (GroupOfCountries groupedCountries : organizedCountries) {
-				listOfThreeLettersGroups.add(groupedCountries.getName());
-			}
-		}
+		listOfThreeLettersGroups = prepareThreeLettersGroups(organizedCountries, userDecision);
 
 		if ((userDecision == DirectoriesActivity.DELETE) || (userDecision == DirectoriesActivity.REPLACE)) {
 			for (String directoryToDelete : listOfThreeLettersGroups) {
@@ -75,6 +85,29 @@ public class FileDeleter {
 				}
 			}
 		}
+	}
+
+	/**
+	 * This method prepare three letters groups.
+	 * 
+	 * @param organizedCountries
+	 *            List of GroupOfCountries objects.
+	 * @param userDecision
+	 *            User decision about what to do with old files.
+	 * @return This method return list of three letters groups.
+	 */
+	private List<String> prepareThreeLettersGroups(List<GroupOfCountries> organizedCountries,
+			DirectoriesActivity userDecision) {
+		List<String> listOfThreeLettersGroups = new ArrayList<String>();
+		if (userDecision == DirectoriesActivity.DELETE) {
+			GroupOfCountries groupOfCountries = new GroupOfCountries();
+			listOfThreeLettersGroups = groupOfCountries.returnLettersGroups();
+		} else if (userDecision == DirectoriesActivity.REPLACE) {
+			for (GroupOfCountries groupedCountries : organizedCountries) {
+				listOfThreeLettersGroups.add(groupedCountries.getName());
+			}
+		}
+		return listOfThreeLettersGroups;
 	}
 
 	protected File createFile(String pathOfGorupDirectory) {
