@@ -67,6 +67,7 @@ public class FileDeleter implements Deleter {
 			File[] children = dir.listFiles();
 			for (int i = 0; i < children.length; i++) {
 				boolean success = deleteDirectory(children[i]);
+				System.out.println("Success: " + success);
 				if (!success) {
 					return false;
 				}
