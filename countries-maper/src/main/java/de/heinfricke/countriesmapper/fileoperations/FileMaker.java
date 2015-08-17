@@ -23,13 +23,17 @@ public class FileMaker implements Maker {
 	public void createDirectories(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 			String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
-			File groupFile = new File(pathToGroupFolder);
+			File groupFile = createFile(pathToGroupFolder);
 			groupFile.mkdirs();
 			for (Country countries : groupedCountries.getCountriesList()) {
 				String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
-				File singleFile = new File(pathToSingleFile);
+				File singleFile = createFile(pathToSingleFile);
 				singleFile.mkdirs();
 			}
 		}
+	}
+
+	protected File createFile(String pathToSingleFile) {
+		return new File(pathToSingleFile);
 	}
 }

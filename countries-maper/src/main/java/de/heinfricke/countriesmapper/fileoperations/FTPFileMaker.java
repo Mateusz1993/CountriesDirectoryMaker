@@ -37,10 +37,10 @@ public class FTPFileMaker implements Maker {
 		try {
 			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
-				ftpConnection.makeDirectory(pathToGroupFolder);
+				createDirectory(pathToGroupFolder);
 				for (Country countries : groupedCountries.getCountriesList()) {
 					String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
-					ftpConnection.makeDirectory(pathToSingleFile);
+					createDirectory(pathToSingleFile);
 				}
 			}
 		} catch (IOException e) {
@@ -48,5 +48,15 @@ public class FTPFileMaker implements Maker {
 					"There was a problem while connecting to server. Please make sure given host, port, username and password are correct and run application again");
 			LOGGER.log(Level.FINE, "There was a problem while connecting to server.", e);
 		}
+	}
+
+	/**
+	 * This method create new directory on FTP Server.
+	 * 
+	 * @param pathToSingleFile
+	 * @throws IOException
+	 */
+	private void createDirectory(String pathToSingleFile) throws IOException {
+		ftpConnection.makeDirectory(pathToSingleFile);
 	}
 }

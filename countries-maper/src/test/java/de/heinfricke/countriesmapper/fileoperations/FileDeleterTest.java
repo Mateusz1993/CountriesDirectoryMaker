@@ -48,7 +48,6 @@ public class FileDeleterTest {
 		};
 	}
 	
-	@Ignore
 	@Test
 	public void test() {
 		File[] fileChildrenEmpty = new File[0];
@@ -71,7 +70,6 @@ public class FileDeleterTest {
 		verify(childFile, times(1)).delete();
 	}
 	
-	@Ignore
 	@Test
 	public void testMultipleGroupsReplace() throws IOException {
 		
