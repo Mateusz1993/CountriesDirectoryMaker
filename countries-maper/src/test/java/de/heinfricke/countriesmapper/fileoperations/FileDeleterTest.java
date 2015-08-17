@@ -37,9 +37,6 @@ public class FileDeleterTest {
 	private FileDeleter fileDeleter;
 	
 	@Mock
-	private FileDeleter fileDeleterTest;
-	
-	@Mock
 	private File secondChildFile;
 	
 	@Before
@@ -105,7 +102,6 @@ public class FileDeleterTest {
 		doReturn(DirectoriesActivity.REPLACE).when(userInputs).userDecisionAboutDirectories();
 		String path = "somepath";
 		
-		//Zrób 2 grupy z państwami
 		List<GroupOfCountries> groupOfCountries = new ArrayList<GroupOfCountries>();
 		
 		List<Country> countries = new ArrayList<Country>();
@@ -121,7 +117,6 @@ public class FileDeleterTest {
 		GroupOfCountries secondGroup = new GroupOfCountries("PQR", countries);
 		groupOfCountries.add(secondGroup);
 		
-		//Napisz test, który sprawdzi że usunięte zostały tylko te kraje które występują w podanych grupach
 		fileDeleter.deleteDirectories(groupOfCountries, path);
 		
 		verify(directoryAbc, times(1)).delete();
