@@ -11,6 +11,7 @@ import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.fileoperations.*;
 import de.heinfricke.countriesmapper.preparer.*;
 import org.apache.commons.cli.*;
+import org.codehaus.jettison.json.JSONException;
 
 public class CountriesDirectoryMake {
 	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
@@ -26,7 +27,7 @@ public class CountriesDirectoryMake {
 
 			// Read all countries to "Set".
 			CountriesReader countriesReader = new CountriesReader();
-			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"));
+			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"), cmd.hasOption("restCountriesFetch"));
 
 			// Prepare groups of countries (for example: ABC = (Albania,
 			// Czech Republic), PQR = (Poland, Qatar)).
@@ -47,6 +48,12 @@ public class CountriesDirectoryMake {
 		} catch (ParseException e) {
 			System.out.println("There was invalid expression. Please use '-H' for help.");
 			LOGGER.log(Level.FINE, "Invalid expression.", e);
+		} catch (JSONException e) {
+			System.out.println("There was something invalid in JSON. You propably wrote country which doesn't exist or is not supported by our application.");
+			LOGGER.log(Level.FINE, "Invalid expression.", e);
+		} catch (RuntimeException e) {
+			System.out.println("You propably wrote country which doesn't exists or is not supported by our application. Please make sure that country's name is correct and run application again.");
+			LOGGER.log(Level.FINE, "HTTP error.", e);
 		}
 	}
 
@@ -109,7 +116,8 @@ public class CountriesDirectoryMake {
 				.addOption("i", "inputFile", true, "Path to your input file.")
 				.addOption("o", "outputPath", true, "Path to your output.").addOption("h", "host", true, "FTP host.")
 				.addOption("p", "port", true, "FTP port.").addOption("u", "ftpUser", true, "FTP user name.")
-				.addOption("pw", "ftpPassword", true, "FTP user password.");
+				.addOption("pw", "ftpPassword", true, "FTP user password.")
+				.addOption("restCountriesFetch", "r", false, "Make file with informations about each country.");
 
 		cmd = parser.parse(options, args);
 		return cmd;
