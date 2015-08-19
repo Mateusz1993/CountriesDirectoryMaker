@@ -20,5 +20,5 @@ public interface Maker {
 	 *            Second parameter is path to directory where new directories
 	 *            will be created.
 	 */
-	public void createDirectories(List<GroupOfCountries> organizedCountries, String path);
+	public void createFiles(List<GroupOfCountries> organizedCountries, String path);
 }

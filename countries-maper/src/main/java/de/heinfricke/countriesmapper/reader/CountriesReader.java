@@ -1,39 +1,16 @@
 package de.heinfricke.countriesmapper.reader;
 
-//////////////////////////////////////////////////////////////
-//															//
-//															//
-//															//
-//															//
-//															//
-//															//
-//			     BETTER DON'T READ THIS CLASS				//
-//				TOO MANY COMMENTS, ENETERS, ETC				//
-//															//
-//															//
-//															//
-//															//
-//															//
-//															//
-//////////////////////////////////////////////////////////////
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jackson.map.DeserializationConfig;
-import com.sun.jersey.api.client.*;
 import de.heinfricke.countriesmapper.country.*;
-
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
+import de.heinfricke.countriesmapper.preparer.InformationPreparer;
 
 /**
  * This class contains methods which are used to read files's contents.
@@ -63,19 +40,24 @@ public class CountriesReader {
 		File file = new File(path);
 		String line;
 
+		if (prepareInfromationFile) {
+			System.out.println("Loading...");
+		}
+
 		BufferedReader bufferedReader = null;
 		try {
 			FileReader fileReader = new FileReader(file);
 			bufferedReader = new BufferedReader(fileReader);
 			while ((line = bufferedReader.readLine()) != null) {
 				if (!line.isEmpty()) {
-					Country test;
+					Country newCountry;
 					if (prepareInfromationFile) {
-						test = prepareInformationsAboutCountries(line);
+						InformationPreparer informationPreparer = new InformationPreparer();
+						newCountry = informationPreparer.collectCountryData(line);
 					} else {
-						test = new Country(line);
+						newCountry = new Country(line);
 					}
-					namesOfCountries.add(test);
+					namesOfCountries.add(newCountry);
 				}
 			}
 		} finally {
@@ -84,61 +66,5 @@ public class CountriesReader {
 			}
 		}
 		return namesOfCountries;
-	}
-
-	private Country prepareInformationsAboutCountries(String line)
-			throws JSONException, RuntimeException, JsonParseException, JsonMappingException, IOException {
-		Client client = Client.create();
-		line = line.replaceAll(" ", "%20");
-
-		String getUrl = ("http://restcountries.eu/rest/v1/name/" + line);
-		ClientResponse response = returnResponse(client, getUrl);
-
-		String result = response.getEntity(String.class);
-		ObjectMapper objectMapper = returnObjectMapper();
-
-		Country country = null;
-		result = result.substring(1, result.length() - 1);
-		country = objectMapper.readValue(result, Country.class);
-
-		setAllNeighborsIntoOneString(client, country);
-
-		return country;
-	}
-
-	private ObjectMapper returnObjectMapper() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		return objectMapper;
-	}
-
-	private ClientResponse returnResponse(Client client, String getUrl) {
-		WebResource webResource = client.resource(getUrl);
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException();
-		}
-		return response;
-	}
-
-	private void setAllNeighborsIntoOneString(Client client, Country country)
-			throws IOException, JsonParseException, JsonMappingException {
-		List<String> neighbors = country.getBorders();
-		String borders = "";
-		for (String neighbor : neighbors) {
-			String getUrl = ("http://restcountries.eu/rest/v1/alpha/" + neighbor);
-			ClientResponse response = returnResponse(client, getUrl);
-			String result = response.getEntity(String.class);
-
-			ObjectMapper objectMapper = returnObjectMapper();
-
-			Country newCountry = null;
-			newCountry = objectMapper.readValue(result, Country.class);
-
-			borders += (newCountry.getName() + "/");
-		}
-		borders = borders.substring(0, borders.length() - 1);
-		country.setAllBordersInOneString(borders);
-		System.out.println(country.getAllBordersInOneString());
 	}
 }

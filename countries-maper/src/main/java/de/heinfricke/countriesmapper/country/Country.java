@@ -81,4 +81,8 @@ public class Country implements Comparable<Country> {
 	{
 		return "Country [Name = " + name + ", capital = " + capital + ", nativeName = " + nativeName + ", borders = " + borders + "]";
 	}	
+	
+	public String[] returnInfromations(){
+		return (name + "#" + capital + "#" + nativeName + "#" + allBordersInOneString).split("#");
+	}
 }

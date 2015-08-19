@@ -152,4 +152,8 @@ public class FTPConnection {
 		client.logout();
 		client.disconnect();
 	}
+	
+	public FTPClient getClient(){
+		return client;
+	}
 }

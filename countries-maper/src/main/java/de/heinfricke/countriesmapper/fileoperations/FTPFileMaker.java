@@ -33,7 +33,7 @@ public class FTPFileMaker implements Maker {
 	 * de.heinfricke.countriesmapper.fileoperations.Maker#createDirectories(java
 	 * .util.List, java.lang.String)
 	 */
-	public void createDirectories(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
+	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		try {
 			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());

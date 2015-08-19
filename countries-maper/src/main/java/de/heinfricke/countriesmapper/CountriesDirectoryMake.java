@@ -89,7 +89,18 @@ public class CountriesDirectoryMake {
 				deleter = new FileDeleter(ftpConnection, userInputs);
 			}
 			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
-			maker.createDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+			
+			if(cmd.hasOption("restCountriesFetch"))
+			{
+				CSVFileMaker csvFileMaker = new CSVFileMaker();
+				if(programTask == ProgramTask.WORK_ON_FTP)
+				{
+					csvFileMaker = new CSVFileMaker(ftpConnection);
+				}
+				csvFileMaker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+			}
+			
 			if (programTask == ProgramTask.WORK_ON_FTP) {
 				ftpConnection.makeDisconnection();
 			}

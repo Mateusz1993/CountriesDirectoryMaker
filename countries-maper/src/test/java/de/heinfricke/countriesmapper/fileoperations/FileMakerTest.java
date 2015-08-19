@@ -69,7 +69,7 @@ public class FileMakerTest {
 		GroupOfCountries secondGroup = new GroupOfCountries("PQR", countries);
 		groupOfCountries.add(secondGroup);
 		
-		fileMaker.createDirectories(groupOfCountries, path);
+		fileMaker.createFiles(groupOfCountries, path);
 
 		verify(directoryAbc, times(1)).mkdirs();
 		verify(directoryDef, times(0)).mkdirs();
