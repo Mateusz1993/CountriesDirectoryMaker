@@ -5,45 +5,40 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.net.ftp.FTPFile;
-
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
-import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
 
 /**
- * This class contains methods which are used to delete old files and directories.
+ * This class has methods used for preparing files to deletion.
  * 
  * @author mateusz
  *
  */
-public class FileDeleter {
+public abstract class Deleter {
 
+	/**
+	 * User decision about destination of files.
+	 */
 	private UserInputs userInputs;
-	private FilesLocalization filesLocalization;
-	private FTPConnection ftpConnection;
 
 	/**
-	 * This constructor is used when we want delete local files.
+	 * This method is used for deleting files on local system, FTP server etc.
+	 * 
+	 * @param pathOfGorupDirectory
+	 *            As parameter it takes path to files.
+	 * @throws IOException
+	 */
+	abstract void deleteFiles(String pathOfGorupDirectory) throws IOException;
+
+	/**
+	 * This constructor is used because we need to know if user want to delete
+	 * all files or only replace existing.
 	 * 
 	 * @param userInputs
 	 */
-	public FileDeleter(UserInputs userInputs) {
+	public Deleter(UserInputs userInputs) {
 		this.userInputs = userInputs;
-		this.filesLocalization = FilesLocalization.LOCAL;
-	}
-
-	/**
-	 * This constructor is used when we want to delete files on FTP server.
-	 * 
-	 * @param ftpConnection
-	 * @param userInputs
-	 */
-	public FileDeleter(FTPConnection ftpConnection, UserInputs userInputs) {
-		this.userInputs = userInputs;
-		this.filesLocalization = FilesLocalization.FTPSERVER;
-		this.ftpConnection = ftpConnection;
 	}
 
 	/**
@@ -60,6 +55,7 @@ public class FileDeleter {
 	 * @param path
 	 *            Path to directory where new directories will be created so
 	 *            also here old ones will be deleted.
+	 * @throws IOException
 	 */
 	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path) throws IOException {
 		DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
@@ -71,18 +67,7 @@ public class FileDeleter {
 			for (String directoryToDelete : listOfThreeLettersGroups) {
 				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
 
-				if (filesLocalization == FilesLocalization.FTPSERVER) {
-					FTPFile[] files = ftpConnection.listDirectories(pathOfGorupDirectory);
-					for (FTPFile file : files) {
-						ftpConnection.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
-					}
-					ftpConnection.removeDirectory(pathOfGorupDirectory);
-				}
-
-				if (filesLocalization == FilesLocalization.LOCAL) {
-					File tempfile = createFile(pathOfGorupDirectory);
-					deleteDirectory(tempfile);
-				}
+				deleteFiles(pathOfGorupDirectory);
 			}
 		}
 	}
@@ -108,33 +93,5 @@ public class FileDeleter {
 			}
 		}
 		return listOfThreeLettersGroups;
-	}
-
-	protected File createFile(String pathOfGorupDirectory) {
-		return new File(pathOfGorupDirectory);
-	}
-
-	/**
-	 * This method delete main directory and all included directories.
-	 * 
-	 * @param dir
-	 *            As parameter it takes File object.
-	 * @return It returns dir.delete().
-	 */
-	private boolean deleteDirectory(File dir) {
-		if (dir.isDirectory()) {
-			File[] children = dir.listFiles();
-			for (int i = 0; i < children.length; i++) {
-				boolean success = deleteDirectory(children[i]);
-				if (!success) {
-					return false;
-				}
-			}
-		}
-		return dir.delete();
-	}
-
-	public enum FilesLocalization {
-		LOCAL, FTPSERVER;
 	}
 }

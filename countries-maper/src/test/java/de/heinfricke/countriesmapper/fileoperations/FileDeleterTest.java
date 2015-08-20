@@ -33,17 +33,17 @@ public class FileDeleterTest {
 	@Mock
 	private UserInputs userInputs;
 	
-	private FileDeleter fileDeleter;
+	private LocalFileDeleter fileDeleter;
 	
 	@Mock
 	private File secondChildFile;
 	
 	@Before
 	public void setUp() {
-		fileDeleter = new FileDeleter(userInputs) {
+		fileDeleter = new LocalFileDeleter(userInputs) {
 			protected File createFile(String pathOfGorupDirectory) {
 				return file;
-			};
+			}
 		};
 	}
 	
@@ -76,7 +76,7 @@ public class FileDeleterTest {
 		final File directoryDef = mock(File.class);
 		final File directoryPqr = mock(File.class);
 		
-		FileDeleter fileDeleter = new FileDeleter(userInputs) {
+		LocalFileDeleter fileDeleter = new LocalFileDeleter(userInputs) {
 			protected File createFile(String pathOfGorupDirectory) {
 				if (pathOfGorupDirectory.endsWith("ABC")) {
 					return directoryAbc;
@@ -87,7 +87,7 @@ public class FileDeleterTest {
 				} else {
 					throw new IllegalStateException();
 				}
-			};
+			}
 		};
 		
 		File[] fileChildrenEmpty = new File[0];

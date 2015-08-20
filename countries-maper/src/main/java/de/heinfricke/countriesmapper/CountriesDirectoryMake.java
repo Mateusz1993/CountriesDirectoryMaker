@@ -92,7 +92,7 @@ public class CountriesDirectoryMake {
 		} else {
 			UserInputs userInputs = new UserInputs();
 
-			FileDeleter deleter = new FileDeleter(userInputs);
+			Deleter deleter = new LocalFileDeleter(userInputs);
 			Maker maker = new FileMaker();
 			FTPConnection ftpConnection = new FTPConnection();
 
@@ -100,7 +100,7 @@ public class CountriesDirectoryMake {
 				ftpConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
 				maker = new FTPFileMaker(ftpConnection);
-				deleter = new FileDeleter(ftpConnection, userInputs);
+				deleter = new FTPFileDeleter(ftpConnection, userInputs);
 			}
 			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));

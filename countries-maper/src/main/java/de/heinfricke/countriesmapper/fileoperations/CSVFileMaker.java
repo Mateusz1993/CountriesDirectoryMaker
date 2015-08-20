@@ -94,7 +94,7 @@ public class CSVFileMaker implements Maker {
 	 */
 	private void prepareInformations(List<GroupOfCountries> listOfGroupedCountriesClasses, CSVWriter writer)
 			throws IOException {
-		String[] titles = "Name:#Capital:#Native name:#Borders:".split("#");
+		String[] titles = new String[]{"Name:", "Capital:", "Native name:", "Borders:"};
 		writer.writeNext(titles);
 		for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 			for (Country countries : groupedCountries.getCountriesList()) {

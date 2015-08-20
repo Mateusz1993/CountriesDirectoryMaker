@@ -2,14 +2,9 @@ package de.heinfricke.countriesmapper.utils;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
-
-import de.heinfricke.countriesmapper.CountriesDirectoryMake;
 
 /**
  * This class is used to make all tasks connected with FTP Server.
@@ -18,8 +13,6 @@ import de.heinfricke.countriesmapper.CountriesDirectoryMake;
  *
  */
 public class FTPConnection {
-	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
-
 	/**
 	 * FTP Server host.
 	 */
@@ -74,10 +67,10 @@ public class FTPConnection {
 	 *            FTP user name.
 	 * @param userPassword
 	 *            FTP user password.
+	 * @throws IOException 
+	 * @throws SocketException 
 	 */
-	public void makeConnection(String userHost, String userPort, String userName, String userPassword) {
-		try {
-
+	public void makeConnection(String userHost, String userPort, String userName, String userPassword) throws SocketException, IOException {
 			setAllVariables(userHost, userPort, userName, userPassword);
 
 			client.connect(host, port);
@@ -94,17 +87,6 @@ public class FTPConnection {
 				client.disconnect();
 				System.exit(0);
 			}
-		} catch (SocketException e) {
-			System.out.println(
-					"There was an error while creating or accessing a socket. Please make sure given host, port, username and password are correct and run application again");
-			LOGGER.log(Level.FINE, "There was an error while creating or accesing a socket.", e);
-			System.exit(0);
-		} catch (IOException e) {
-			System.out.println(
-					"There was a problem while connecting to server. Please make sure given host, port, username and password are correct and run application again");
-			LOGGER.log(Level.FINE, "There was a problem while connecting to server.", e);
-			System.exit(0);
-		}
 	}
 
 	/**
@@ -139,8 +121,7 @@ public class FTPConnection {
 	 * @throws IOException
 	 */
 	public FTPFile[] listDirectories(String pathToDirectory) throws IOException {
-		FTPFile[] files = client.listDirectories(pathToDirectory);
-		return files;
+		return client.listDirectories(pathToDirectory);
 	}
 
 	/**
