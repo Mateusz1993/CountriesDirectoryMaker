@@ -118,7 +118,6 @@ public class CountriesDirectoryMake {
 				} else {
 					PrepareForXML preareForXml = new PrepareForXML();
 					preareForXml.setCountries(sortedCountries);
-
 					xmlFileMaker.countryObjectsToXML(preareForXml, cmd.getOptionValue("o"));
 				}
 			}
