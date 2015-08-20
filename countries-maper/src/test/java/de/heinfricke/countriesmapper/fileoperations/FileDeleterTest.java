@@ -26,7 +26,7 @@ public class FileDeleterTest {
 	
 	@Mock
 	private File file;
-	
+
 	@Mock
 	private File childFile;
 	

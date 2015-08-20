@@ -2,6 +2,8 @@ package de.heinfricke.countriesmapper.country;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.*;
+
 /**
  * Country are objects which contains information about countries. For now it
  * contains only countries's names.
@@ -9,12 +11,15 @@ import java.util.List;
  * @author mateusz
  *
  */
+@XmlRootElement(name = "country")
+@XmlType(propOrder = {"name", "capital", "nativeName", "borderCountries"})
 public class Country implements Comparable<Country> {
 	private String name;
 	private String capital;
 	private String nativeName;
 	private List<String> borders;
 	private String allBordersInOneString;
+	private List<Country> borderCountries;
 	
 	public Country(){
 	
@@ -31,6 +36,16 @@ public class Country implements Comparable<Country> {
 		this.name = name;
 	}
 
+	@XmlElementWrapper(name="border-countries")
+	@XmlElement(name="border-country")
+	public List<Country> getBorderCountries(){
+		return borderCountries;
+	}
+	
+	public void setBorderCountries(List<Country> borderCountries){
+		this.borderCountries = borderCountries;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -47,6 +62,7 @@ public class Country implements Comparable<Country> {
 		this.capital = capital;
 	}
 	
+	@XmlElement(name="native-name")
 	public String getNativeName() {
 		return nativeName;
 	}
@@ -54,7 +70,8 @@ public class Country implements Comparable<Country> {
 	public void setNativeName(String nativeName){
 		this.nativeName = nativeName;
 	}
-	
+
+	@XmlTransient
 	public List<String> getBorders(){
 		return borders;
 	}
@@ -67,6 +84,7 @@ public class Country implements Comparable<Country> {
 		this.allBordersInOneString = allBordersInOneString;
 	}
 
+	@XmlTransient
 	public String getAllBordersInOneString(){
 		return allBordersInOneString;
 	}

@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.xml.bind.JAXBException;
+
 import de.heinfricke.countriesmapper.reader.*;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
@@ -27,7 +30,8 @@ public class CountriesDirectoryMake {
 
 			// Read all countries to "Set".
 			CountriesReader countriesReader = new CountriesReader();
-			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"), cmd.hasOption("restCountriesFetch"));
+			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"),
+					cmd.hasOption("restCountriesFetch"));
 
 			// Prepare groups of countries (for example: ABC = (Albania,
 			// Czech Republic), PQR = (Poland, Qatar)).
@@ -36,7 +40,8 @@ public class CountriesDirectoryMake {
 					.organizeCountriesInGroups(sortedCountries);
 
 			// Delete and create directories.
-			countriesDirectoryMake.executeTask(cmd, options, programTask, listOfGroupedCountriesClasses);
+			countriesDirectoryMake.executeTask(cmd, options, programTask, listOfGroupedCountriesClasses,
+					sortedCountries);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Provided file path is wrong. Please provide correct file path.");
@@ -48,11 +53,17 @@ public class CountriesDirectoryMake {
 		} catch (ParseException e) {
 			System.out.println("There was invalid expression. Please use '-H' for help.");
 			LOGGER.log(Level.FINE, "Invalid expression.", e);
+		} catch (JAXBException e) {
+			System.out.println(
+					"There was something invalid during preparing XML file. Please make sure that all countries and path to directories are correct.");
+			LOGGER.log(Level.FINE, "JAXB Exception.", e);
 		} catch (JSONException e) {
-			System.out.println("There was something invalid in JSON. You propably wrote country which doesn't exist or is not supported by our application.");
+			System.out.println(
+					"There was something invalid in JSON. You propably wrote country which doesn't exist or is not supported by our application.");
 			LOGGER.log(Level.FINE, "Invalid expression.", e);
 		} catch (RuntimeException e) {
-			System.out.println("You propably wrote country which doesn't exists or is not supported by our application. Please make sure that country's name is correct and run application again.");
+			System.out.println(
+					"You propably wrote country which doesn't exists or is not supported by our application. Please make sure that country's name is correct and run application again.");
 			LOGGER.log(Level.FINE, "HTTP error.", e);
 		}
 	}
@@ -71,17 +82,20 @@ public class CountriesDirectoryMake {
 	 * @param listOfGroupedCountriesClasses
 	 *            As fourth parameter it takes list of GroupOfCountries objects.
 	 * @throws IOException
+	 * @throws JAXBException
 	 */
 	private void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
-			List<GroupOfCountries> listOfGroupedCountriesClasses) throws IOException {
+			List<GroupOfCountries> listOfGroupedCountriesClasses, Set<Country> sortedCountries)
+					throws IOException, JAXBException {
 		if (programTask == ProgramTask.ERROR_INFO) {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
 			UserInputs userInputs = new UserInputs();
-			
+
 			FileDeleter deleter = new FileDeleter(userInputs);
 			Maker maker = new FileMaker();
 			FTPConnection ftpConnection = new FTPConnection();
+
 			if (programTask == ProgramTask.WORK_ON_FTP) {
 				ftpConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
 						cmd.getOptionValue("pw"));
@@ -90,17 +104,25 @@ public class CountriesDirectoryMake {
 			}
 			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
-			
-			if(cmd.hasOption("restCountriesFetch"))
-			{
+
+			if (cmd.hasOption("restCountriesFetch")) {
 				CSVFileMaker csvFileMaker = new CSVFileMaker();
-				if(programTask == ProgramTask.WORK_ON_FTP)
-				{
+				XMLFileMaker xmlFileMaker = new XMLFileMaker();
+				if (programTask == ProgramTask.WORK_ON_FTP) {
 					csvFileMaker = new CSVFileMaker(ftpConnection);
+					xmlFileMaker = new XMLFileMaker(ftpConnection);
 				}
-				csvFileMaker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+
+				if (!cmd.hasOption("xml")) {
+					csvFileMaker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+				} else {
+					PrepareForXML preareForXml = new PrepareForXML();
+					preareForXml.setCountries(sortedCountries);
+
+					xmlFileMaker.countryObjectsToXML(preareForXml, cmd.getOptionValue("o"));
+				}
 			}
-			
+
 			if (programTask == ProgramTask.WORK_ON_FTP) {
 				ftpConnection.makeDisconnection();
 			}
@@ -128,7 +150,9 @@ public class CountriesDirectoryMake {
 				.addOption("o", "outputPath", true, "Path to your output.").addOption("h", "host", true, "FTP host.")
 				.addOption("p", "port", true, "FTP port.").addOption("u", "ftpUser", true, "FTP user name.")
 				.addOption("pw", "ftpPassword", true, "FTP user password.")
-				.addOption("restCountriesFetch", "r", false, "Make file with informations about each country.");
+				.addOption("restCountriesFetch", "r", false, "Make file with informations about each country.")
+				.addOption("csv", "c", false, "Create CSV file with informations. (default)")
+				.addOption("xml", "x", false, "Create XML file with informations.");
 
 		cmd = parser.parse(options, args);
 		return cmd;

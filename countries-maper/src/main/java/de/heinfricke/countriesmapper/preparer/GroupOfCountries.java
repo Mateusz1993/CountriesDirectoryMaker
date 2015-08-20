@@ -25,7 +25,7 @@ public class GroupOfCountries {
 	 * List of countries assigned to the group.
 	 */
 	List<Country> countriesList;
-
+	
 	public GroupOfCountries(){
 		//empty Constructor;
 	};
@@ -50,7 +50,7 @@ public class GroupOfCountries {
 	public List<Country> getCountriesList() {
 		return countriesList;
 	}
-
+	
 	/**
 	 * This function divide alphabet for X letters and return List of these
 	 * letters groups.

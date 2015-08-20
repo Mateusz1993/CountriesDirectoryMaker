@@ -1,6 +1,7 @@
 package de.heinfricke.countriesmapper.preparer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -102,6 +103,9 @@ public class InformationPreparer {
 	private void setAllNeighborsIntoOneString(Client client, Country country)
 			throws IOException, JsonParseException, JsonMappingException {
 		List<String> neighbors = country.getBorders();
+		List<String> fullNameNeighbors = new ArrayList<String>();
+		List<Country> borderCountries = new ArrayList<Country>();
+		
 		String borders = "";
 		for (String neighbor : neighbors) {
 			String getUrl = ("http://restcountries.eu/rest/v1/alpha/" + neighbor);
@@ -111,9 +115,16 @@ public class InformationPreparer {
 
 			Country newCountry = null;
 			newCountry = objectMapper.readValue(result, Country.class);
+			fullNameNeighbors.add(newCountry.getName());
 			borders += (newCountry.getName() + "/");
+			
+			Country newerCountry = new Country(newCountry.getName());
+			borderCountries.add(newerCountry);
 		}
 		borders = borders.substring(0, borders.length() - 1);
 		country.setAllBordersInOneString(borders);
+		country.setBorders(fullNameNeighbors);
+		country.setBorderCountries(borderCountries);
+		
 	}
 }
