@@ -55,19 +55,19 @@ public class CSVFileMaker implements Maker {
 	 */
 	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
 		try {
-			CSVWriter writer = null;
+			CSVWriter csvWriter = null;
 			ByteArrayOutputStream baos = null;
 			final String fileName = "Information.csv";
 
 			if (ftpConnection == null) {
-				writer = new CSVWriter(new FileWriter(path + File.separator + fileName));
+				csvWriter = new CSVWriter(new FileWriter(path + File.separator + fileName));
 			} else {
 				baos = new ByteArrayOutputStream();
-				Writer writer2 = new BufferedWriter(new OutputStreamWriter(baos));
-				writer = new CSVWriter(writer2);
+				Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
+				csvWriter = new CSVWriter(writer);
 			}
 
-			prepareInformations(listOfGroupedCountriesClasses, writer);
+			prepareInformations(listOfGroupedCountriesClasses, csvWriter);
 
 			if (ftpConnection != null) {
 				FTPClient client = ftpConnection.getClient();
