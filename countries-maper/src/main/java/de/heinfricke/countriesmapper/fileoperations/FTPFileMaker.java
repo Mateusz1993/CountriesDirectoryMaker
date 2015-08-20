@@ -3,10 +3,6 @@ package de.heinfricke.countriesmapper.fileoperations;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import de.heinfricke.countriesmapper.CountriesDirectoryMake;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
@@ -18,7 +14,6 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
  *
  */
 public class FTPFileMaker implements Maker {
-	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 
 	FTPConnection ftpConnection;
 		
@@ -33,8 +28,7 @@ public class FTPFileMaker implements Maker {
 	 * de.heinfricke.countriesmapper.fileoperations.Maker#createDirectories(java
 	 * .util.List, java.lang.String)
 	 */
-	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
-		try {
+	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) throws IOException {
 			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
 				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
 				createDirectory(pathToGroupFolder);
@@ -43,11 +37,6 @@ public class FTPFileMaker implements Maker {
 					createDirectory(pathToSingleFile);
 				}
 			}
-		} catch (IOException e) {
-			System.out.println(
-					"There was a problem while connecting to server. Please make sure given host, port, username and password are correct and run application again");
-			LOGGER.log(Level.FINE, "There was a problem while connecting to server.", e);
-		}
 	}
 
 	/**

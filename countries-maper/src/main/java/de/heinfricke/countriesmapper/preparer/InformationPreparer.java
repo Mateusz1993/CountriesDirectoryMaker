@@ -125,6 +125,5 @@ public class InformationPreparer {
 		country.setAllBordersInOneString(borders);
 		country.setBorders(fullNameNeighbors);
 		country.setBorderCountries(borderCountries);
-		
 	}
 }

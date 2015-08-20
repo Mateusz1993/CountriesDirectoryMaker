@@ -9,12 +9,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.net.ftp.FTPClient;
 import au.com.bytecode.opencsv.CSVWriter;
-import de.heinfricke.countriesmapper.CountriesDirectoryMake;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
@@ -26,7 +23,6 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
  *
  */
 public class CSVFileMaker implements Maker {
-	private static final Logger LOGGER = Logger.getLogger(CountriesDirectoryMake.class.getCanonicalName());
 	/**
 	 * Object of FTPConnection. Important if we create files on FTP server.
 	 */
@@ -53,8 +49,7 @@ public class CSVFileMaker implements Maker {
 	 * de.heinfricke.countriesmapper.fileoperations.Maker#createFiles(java.util.
 	 * List, java.lang.String)
 	 */
-	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) {
-		try {
+	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) throws IOException {
 			CSVWriter csvWriter = null;
 			ByteArrayOutputStream baos = null;
 			final String fileName = "Information.csv";
@@ -75,11 +70,6 @@ public class CSVFileMaker implements Maker {
 				ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 				client.storeFile(path + File.separator + fileName, bais);
 			}
-		} catch (IOException e) {
-			System.out.println(
-					"There was a problem while connecting to server or during creating file. Please make sure given input path, output path, host, port, username and password are correct and run application again.");
-			LOGGER.log(Level.FINE, "There was a problem while connecting to server or during creating file.", e);
-		}
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package de.heinfricke.countriesmapper.fileoperations;
 
+import java.io.IOException;
 import java.util.List;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 
@@ -19,6 +20,7 @@ public interface Maker {
 	 * @param path
 	 *            Second parameter is path to directory where new directories
 	 *            will be created.
+	 * @throws IOException 
 	 */
-	public void createFiles(List<GroupOfCountries> organizedCountries, String path);
+	public void createFiles(List<GroupOfCountries> organizedCountries, String path) throws IOException;
 }

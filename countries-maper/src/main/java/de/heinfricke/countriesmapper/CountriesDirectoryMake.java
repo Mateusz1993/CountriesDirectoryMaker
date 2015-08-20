@@ -139,9 +139,7 @@ public class CountriesDirectoryMake {
 	 * @throws ParseException
 	 */
 	private CommandLine readFromCommandLine(String[] args, Options options) throws ParseException {
-		CommandLine cmd;
 		CommandLineParser parser = new DefaultParser();
-
 		options.addOption("H", "help", false, "Show help.")
 				.addOption("l", "localFileSystem", false, "Make directories in your local system.")
 				.addOption("f", "ftp", false, "Make directories in your FTP Server.")
@@ -153,8 +151,7 @@ public class CountriesDirectoryMake {
 				.addOption("csv", "c", false, "Create CSV file with informations. (default)")
 				.addOption("xml", "x", false, "Create XML file with informations.");
 
-		cmd = parser.parse(options, args);
-		return cmd;
+		return parser.parse(options, args);
 	}
 
 	/**
