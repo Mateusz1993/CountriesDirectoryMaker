@@ -43,6 +43,9 @@ public class CountriesDirectoryMake {
 			countriesDirectoryMake.executeTask(cmd, options, programTask, listOfGroupedCountriesClasses,
 					sortedCountries);
 
+		} catch (IllegalArgumentException e) {
+			System.out.println("Unknown value. Please use D, R or A as your decision.");
+			LOGGER.log(Level.FINE, "Unknown value.", e);
 		} catch (FileNotFoundException e) {
 			System.out.println("Provided file path is wrong. Please provide correct file path.");
 			LOGGER.log(Level.FINE, "Provided file path is wrong. Please provide correct file path.", e);
@@ -86,7 +89,7 @@ public class CountriesDirectoryMake {
 	 */
 	private void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
 			List<GroupOfCountries> listOfGroupedCountriesClasses, Set<Country> sortedCountries)
-					throws IOException, JAXBException {
+					throws IOException, JAXBException, IllegalArgumentException {
 		if (programTask == ProgramTask.ERROR_INFO) {
 			System.out.println("You wrote something wrong. Please use '-H' for help.");
 		} else {
@@ -107,10 +110,10 @@ public class CountriesDirectoryMake {
 
 			if (cmd.hasOption("restCountriesFetch")) {
 				CSVFileMaker csvFileMaker = new CSVFileMaker();
-				XMLFileMaker xmlFileMaker = new XMLFileMaker();
+				XMLMaker xmlMaker = new XMLMaker();
 				if (programTask == ProgramTask.WORK_ON_FTP) {
 					csvFileMaker = new CSVFileMaker(ftpConnection);
-					xmlFileMaker = new XMLFileMaker(ftpConnection);
+					xmlMaker = new XMLMaker(ftpConnection);
 				}
 
 				if (!cmd.hasOption("xml")) {
@@ -118,7 +121,7 @@ public class CountriesDirectoryMake {
 				} else {
 					PrepareForXML preareForXml = new PrepareForXML();
 					preareForXml.setCountries(sortedCountries);
-					xmlFileMaker.countryObjectsToXML(preareForXml, cmd.getOptionValue("o"));
+					xmlMaker.countryObjectsToXML(preareForXml, cmd.getOptionValue("o"));
 				}
 			}
 

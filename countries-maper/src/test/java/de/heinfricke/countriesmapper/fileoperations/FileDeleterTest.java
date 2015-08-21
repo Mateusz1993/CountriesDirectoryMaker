@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.UserInputs;
-import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
+import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FileDeleterTest {

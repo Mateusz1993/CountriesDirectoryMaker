@@ -11,13 +11,13 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
  * @author mateusz
  *
  */
-public class XMLFileMaker {
+public class XMLMaker {
 	/**
 	 * Object of FTPConnection. Important if we create files on FTP server.
 	 */
 	private FTPConnection ftpConnection = null;
 
-	public XMLFileMaker() {
+	public XMLMaker() {
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class XMLFileMaker {
 	 * @param ftpConnection
 	 *            As parameter it takes FTPConnection object.
 	 */
-	public XMLFileMaker(FTPConnection ftpConnection) {
+	public XMLMaker(FTPConnection ftpConnection) {
 		this.ftpConnection = ftpConnection;
 	}
 

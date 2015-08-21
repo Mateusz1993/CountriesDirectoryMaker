@@ -7,7 +7,7 @@ import java.util.List;
 
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.utils.UserInputs;
-import de.heinfricke.countriesmapper.utils.UserInputs.DirectoriesActivity;
+import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 
 /**
  * This class has methods used for preparing files to deletion.
@@ -57,13 +57,14 @@ public abstract class Deleter {
 	 *            also here old ones will be deleted.
 	 * @throws IOException
 	 */
-	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path) throws IOException {
+	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path)
+			throws IOException, IllegalArgumentException {
 		DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
 		List<String> listOfThreeLettersGroups;
 
 		listOfThreeLettersGroups = prepareThreeLettersGroups(organizedCountries, userDecision);
 
-		if ((userDecision == DirectoriesActivity.DELETE) || (userDecision == DirectoriesActivity.REPLACE)) {
+		if (userDecision.decisionAboutDeletingFiles(userDecision)) {
 			for (String directoryToDelete : listOfThreeLettersGroups) {
 				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
 

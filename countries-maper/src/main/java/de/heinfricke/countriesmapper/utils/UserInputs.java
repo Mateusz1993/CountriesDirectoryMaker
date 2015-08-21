@@ -17,9 +17,9 @@ public class UserInputs {
 	 * 
 	 * @return User decision about future of his directories.
 	 */
-	public DirectoriesActivity userDecisionAboutDirectories() {
+	public DirectoriesActivity userDecisionAboutDirectories() throws IllegalArgumentException  {
 		Scanner scanner = null;
-		String userDecision = "A";
+		String userDecision;
 		scanner = new Scanner(System.in);
 		try {
 			System.out.println("\nWhat do you want to do with your directories?");
@@ -35,16 +35,6 @@ public class UserInputs {
 			}
 		}
 
-		if (userDecision.equalsIgnoreCase("D")) {
-			return DirectoriesActivity.DELETE;
-		} else if (userDecision.equalsIgnoreCase("R")) {
-			return DirectoriesActivity.REPLACE;
-		} else {
-			return DirectoriesActivity.ADD_NEW_CONTENTS;
-		}
-	}
-
-	public enum DirectoriesActivity {
-		DELETE, REPLACE, ADD_NEW_CONTENTS;
+		return DirectoriesActivity.getEnum(userDecision.toUpperCase());
 	}
 }
