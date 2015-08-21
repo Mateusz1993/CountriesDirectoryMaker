@@ -95,8 +95,7 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	public void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller)
 			throws JAXBException, IOException {
 		FTPClient client = ftpConnection.getClient();
-		ByteArrayOutputStream baos = null;
-		baos = new ByteArrayOutputStream();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
 		marshaller.marshal(prepareForXml, writer);
 		byte[] bytes = baos.toByteArray();
