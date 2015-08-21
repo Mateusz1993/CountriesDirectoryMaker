@@ -22,13 +22,13 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
  * @author mateusz
  *
  */
-public class CSVFileMaker implements Maker {
+public class CSVMaker implements Maker {
 	/**
 	 * Object of FTPConnection. Important if we create files on FTP server.
 	 */
 	private FTPConnection ftpConnection = null;
 
-	public CSVFileMaker() {
+	public CSVMaker() {
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class CSVFileMaker implements Maker {
 	 * @param ftpConnection
 	 *            As parameter it takes FTPConnection object.
 	 */
-	public CSVFileMaker(FTPConnection ftpConnection) {
+	public CSVMaker(FTPConnection ftpConnection) {
 		this.ftpConnection = ftpConnection;
 	}
 

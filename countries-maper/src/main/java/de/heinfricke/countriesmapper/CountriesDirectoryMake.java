@@ -109,11 +109,11 @@ public class CountriesDirectoryMake {
 			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 
 			if (cmd.hasOption("restCountriesFetch")) {
-				CSVFileMaker csvFileMaker = new CSVFileMaker();
-				XMLMaker xmlMaker = new XMLMaker();
+				CSVMaker csvFileMaker = new CSVMaker();
+				XMLMaker xmlMaker = new FileMaker();
 				if (programTask == ProgramTask.WORK_ON_FTP) {
-					csvFileMaker = new CSVFileMaker(ftpConnection);
-					xmlMaker = new XMLMaker(ftpConnection);
+					csvFileMaker = new CSVMaker(ftpConnection);
+					xmlMaker = new FTPFileMaker(ftpConnection);
 				}
 
 				if (!cmd.hasOption("xml")) {

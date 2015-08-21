@@ -64,7 +64,7 @@ public abstract class Deleter {
 
 		listOfThreeLettersGroups = prepareThreeLettersGroups(organizedCountries, userDecision);
 
-		if (userDecision.decisionAboutDeletingFiles(userDecision)) {
+		if (userDecision.requiresDirectoryRemove(userDecision)) {
 			for (String directoryToDelete : listOfThreeLettersGroups) {
 				String pathOfGorupDirectory = (path + File.separator + directoryToDelete);
 

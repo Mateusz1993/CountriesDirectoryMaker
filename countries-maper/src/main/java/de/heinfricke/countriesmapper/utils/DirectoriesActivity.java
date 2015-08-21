@@ -34,7 +34,7 @@ public enum DirectoriesActivity {
 	 *            As first parameter it takes DirectoriesActivity ENUM.
 	 * @return It returns true or false.
 	 */
-	public boolean decisionAboutDeletingFiles(DirectoriesActivity directoriesActivity) {
+	public boolean requiresDirectoryRemove(DirectoriesActivity directoriesActivity) {
 		String[] lettersWhichDecideAboutDeletion = new String[] { "D", "R" };
 		for (String letter : lettersWhichDecideAboutDeletion) {
 			if (letter == directoriesActivity.directoriesActivityCode) {
