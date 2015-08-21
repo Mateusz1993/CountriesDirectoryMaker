@@ -36,12 +36,20 @@ public class FileMaker extends XMLMaker implements Maker {
 			}
 		}
 	}
-	
+
 	protected File createFile(String pathToSingleFile) {
 		return new File(pathToSingleFile);
 	}
-	
-	public void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller) throws JAXBException{
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.XMLMaker#createXMLFile(de.
+	 * heinfricke.countriesmapper.preparer.PrepareForXML, java.lang.String,
+	 * javax.xml.bind.Marshaller)
+	 */
+	public void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller) throws JAXBException {
 		marshaller.marshal(prepareForXml, new File(path + File.separator + "Informations.xml"));
 	}
 }

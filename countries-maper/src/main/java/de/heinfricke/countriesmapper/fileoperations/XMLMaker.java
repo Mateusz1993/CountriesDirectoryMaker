@@ -9,8 +9,23 @@ import de.heinfricke.countriesmapper.preparer.PrepareForXML;
  *
  */
 public abstract class XMLMaker {
-	public abstract void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller) throws JAXBException, IOException;
-	
+	/**
+	 * This method create XML files.
+	 * 
+	 * @param prepareForXml
+	 *            As first parameter it takes Country objects prepared to
+	 *            creating XML.
+	 * @param path
+	 *            As second parameter it takes output path where XML file will
+	 *            be created.
+	 * @param marshaller
+	 *            As third parameter it takes Marshaller object.
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	public abstract void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller)
+			throws JAXBException, IOException;
+
 	/**
 	 * This method convert Country Objects to XML representation and save it to
 	 * file.

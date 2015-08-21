@@ -28,11 +28,11 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
 public class FTPFileMaker extends XMLMaker implements Maker {
 
 	FTPConnection ftpConnection;
-		
-	public FTPFileMaker(FTPConnection ftpConnection){
+
+	public FTPFileMaker(FTPConnection ftpConnection) {
 		this.ftpConnection = ftpConnection;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -41,14 +41,14 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	 * .util.List, java.lang.String)
 	 */
 	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) throws IOException {
-			for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
-				String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
-				createDirectory(pathToGroupFolder);
-				for (Country countries : groupedCountries.getCountriesList()) {
-					String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
-					createDirectory(pathToSingleFile);
-				}
+		for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
+			String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
+			createDirectory(pathToGroupFolder);
+			for (Country countries : groupedCountries.getCountriesList()) {
+				String pathToSingleFile = (pathToGroupFolder + File.separator + countries.getName());
+				createDirectory(pathToSingleFile);
 			}
+		}
 	}
 
 	/**
@@ -60,8 +60,17 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	private void createDirectory(String pathToSingleFile) throws IOException {
 		ftpConnection.makeDirectory(pathToSingleFile);
 	}
-	
-	public void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller) throws JAXBException, IOException {
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.XMLMaker#createXMLFile(de.
+	 * heinfricke.countriesmapper.preparer.PrepareForXML, java.lang.String,
+	 * javax.xml.bind.Marshaller)
+	 */
+	public void createXMLFile(PrepareForXML prepareForXml, String path, Marshaller marshaller)
+			throws JAXBException, IOException {
 		FTPClient client = ftpConnection.getClient();
 		ByteArrayOutputStream baos = null;
 		baos = new ByteArrayOutputStream();
