@@ -14,6 +14,7 @@ import javax.xml.bind.Marshaller;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import au.com.bytecode.opencsv.CSVWriter;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
 import de.heinfricke.countriesmapper.preparer.PrepareForXML;
@@ -59,6 +60,28 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	 */
 	private void createDirectory(String pathToSingleFile) throws IOException {
 		ftpConnection.makeDirectory(pathToSingleFile);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Maker#createCSVFile(java.
+	 * util.List, java.lang.String,
+	 * de.heinfricke.countriesmapper.fileoperations.CSVMaker)
+	 */
+	public void createCSVFile(List<GroupOfCountries> listOfGroupedCountriesClasses, String path, CSVMaker csvMaker)
+			throws IOException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
+		CSVWriter csvWriter = new CSVWriter(writer);
+
+		csvMaker.prepareInformations(listOfGroupedCountriesClasses, csvWriter);
+
+		FTPClient client = ftpConnection.getClient();
+		byte[] bytes = baos.toByteArray();
+		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+		client.storeFile(path + File.separator + "Information.csv", bais);
 	}
 
 	/*

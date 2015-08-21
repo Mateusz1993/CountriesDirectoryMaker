@@ -20,7 +20,22 @@ public interface Maker {
 	 * @param path
 	 *            Second parameter is path to directory where new directories
 	 *            will be created.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void createFiles(List<GroupOfCountries> organizedCountries, String path) throws IOException;
+
+	/**
+	 * This method creates CSV Files.
+	 * 
+	 * @param listOfGroupedCountriesClasses
+	 *            As first parameter it takes list of grouped Countries objects.
+	 * @param path
+	 *            As second parameter it takes path to output directory, where
+	 *            CSV file will be created.
+	 * @param csvMaker
+	 *            As third parameter it takes CSVMaker object.
+	 * @throws IOException
+	 */
+	public void createCSVFile(List<GroupOfCountries> listOfGroupedCountriesClasses, String path, CSVMaker csvMaker)
+			throws IOException;
 }

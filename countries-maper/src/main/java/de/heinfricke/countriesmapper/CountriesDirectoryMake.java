@@ -109,15 +109,14 @@ public class CountriesDirectoryMake {
 			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
 
 			if (cmd.hasOption("restCountriesFetch")) {
-				CSVMaker csvFileMaker = new CSVMaker();
 				XMLMaker xmlMaker = new FileMaker();
 				if (programTask == ProgramTask.WORK_ON_FTP) {
-					csvFileMaker = new CSVMaker(ftpConnection);
 					xmlMaker = new FTPFileMaker(ftpConnection);
 				}
 
 				if (!cmd.hasOption("xml")) {
-					csvFileMaker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+					CSVMaker csvMaker = new CSVMaker();
+					maker.createCSVFile(listOfGroupedCountriesClasses, cmd.getOptionValue("o"), csvMaker);
 				} else {
 					PrepareForXML preareForXml = new PrepareForXML();
 					preareForXml.setCountries(sortedCountries);

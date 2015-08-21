@@ -1,77 +1,18 @@
 package de.heinfricke.countriesmapper.fileoperations;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.List;
-
-import org.apache.commons.net.ftp.FTPClient;
 import au.com.bytecode.opencsv.CSVWriter;
 import de.heinfricke.countriesmapper.country.Country;
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
-import de.heinfricke.countriesmapper.utils.FTPConnection;
 
 /**
- * This class contains methods which are used to make CSV files on local system and FTP server.
+ * This class contains methods which are used to prepare CSV files.
  * 
  * @author mateusz
  *
  */
-public class CSVMaker implements Maker {
-	/**
-	 * Object of FTPConnection. Important if we create files on FTP server.
-	 */
-	private FTPConnection ftpConnection = null;
-
-	public CSVMaker() {
-	}
-
-	/**
-	 * This constructor will be used when user will use working on FTP server
-	 * version.
-	 * 
-	 * @param ftpConnection
-	 *            As parameter it takes FTPConnection object.
-	 */
-	public CSVMaker(FTPConnection ftpConnection) {
-		this.ftpConnection = ftpConnection;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.heinfricke.countriesmapper.fileoperations.Maker#createFiles(java.util.
-	 * List, java.lang.String)
-	 */
-	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) throws IOException {
-			CSVWriter csvWriter = null;
-			ByteArrayOutputStream baos = null;
-			final String fileName = "Information.csv";
-
-			if (ftpConnection == null) {
-				csvWriter = new CSVWriter(new FileWriter(path + File.separator + fileName));
-			} else {
-				baos = new ByteArrayOutputStream();
-				Writer writer = new BufferedWriter(new OutputStreamWriter(baos));
-				csvWriter = new CSVWriter(writer);
-			}
-
-			prepareInformations(listOfGroupedCountriesClasses, csvWriter);
-
-			if (ftpConnection != null) {
-				FTPClient client = ftpConnection.getClient();
-				byte[] bytes = baos.toByteArray();
-				ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-				client.storeFile(path + File.separator + fileName, bais);
-			}
-	}
-
+public class CSVMaker {
 	/**
 	 * This method prepare read all informations about countries from Country
 	 * objects.
@@ -82,7 +23,7 @@ public class CSVMaker implements Maker {
 	 *            As second parameter it takes CSVWriter object.
 	 * @throws IOException
 	 */
-	private void prepareInformations(List<GroupOfCountries> listOfGroupedCountriesClasses, CSVWriter writer)
+	 void prepareInformations(List<GroupOfCountries> listOfGroupedCountriesClasses, CSVWriter writer)
 			throws IOException {
 		String[] titles = new String[]{"Name:", "Capital:", "Native name:", "Borders:"};
 		writer.writeNext(titles);
