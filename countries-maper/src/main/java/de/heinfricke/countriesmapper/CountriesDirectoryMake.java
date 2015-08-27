@@ -67,7 +67,6 @@ public class CountriesDirectoryMake {
 					"There was something invalid in JSON. You propably wrote country which doesn't exist or is not supported by our application.");
 			LOGGER.log(Level.FINE, "Invalid expression.", e);
 		} catch (RuntimeException e) {
-			e.printStackTrace();
 			System.out.println(
 					"You propably wrote country which doesn't exists or is not supported by our application. Please make sure that country's name is correct and run application again.");
 			LOGGER.log(Level.FINE, "HTTP error.", e);
