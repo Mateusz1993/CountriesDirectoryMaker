@@ -133,6 +133,18 @@ public class FTPConnection {
 		client.logout();
 		client.disconnect();
 	}
+	
+	
+	public boolean checkFTPConnection(){
+		if (client == null){
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
 
 	public FTPClient getClient() {
 		return client;

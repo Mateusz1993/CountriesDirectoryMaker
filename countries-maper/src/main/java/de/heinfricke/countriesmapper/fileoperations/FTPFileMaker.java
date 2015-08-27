@@ -29,7 +29,11 @@ import de.heinfricke.countriesmapper.utils.FTPConnection;
 public class FTPFileMaker extends XMLMaker implements Maker {
 
 	FTPConnection ftpConnection;
-
+	String host;
+	String port;
+	String username;
+	String password;
+	
 	public FTPFileMaker(FTPConnection ftpConnection) {
 		this.ftpConnection = ftpConnection;
 	}

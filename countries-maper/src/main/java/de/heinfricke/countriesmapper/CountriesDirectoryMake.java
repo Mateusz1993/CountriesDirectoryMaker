@@ -1,6 +1,7 @@
 package de.heinfricke.countriesmapper;
 
 import java.io.*;
+import java.net.SocketException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,6 +67,7 @@ public class CountriesDirectoryMake {
 					"There was something invalid in JSON. You propably wrote country which doesn't exist or is not supported by our application.");
 			LOGGER.log(Level.FINE, "Invalid expression.", e);
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			System.out.println(
 					"You propably wrote country which doesn't exists or is not supported by our application. Please make sure that country's name is correct and run application again.");
 			LOGGER.log(Level.FINE, "HTTP error.", e);
@@ -91,40 +93,104 @@ public class CountriesDirectoryMake {
 	private void executeTask(CommandLine cmd, Options options, CLIVariables cliVariables,
 			List<GroupOfCountries> listOfGroupedCountriesClasses, Set<Country> sortedCountries)
 					throws IOException, JAXBException, IllegalArgumentException {
-		UserInputs userInputs = new UserInputs();
 
-		Deleter deleter = new LocalFileDeleter(userInputs);
-		Maker maker = new FileMaker();
 		FTPConnection ftpConnection = new FTPConnection();
+		Deleter deleter = createDeleter(cliVariables, ftpConnection);
+		Maker maker = createMaker(cliVariables, ftpConnection);
 
-		if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
-			ftpConnection.makeConnection(cliVariables.getHost(), cliVariables.getPort(), cliVariables.getFTPUser(),
-					cliVariables.getFTPPassword());
-			maker = new FTPFileMaker(ftpConnection);
-			deleter = new FTPFileDeleter(ftpConnection, userInputs);
-		}
 		deleter.deleteDirectories(listOfGroupedCountriesClasses, cliVariables.getOutputPath());
 		maker.createFiles(listOfGroupedCountriesClasses, cliVariables.getOutputPath());
 
-		if (cmd.hasOption("restCountriesFetch")) {
-			XMLMaker xmlMaker = new FileMaker();
-			if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
-				xmlMaker = new FTPFileMaker(ftpConnection);
-			}
+		createOutputCSV(cliVariables, listOfGroupedCountriesClasses, maker);
+		createOutputXML(cliVariables, sortedCountries, ftpConnection);
 
-			if (!cmd.hasOption("xml")) {
-				CSVMaker csvMaker = new CSVMaker();
-				maker.createCSVFile(listOfGroupedCountriesClasses, cliVariables.getOutputPath(), csvMaker);
-			} else {
-				PrepareForXML preareForXml = new PrepareForXML();
-				preareForXml.setCountries(sortedCountries);
-				xmlMaker.countryObjectsToXML(preareForXml, cliVariables.getOutputPath());
-			}
-		}
-
-		if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
+		if (ftpConnection.checkFTPConnection()) {
 			ftpConnection.makeDisconnection();
 		}
+	}
+
+	/**
+	 * This method create new XML file.
+	 * 
+	 * @param cliVariables
+	 *            As first parameter it takes CLIVariables object.
+	 * @param sortedCountries
+	 *            As second parameter it takes set of sorted Countries.
+	 * @param ftpConnection
+	 *            As third parameter it takes FPTConnection object.
+	 * @throws JAXBException
+	 * @throws IOException
+	 */
+	private void createOutputXML(CLIVariables cliVariables, Set<Country> sortedCountries, FTPConnection ftpConnection)
+			throws JAXBException, IOException {
+		if (cliVariables.getXML()) {
+			XMLMaker xmlMaker = new FileMaker();
+			if (ftpConnection.checkFTPConnection()) {
+				xmlMaker = new FTPFileMaker(ftpConnection);
+			}
+			PrepareForXML preareForXml = new PrepareForXML();
+			preareForXml.setCountries(sortedCountries);
+			xmlMaker.countryObjectsToXML(preareForXml, cliVariables.getOutputPath());
+		}
+	}
+
+	/**
+	 * This method create new CSV file.
+	 * 
+	 * @param cliVariables
+	 *            As first parameter it takes CLIVariables object.
+	 * @param listOfGroupedCountriesClasses
+	 *            As second parameter it take List of GroupOfCountries objects.
+	 * @param maker
+	 *            As third parameter it takes Maker object.
+	 * @throws IOException
+	 */
+	private void createOutputCSV(CLIVariables cliVariables, List<GroupOfCountries> listOfGroupedCountriesClasses,
+			Maker maker) throws IOException {
+		if (cliVariables.getCSV()) {
+			CSVMaker csvMaker = new CSVMaker();
+			maker.createCSVFile(listOfGroupedCountriesClasses, cliVariables.getOutputPath(), csvMaker);
+		}
+	}
+
+	/**
+	 * This method create Deleter object.
+	 * 
+	 * @param cliVariables
+	 *            As first parameter it takes CLIVariables object.
+	 * @param ftpConnection
+	 *            As second parameter it takes FTPConnection object.
+	 * @return It returns Deleter object.
+	 * @throws SocketException
+	 * @throws IOException
+	 */
+	private Deleter createDeleter(CLIVariables cliVariables, FTPConnection ftpConnection)
+			throws SocketException, IOException {
+		UserInputs userInputs = new UserInputs();
+		Deleter deleter = new LocalFileDeleter(userInputs);
+		if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
+			ftpConnection.makeConnection(cliVariables.getHost(), cliVariables.getPort(), cliVariables.getFTPUser(),
+					cliVariables.getFTPPassword());
+			deleter = new FTPFileDeleter(ftpConnection, userInputs);
+		}
+		return deleter;
+	}
+
+	/**
+	 * This method create Maker object.
+	 * 
+	 * @param cliVariables
+	 *            As first parameter it takes CLIVariables object.
+	 * @param ftpConnection
+	 *            As second parameter it takes FTPConnection object.
+	 * @return It returns Maker object.
+	 */
+	private Maker createMaker(CLIVariables cliVariables, FTPConnection ftpConnection) {
+		Maker maker = new FileMaker();
+		if (ftpConnection.checkFTPConnection()) {
+			maker = new FTPFileMaker(ftpConnection);
+		}
+		return maker;
 	}
 
 	/**
@@ -154,7 +220,7 @@ public class CountriesDirectoryMake {
 
 	/**
 	 * This function takes as parameter CommandLine object and basing on user's
-	 * parameters it return correct ProgramTask enum's option.
+	 * parameters it uses correct constructor to create CLIVariables object.
 	 * 
 	 * @param cmd
 	 *            As parameter it takes CommandLine object.
@@ -164,7 +230,8 @@ public class CountriesDirectoryMake {
 	private CLIVariables returnCLIVariables(CommandLine cmd) throws ParseException {
 		CLIVariables cliVariables;
 		if ((cmd.hasOption("l") && cmd.hasOption("i") && cmd.hasOption("o"))) {
-			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"), ProgramTask.WORK_ON_LOCAL_FILES);
+			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"),
+					ProgramTask.WORK_ON_LOCAL_FILES);
 		} else if (cmd.hasOption("f") && cmd.hasOption("h") && cmd.hasOption("p") && cmd.hasOption("u")
 				&& cmd.hasOption("pw") && cmd.hasOption("o")) {
 			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"), cmd.getOptionValue("h"),
@@ -175,10 +242,10 @@ public class CountriesDirectoryMake {
 		} else {
 			throw new ParseException("There was invalid expression. Please use '-H' for help.");
 		}
-		
-		if(cmd.hasOption("restCountriesFetch")){
+
+		if (cmd.hasOption("restCountriesFetch")) {
 			cliVariables.setRestCountriesFetch(true);
-			if(cmd.hasOption("xml")){
+			if (cmd.hasOption("xml")) {
 				cliVariables.setXML(true);
 			} else {
 				cliVariables.setCSV(true);

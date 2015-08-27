@@ -15,6 +15,16 @@ public class CLIVariables {
 	private boolean xml = false;
 	private ProgramTask programTask;
 
+	/**
+	 * This constructor is used when user want to work on local files.
+	 * 
+	 * @param inputFile
+	 *            As first parameter it takes path to input file.
+	 * @param outputPath
+	 *            As second parameter it takes output's path.
+	 * @param programTask
+	 *            As third parameter it takes ProgramTask ENUM.
+	 */
 	public CLIVariables(String inputFile, String outputPath, ProgramTask programTask) {
 		this.localFileSystem = true;
 		this.inputFile = inputFile;
@@ -22,6 +32,24 @@ public class CLIVariables {
 		this.programTask = programTask;
 	}
 
+	/**
+	 * This constructor is used when user wants to work on FTP server.
+	 * 
+	 * @param inputFile
+	 *            As first parameter it takes path to input file.
+	 * @param outputPath
+	 *            As second parameter it takes output's path.
+	 * @param host
+	 *            As third parameter it takes FTP server's host.
+	 * @param port
+	 *            As fourth parameter it takes FTP server's port.
+	 * @param ftpUser
+	 *            As fifth parameter it takes FTP server's user name.
+	 * @param ftpPassword
+	 *            As sixth parameter it takes FTP server's user's password.
+	 * @param programTask
+	 *            As seventh parameter it takes ProgramTask ENUM.
+	 */
 	public CLIVariables(String inputFile, String outputPath, String host, String port, String ftpUser,
 			String ftpPassword, ProgramTask programTask) {
 		this.ftp = true;
@@ -34,6 +62,12 @@ public class CLIVariables {
 		this.ftpPassword = ftpPassword;
 	}
 
+	/**
+	 * This constructor is used when user wants only see help.
+	 * 
+	 * @param programTask
+	 *            As first parameter it takes ProgramTask ENUM.
+	 */
 	public CLIVariables(ProgramTask programTask) {
 		this.programTask = programTask;
 		this.help = true;
@@ -152,5 +186,4 @@ public class CLIVariables {
 	public enum ProgramTask {
 		WORK_ON_FTP, WORK_ON_LOCAL_FILES, SHOW_HELP
 	}
-
 }
