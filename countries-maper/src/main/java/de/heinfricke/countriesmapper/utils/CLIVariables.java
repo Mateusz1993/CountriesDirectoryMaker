@@ -176,7 +176,7 @@ public class CLIVariables {
 	public ProgramTask getProgramTask() {
 		return programTask;
 	}
-
+	
 	/**
 	 * Enum to chose what program have to do.
 	 * 
