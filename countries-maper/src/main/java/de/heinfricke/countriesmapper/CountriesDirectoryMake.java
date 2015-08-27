@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 
 import de.heinfricke.countriesmapper.reader.*;
+import de.heinfricke.countriesmapper.utils.CLIVariables;
+import de.heinfricke.countriesmapper.utils.CLIVariables.ProgramTask;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.country.Country;
@@ -25,8 +27,8 @@ public class CountriesDirectoryMake {
 			CommandLine cmd = null;
 			Options options = new Options();
 			cmd = countriesDirectoryMake.readFromCommandLine(args, options);
-			ProgramTask programTask = countriesDirectoryMake.returnProgramTask(cmd);
-			countriesDirectoryMake.handleHelp(options, programTask);
+			CLIVariables cliVariables = countriesDirectoryMake.returnCLIVariables(cmd);
+			countriesDirectoryMake.handleHelp(options, cliVariables);
 
 			// Read all countries to "Set".
 			CountriesReader countriesReader = new CountriesReader();
@@ -40,9 +42,8 @@ public class CountriesDirectoryMake {
 					.organizeCountriesInGroups(sortedCountries);
 
 			// Delete and create directories.
-			countriesDirectoryMake.executeTask(cmd, options, programTask, listOfGroupedCountriesClasses,
+			countriesDirectoryMake.executeTask(cmd, options, cliVariables, listOfGroupedCountriesClasses,
 					sortedCountries);
-
 		} catch (IllegalArgumentException e) {
 			System.out.println("Unknown value. Please use D, R or A as your decision.");
 			LOGGER.log(Level.FINE, "Unknown value.", e);
@@ -79,7 +80,7 @@ public class CountriesDirectoryMake {
 	 *            As first parameter it takes CommandLine object.
 	 * @param options
 	 *            As second parameter it takes Options object.
-	 * @param programTask
+	 * @param cliVariables
 	 *            As third parameter it takes program task (decision about what
 	 *            program have to do).
 	 * @param listOfGroupedCountriesClasses
@@ -87,46 +88,42 @@ public class CountriesDirectoryMake {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	private void executeTask(CommandLine cmd, Options options, ProgramTask programTask,
+	private void executeTask(CommandLine cmd, Options options, CLIVariables cliVariables,
 			List<GroupOfCountries> listOfGroupedCountriesClasses, Set<Country> sortedCountries)
 					throws IOException, JAXBException, IllegalArgumentException {
-		if (programTask == ProgramTask.ERROR_INFO) {
-			System.out.println("You wrote something wrong. Please use '-H' for help.");
-		} else {
-			UserInputs userInputs = new UserInputs();
+		UserInputs userInputs = new UserInputs();
 
-			Deleter deleter = new LocalFileDeleter(userInputs);
-			Maker maker = new FileMaker();
-			FTPConnection ftpConnection = new FTPConnection();
+		Deleter deleter = new LocalFileDeleter(userInputs);
+		Maker maker = new FileMaker();
+		FTPConnection ftpConnection = new FTPConnection();
 
-			if (programTask == ProgramTask.WORK_ON_FTP) {
-				ftpConnection.makeConnection(cmd.getOptionValue("h"), cmd.getOptionValue("p"), cmd.getOptionValue("u"),
-						cmd.getOptionValue("pw"));
-				maker = new FTPFileMaker(ftpConnection);
-				deleter = new FTPFileDeleter(ftpConnection, userInputs);
-			}
-			deleter.deleteDirectories(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
-			maker.createFiles(listOfGroupedCountriesClasses, cmd.getOptionValue("o"));
+		if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
+			ftpConnection.makeConnection(cliVariables.getHost(), cliVariables.getPort(), cliVariables.getFTPUser(),
+					cliVariables.getFTPPassword());
+			maker = new FTPFileMaker(ftpConnection);
+			deleter = new FTPFileDeleter(ftpConnection, userInputs);
+		}
+		deleter.deleteDirectories(listOfGroupedCountriesClasses, cliVariables.getOutputPath());
+		maker.createFiles(listOfGroupedCountriesClasses, cliVariables.getOutputPath());
 
-			if (cmd.hasOption("restCountriesFetch")) {
-				XMLMaker xmlMaker = new FileMaker();
-				if (programTask == ProgramTask.WORK_ON_FTP) {
-					xmlMaker = new FTPFileMaker(ftpConnection);
-				}
-
-				if (!cmd.hasOption("xml")) {
-					CSVMaker csvMaker = new CSVMaker();
-					maker.createCSVFile(listOfGroupedCountriesClasses, cmd.getOptionValue("o"), csvMaker);
-				} else {
-					PrepareForXML preareForXml = new PrepareForXML();
-					preareForXml.setCountries(sortedCountries);
-					xmlMaker.countryObjectsToXML(preareForXml, cmd.getOptionValue("o"));
-				}
+		if (cmd.hasOption("restCountriesFetch")) {
+			XMLMaker xmlMaker = new FileMaker();
+			if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
+				xmlMaker = new FTPFileMaker(ftpConnection);
 			}
 
-			if (programTask == ProgramTask.WORK_ON_FTP) {
-				ftpConnection.makeDisconnection();
+			if (!cmd.hasOption("xml")) {
+				CSVMaker csvMaker = new CSVMaker();
+				maker.createCSVFile(listOfGroupedCountriesClasses, cliVariables.getOutputPath(), csvMaker);
+			} else {
+				PrepareForXML preareForXml = new PrepareForXML();
+				preareForXml.setCountries(sortedCountries);
+				xmlMaker.countryObjectsToXML(preareForXml, cliVariables.getOutputPath());
 			}
+		}
+
+		if (cliVariables.getProgramTask() == ProgramTask.WORK_ON_FTP) {
+			ftpConnection.makeDisconnection();
 		}
 	}
 
@@ -152,7 +149,6 @@ public class CountriesDirectoryMake {
 				.addOption("restCountriesFetch", "r", false, "Make file with informations about each country.")
 				.addOption("csv", "c", false, "Create CSV file with informations. (default)")
 				.addOption("xml", "x", false, "Create XML file with informations.");
-
 		return parser.parse(options, args);
 	}
 
@@ -163,18 +159,32 @@ public class CountriesDirectoryMake {
 	 * @param cmd
 	 *            As parameter it takes CommandLine object.
 	 * @return It return decision from ProgramTask enum.
+	 * @throws OwnExceptions
 	 */
-	private ProgramTask returnProgramTask(CommandLine cmd) {
+	private CLIVariables returnCLIVariables(CommandLine cmd) throws ParseException {
+		CLIVariables cliVariables;
 		if ((cmd.hasOption("l") && cmd.hasOption("i") && cmd.hasOption("o"))) {
-			return ProgramTask.WORK_ON_LOCAL_FILES;
+			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"), ProgramTask.WORK_ON_LOCAL_FILES);
 		} else if (cmd.hasOption("f") && cmd.hasOption("h") && cmd.hasOption("p") && cmd.hasOption("u")
 				&& cmd.hasOption("pw") && cmd.hasOption("o")) {
-			return ProgramTask.WORK_ON_FTP;
+			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"), cmd.getOptionValue("h"),
+					cmd.getOptionValue("p"), cmd.getOptionValue("u"), cmd.getOptionValue("pw"),
+					ProgramTask.WORK_ON_FTP);
 		} else if (cmd.hasOption("H")) {
-			return ProgramTask.SHOW_HELP;
+			cliVariables = new CLIVariables(ProgramTask.SHOW_HELP);
 		} else {
-			return ProgramTask.ERROR_INFO;
+			throw new ParseException("There was invalid expression. Please use '-H' for help.");
 		}
+		
+		if(cmd.hasOption("restCountriesFetch")){
+			cliVariables.setRestCountriesFetch(true);
+			if(cmd.hasOption("xml")){
+				cliVariables.setXML(true);
+			} else {
+				cliVariables.setCSV(true);
+			}
+		}
+		return cliVariables;
 	}
 
 	/**
@@ -184,8 +194,8 @@ public class CountriesDirectoryMake {
 	 * @param options
 	 *            It takes as parameter Options object.
 	 */
-	private void handleHelp(Options options, ProgramTask programTask) {
-		if (programTask == ProgramTask.SHOW_HELP) {
+	private void handleHelp(Options options, CLIVariables cliVariables) {
+		if (cliVariables.getProgramTask() == ProgramTask.SHOW_HELP) {
 			System.out.println("\nTo make directories on your local system please use: ");
 			System.out.println(
 					"./CountriesDirectoryMake -l -i path/to/your/local/file.txt -o /path/to/your/input/directory");
@@ -196,15 +206,5 @@ public class CountriesDirectoryMake {
 			formater.printHelp("Options:", options);
 			System.exit(0);
 		}
-	}
-
-	/**
-	 * Enum to chose what program have to do.
-	 * 
-	 * @author Mateusz
-	 *
-	 */
-	public enum ProgramTask {
-		WORK_ON_FTP, WORK_ON_LOCAL_FILES, SHOW_HELP, ERROR_INFO
 	}
 }

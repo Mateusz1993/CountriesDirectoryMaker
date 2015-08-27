@@ -67,26 +67,26 @@ public class FTPConnection {
 	 *            FTP user name.
 	 * @param userPassword
 	 *            FTP user password.
-	 * @throws IOException 
-	 * @throws SocketException 
+	 * @throws IOException
+	 * @throws SocketException
 	 */
-	public void makeConnection(String userHost, String userPort, String userName, String userPassword) throws SocketException, IOException {
-			setAllVariables(userHost, userPort, userName, userPassword);
+	public void makeConnection(String userHost, String userPort, String userName, String userPassword)
+			throws SocketException, IOException {
+		setAllVariables(userHost, userPort, userName, userPassword);
 
-			client.connect(host, port);
+		client.connect(host, port);
 
-			int replyCode = client.getReplyCode();
-			if (!FTPReply.isPositiveCompletion(replyCode)) {
-				System.out.println("It was some problem with connection. Please run application again.");
-			}
+		int replyCode = client.getReplyCode();
+		if (!FTPReply.isPositiveCompletion(replyCode)) {
+			System.out.println("It was some problem with connection. Please run application again.");
+		}
 
-			boolean success = client.login(username, password);
-			if (!success) {
-				System.out.println("Could not login to the server.");
-				client.logout();
-				client.disconnect();
-				System.exit(0);
-			}
+		boolean success = client.login(username, password);
+		if (!success) {
+			System.out.println("Could not login to the server.");
+			client.logout();
+			client.disconnect();
+		}
 	}
 
 	/**
@@ -133,8 +133,8 @@ public class FTPConnection {
 		client.logout();
 		client.disconnect();
 	}
-	
-	public FTPClient getClient(){
+
+	public FTPClient getClient() {
 		return client;
 	}
 }
