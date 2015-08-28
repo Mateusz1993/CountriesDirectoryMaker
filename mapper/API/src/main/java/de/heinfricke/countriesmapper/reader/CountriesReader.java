@@ -1,10 +1,6 @@
 package de.heinfricke.countriesmapper.reader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -36,8 +32,6 @@ public class CountriesReader {
 		System.out.println("\nYour path to .txt file is: " + path);
 
 		Set<Country> namesOfCountries = new TreeSet<Country>();
-
-		File file = new File(path);
 		String line;
 
 		if (prepareInfromationFile) {
@@ -46,8 +40,9 @@ public class CountriesReader {
 
 		BufferedReader bufferedReader = null;
 		try {
-			FileReader fileReader = new FileReader(file);
-			bufferedReader = new BufferedReader(fileReader);
+			InputStream in = new FileInputStream(path);
+			bufferedReader = new BufferedReader(new InputStreamReader(in));
+			
 			while ((line = bufferedReader.readLine()) != null) {
 				if (!line.isEmpty()) {
 					Country newCountry;
