@@ -6,7 +6,6 @@
   <packaging>pom</packaging>
   <name>Mapper</name>
   <modules>
-  	<module>ApacheCLI</module>
   	<module>APP</module>
   	<module>LocalFileSystem</module>
   	<module>FTP</module>
