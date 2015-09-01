@@ -59,7 +59,8 @@ public abstract class Deleter {
 	 */
 	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path)
 			throws IOException, IllegalArgumentException {
-		DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
+		//DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
+		DirectoriesActivity userDecision = DirectoriesActivity.DELETE;
 		List<String> listOfThreeLettersGroups;
 
 		listOfThreeLettersGroups = prepareThreeLettersGroups(organizedCountries, userDecision);

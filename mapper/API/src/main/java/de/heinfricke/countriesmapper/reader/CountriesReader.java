@@ -27,20 +27,13 @@ public class CountriesReader {
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	public Set<Country> readCountries(String path, boolean prepareInfromationFile)
+	public Set<Country> readCountries(InputStream in, boolean prepareInfromationFile)
 			throws FileNotFoundException, IOException, JSONException, RuntimeException {
-		System.out.println("\nYour path to .txt file is: " + path);
-
 		Set<Country> namesOfCountries = new TreeSet<Country>();
 		String line;
 
-		if (prepareInfromationFile) {
-			System.out.println("Loading...");
-		}
-
 		BufferedReader bufferedReader = null;
 		try {
-			InputStream in = new FileInputStream(path);
 			bufferedReader = new BufferedReader(new InputStreamReader(in));
 			
 			while ((line = bufferedReader.readLine()) != null) {

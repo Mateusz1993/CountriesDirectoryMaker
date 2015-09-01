@@ -30,7 +30,7 @@ public class FTPFileDeleter extends Deleter {
 		super(userInputs);
 		this.ftpConnection = ftpConnection;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

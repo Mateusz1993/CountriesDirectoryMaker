@@ -35,7 +35,8 @@ public class CountriesDirectoryMake {
 
 			// Read all countries to "Set".
 			CountriesReader countriesReader = new CountriesReader();
-			Set<Country> sortedCountries = countriesReader.readCountries(cmd.getOptionValue("i"),
+			InputStream in = new FileInputStream(cmd.getOptionValue("i"));
+			Set<Country> sortedCountries = countriesReader.readCountries(in,
 					cmd.hasOption("restCountriesFetch"));
 
 			// Prepare groups of countries (for example: ABC = (Albania,

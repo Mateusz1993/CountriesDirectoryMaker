@@ -121,7 +121,9 @@ public class InformationPreparer {
 			Country newerCountry = new Country(newCountry.getName());
 			borderCountries.add(newerCountry);
 		}
-		borders = borders.substring(0, borders.length() - 1);
+		if(borders.length() > 0){
+			borders = borders.substring(0, borders.length() - 1);
+		}
 		country.setAllBordersInOneString(borders);
 		country.setBorders(fullNameNeighbors);
 		country.setBorderCountries(borderCountries);
