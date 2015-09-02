@@ -1,3 +1,13 @@
 .metadata*
 .recommenders*
 *~
+.bashrc*
+RemoteSystem*/
+Servers/
+.settings*
+.project*
+.classpath*
+*.tmp
+.settings/
+.loadpath
+.externalToolBuilders/

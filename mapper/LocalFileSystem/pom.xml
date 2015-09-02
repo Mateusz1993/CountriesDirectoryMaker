@@ -9,7 +9,7 @@
   <dependencies>
   	<dependency>
   		<groupId>de.heinfricke</groupId>
-  		<artifactId>APP</artifactId>
+  		<artifactId>API</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   </dependencies>

@@ -5,11 +5,11 @@
     <artifactId>mapper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>API</artifactId>
+  <artifactId>APP</artifactId>
   <dependencies>
   	<dependency>
   		<groupId>de.heinfricke</groupId>
-  		<artifactId>APP</artifactId>
+  		<artifactId>API</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
