@@ -12,6 +12,7 @@
   	<module>FTP</module>
   	<module>API</module>
     <module>WebAplication</module>
+    <module>Universal</module>
   </modules>  
   
     <build>

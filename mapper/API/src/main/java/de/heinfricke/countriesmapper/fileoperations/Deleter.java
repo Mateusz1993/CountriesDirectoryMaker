@@ -21,7 +21,8 @@ public abstract class Deleter {
 	 * User decision about destination of files.
 	 */
 	private UserInputs userInputs;
-
+	private DirectoriesActivity userDecision;
+	
 	/**
 	 * This method is used for deleting files on local system, FTP server etc.
 	 * 
@@ -35,10 +36,10 @@ public abstract class Deleter {
 	 * This constructor is used because we need to know if user want to delete
 	 * all files or only replace existing.
 	 * 
-	 * @param userInputs
+	 * @param userDecision
 	 */
-	public Deleter(UserInputs userInputs) {
-		this.userInputs = userInputs;
+	public Deleter(DirectoriesActivity userDecision) {
+		this.userDecision = userDecision;
 	}
 
 	/**
@@ -59,8 +60,6 @@ public abstract class Deleter {
 	 */
 	public void deleteDirectories(List<GroupOfCountries> organizedCountries, String path)
 			throws IOException, IllegalArgumentException {
-		//DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
-		DirectoriesActivity userDecision = DirectoriesActivity.DELETE;
 		List<String> listOfThreeLettersGroups;
 
 		listOfThreeLettersGroups = prepareThreeLettersGroups(organizedCountries, userDecision);

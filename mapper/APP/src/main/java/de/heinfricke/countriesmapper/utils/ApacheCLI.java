@@ -6,7 +6,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import de.heinfricke.countriesmapper.utils.CLIVariables.ProgramTask;
+import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 
 public class ApacheCLI {
 	
@@ -45,18 +45,18 @@ public class ApacheCLI {
 	 * @return It return decision from ProgramTask enum.
 	 * @throws OwnExceptions
 	 */
-	public CLIVariables returnCLIVariables(CommandLine cmd) throws ParseException {
-		CLIVariables cliVariables;
+	public InformationHandler returnCLIVariables(CommandLine cmd) throws ParseException {
+		InformationHandler cliVariables;
 		if ((cmd.hasOption("l") && cmd.hasOption("i") && cmd.hasOption("o"))) {
-			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"),
+			cliVariables = new InformationHandler(cmd.getOptionValue("i"), cmd.getOptionValue("o"),
 					ProgramTask.WORK_ON_LOCAL_FILES);
 		} else if (cmd.hasOption("f") && cmd.hasOption("h") && cmd.hasOption("p") && cmd.hasOption("u")
 				&& cmd.hasOption("pw") && cmd.hasOption("o")) {
-			cliVariables = new CLIVariables(cmd.getOptionValue("i"), cmd.getOptionValue("o"), cmd.getOptionValue("h"),
+			cliVariables = new InformationHandler(cmd.getOptionValue("i"), cmd.getOptionValue("o"), cmd.getOptionValue("h"),
 					cmd.getOptionValue("p"), cmd.getOptionValue("u"), cmd.getOptionValue("pw"),
 					ProgramTask.WORK_ON_FTP);
 		} else if (cmd.hasOption("H")) {
-			cliVariables = new CLIVariables(ProgramTask.SHOW_HELP);
+			cliVariables = new InformationHandler(ProgramTask.SHOW_HELP);
 		} else {
 			throw new ParseException("There was invalid expression. Please use '-H' for help.");
 		}

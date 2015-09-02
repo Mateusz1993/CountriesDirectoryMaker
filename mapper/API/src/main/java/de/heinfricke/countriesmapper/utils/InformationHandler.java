@@ -1,6 +1,6 @@
 package de.heinfricke.countriesmapper.utils;
 
-public class CLIVariables {
+public class InformationHandler {
 	private boolean csv = false;
 	private boolean ftp = false;
 	private boolean help = false;
@@ -25,7 +25,7 @@ public class CLIVariables {
 	 * @param programTask
 	 *            As third parameter it takes ProgramTask ENUM.
 	 */
-	public CLIVariables(String inputFile, String outputPath, ProgramTask programTask) {
+	public InformationHandler(String inputFile, String outputPath, ProgramTask programTask) {
 		this.localFileSystem = true;
 		this.inputFile = inputFile;
 		this.outputPath = outputPath;
@@ -50,7 +50,7 @@ public class CLIVariables {
 	 * @param programTask
 	 *            As seventh parameter it takes ProgramTask ENUM.
 	 */
-	public CLIVariables(String inputFile, String outputPath, String host, String port, String ftpUser,
+	public InformationHandler(String inputFile, String outputPath, String host, String port, String ftpUser,
 			String ftpPassword, ProgramTask programTask) {
 		this.ftp = true;
 		this.inputFile = inputFile;
@@ -68,7 +68,7 @@ public class CLIVariables {
 	 * @param programTask
 	 *            As first parameter it takes ProgramTask ENUM.
 	 */
-	public CLIVariables(ProgramTask programTask) {
+	public InformationHandler(ProgramTask programTask) {
 		this.programTask = programTask;
 		this.help = true;
 	}

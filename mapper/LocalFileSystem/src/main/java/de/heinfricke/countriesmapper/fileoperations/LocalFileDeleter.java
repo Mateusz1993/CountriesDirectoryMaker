@@ -2,6 +2,7 @@ package de.heinfricke.countriesmapper.fileoperations;
 
 import java.io.File;
 
+import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 
 /**
@@ -16,10 +17,10 @@ public class LocalFileDeleter extends Deleter {
 	 * This constructor is used because we need to know if user want to delete
 	 * all files or only replace existing.
 	 * 
-	 * @param userInputs
+	 * @param userDecision
 	 */
-	public LocalFileDeleter(UserInputs userInputs) {
-		super(userInputs);
+	public LocalFileDeleter(DirectoriesActivity userDecision) {
+		super(userDecision);
 	}
 
 	/*

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.net.ftp.FTPFile;
+
+import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
 import de.heinfricke.countriesmapper.utils.UserInputs;
 
@@ -26,8 +28,8 @@ public class FTPFileDeleter extends Deleter {
 	 * @param userInputs
 	 *            As second parameter it takes UserInputs Object.
 	 */
-	public FTPFileDeleter(FTPConnection ftpConnection, UserInputs userInputs) {
-		super(userInputs);
+	public FTPFileDeleter(FTPConnection ftpConnection, DirectoriesActivity userDecision) {
+		super(userDecision);
 		this.ftpConnection = ftpConnection;
 	}
 	

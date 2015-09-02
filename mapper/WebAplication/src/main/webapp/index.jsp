@@ -23,8 +23,7 @@ body {
 	<center>
 		<h3>Countries Directories at FTP Maker</h3>
 
-		<br /> 
-		<br />
+		<br /> <br />
 
 
 		<form name="form1" id="form1" action="upload" method="post"
@@ -34,7 +33,7 @@ body {
 				<td width="150px">Chose your file:</td>
 				<td><input type="file" size="50" name="file1"></td>
 				<tr>
-					<td><br/></td>
+					<td><br /></td>
 				</tr>
 				<tr>
 				<tr>
@@ -58,6 +57,14 @@ body {
 					<td><input type="text" name="path"></td>
 				</tr>
 				<tr>
+					<td>What to do with old directories?</td>
+					<td><select name="directories">
+							<option value="delete">Delete</option>
+							<option value="replace">Replace</option>
+							<option value="add">Add new contents</option>
+					</select></td>
+				</tr>
+				<tr>
 					<td>Create CSV file:</td>
 					<td><input type="checkbox" name="csv"></td>
 				</tr>
@@ -66,7 +73,7 @@ body {
 					<td><input type="checkbox" name="xml"></td>
 				</tr>
 				<tr>
-					<td><br/></td>
+					<td><br /></td>
 				</tr>
 				<tr>
 					<td></td>
