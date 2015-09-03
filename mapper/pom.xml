@@ -13,6 +13,7 @@
   	<module>API</module>
     <module>WebAplication</module>
     <module>Universal</module>
+    <module>NewWebApp</module>
   </modules>  
   
     <build>

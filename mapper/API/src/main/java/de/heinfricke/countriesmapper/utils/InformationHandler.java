@@ -61,6 +61,21 @@ public class InformationHandler {
 		this.ftpUser = ftpUser;
 		this.ftpPassword = ftpPassword;
 	}
+	
+	
+	public InformationHandler(String outputPath, String host, String port, String ftpUser,
+			String ftpPassword, ProgramTask programTask, boolean xml, boolean csv) {
+		this.ftp = true;
+		this.inputFile = inputFile;
+		this.outputPath = outputPath;
+		this.programTask = programTask;
+		this.host = host;
+		this.port = port;
+		this.ftpUser = ftpUser;
+		this.ftpPassword = ftpPassword;
+		this.csv = csv;
+		this.xml = xml;
+	}
 
 	/**
 	 * This constructor is used when user wants only see help.

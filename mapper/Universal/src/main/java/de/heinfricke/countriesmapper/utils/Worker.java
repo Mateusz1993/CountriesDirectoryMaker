@@ -26,7 +26,7 @@ import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 
 public class Worker {
 
-	public void makeEverything(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
+	public void countryPreparerAndFileMakerrRun(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
 			DirectoriesActivity userDecision) throws IOException, JAXBException, JSONException, RuntimeException {
 
 		// Read all countries to "Set".
