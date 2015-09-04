@@ -30,6 +30,10 @@ public class CountriesDirectoryMake {
 			Worker worker = new Worker();
 			worker.countryPreparerAndFileMakerRun(in, cliVariables.getRestCountriesFetch(), cliVariables, userDecision);
 
+		} catch (UsernameOrPasswordException e) {
+			System.out.println(
+					"Unknown user name or password. Please make sure that your user name and password is correct and run application again.");
+			LOGGER.log(Level.FINE, "Unknown user name or password.", e);
 		} catch (IllegalArgumentException e) {
 			System.out.println("Unknown value. Please use D, R or A as your decision.");
 			LOGGER.log(Level.FINE, "Unknown value.", e);

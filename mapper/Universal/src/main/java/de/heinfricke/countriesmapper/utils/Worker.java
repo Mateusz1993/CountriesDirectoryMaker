@@ -27,7 +27,7 @@ import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 public class Worker {
 
 	public void countryPreparerAndFileMakerRun(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
-			DirectoriesActivity userDecision) throws IOException, JAXBException, JSONException, RuntimeException {
+			DirectoriesActivity userDecision) throws IOException, JAXBException, JSONException, RuntimeException, UsernameOrPasswordException {
 
 		// Read all countries to "Set".
 		CountriesReader countriesReader = new CountriesReader();
@@ -55,10 +55,11 @@ public class Worker {
 	 *            As third parameter it takes list of GroupOfCountries objects.
 	 * @throws IOException
 	 * @throws JAXBException
+	 * @throws UsernameOrPasswordException 
 	 */
 	private void executeTask(InformationHandler informationsHandler,
 			List<GroupOfCountries> listOfGroupedCountriesClasses, Set<Country> sortedCountries,
-			DirectoriesActivity userDecision) throws IOException, JAXBException, IllegalArgumentException {
+			DirectoriesActivity userDecision) throws IOException, JAXBException, IllegalArgumentException, UsernameOrPasswordException {
 
 		FTPConnection ftpConnection = new FTPConnection();
 		Deleter deleter = createDeleter(informationsHandler, ftpConnection, userDecision);
@@ -129,9 +130,10 @@ public class Worker {
 	 * @return It returns Deleter object.
 	 * @throws SocketException
 	 * @throws IOException
+	 * @throws UsernameOrPasswordException 
 	 */
 	private Deleter createDeleter(InformationHandler informationsHandler, FTPConnection ftpConnection,
-			DirectoriesActivity userDecision) throws SocketException, IOException {
+			DirectoriesActivity userDecision) throws SocketException, IOException, UsernameOrPasswordException {
 		Deleter deleter = new LocalFileDeleter(userDecision);
 		if (informationsHandler.getProgramTask() == ProgramTask.WORK_ON_FTP) {
 			ftpConnection.makeConnection(informationsHandler.getHost(), informationsHandler.getPort(),

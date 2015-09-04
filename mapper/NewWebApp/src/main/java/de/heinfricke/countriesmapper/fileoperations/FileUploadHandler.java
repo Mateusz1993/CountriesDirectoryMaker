@@ -14,6 +14,7 @@ import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 import de.heinfricke.countriesmapper.utils.InformationHandler;
 import de.heinfricke.countriesmapper.utils.Worker;
 import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
+import de.heinfricke.countriesmapper.utils.UsernameOrPasswordException;
 
 /**
  * This class is representation of RESTClient with Java's HttpServlet.
@@ -51,8 +52,10 @@ public class FileUploadHandler extends HttpServlet {
 				Worker worker = new Worker();
 				worker.countryPreparerAndFileMakerRun(stream, true, informationHandler, userDecision);
 			}
-		} catch (SocketException e) {
+		} catch (UsernameOrPasswordException e) {
 			response.setStatus(401);
+		} catch (SocketException e) {
+			response.setStatus(404);
 		} catch (IOException e) {
 			response.setStatus(400);
 		} catch (FileUploadException e) {

@@ -69,9 +69,10 @@ public class FTPConnection {
 	 *            FTP user password.
 	 * @throws IOException
 	 * @throws SocketException
+	 * @throws UsernameOrPasswordException 
 	 */
 	public void makeConnection(String userHost, String userPort, String userName, String userPassword)
-			throws SocketException, IOException {
+			throws SocketException, IOException, UsernameOrPasswordException {
 		setAllVariables(userHost, userPort, userName, userPassword);
 
 		client.connect(host, port);
@@ -86,7 +87,7 @@ public class FTPConnection {
 			System.out.println("Could not login to the server.");
 			client.logout();
 			client.disconnect();
-			throw new SocketException();
+			throw new UsernameOrPasswordException();
 		}
 	}
 
