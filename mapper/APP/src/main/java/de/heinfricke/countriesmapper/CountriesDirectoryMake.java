@@ -27,8 +27,8 @@ public class CountriesDirectoryMake {
 			DirectoriesActivity userDecision = userInputs.userDecisionAboutDirectories();
 			InputStream in = new FileInputStream(cmd.getOptionValue("i"));
 
-			Worker worker = new Worker();
-			worker.countryPreparerAndFileMakerRun(in, cliVariables.getRestCountriesFetch(), cliVariables, userDecision);
+			CountriesStructure worker = new CountriesStructure();
+			worker.prepareCountriesStructure(in, cliVariables.getRestCountriesFetch(), cliVariables, userDecision);
 
 		} catch (UsernameOrPasswordException e) {
 			System.out.println(

@@ -24,9 +24,9 @@ import de.heinfricke.countriesmapper.preparer.PrepareForXML;
 import de.heinfricke.countriesmapper.reader.CountriesReader;
 import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 
-public class Worker {
+public class CountriesStructure {
 
-	public void countryPreparerAndFileMakerRun(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
+	public void prepareCountriesStructure(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
 			DirectoriesActivity userDecision) throws IOException, JAXBException, JSONException, RuntimeException, UsernameOrPasswordException {
 
 		// Read all countries to "Set".
@@ -40,7 +40,7 @@ public class Worker {
 				.organizeCountriesInGroups(sortedCountries);
 
 		// Delete and create directories.
-		Worker worker = new Worker();
+		CountriesStructure worker = new CountriesStructure();
 		worker.executeTask(informationsHandler, listOfGroupedCountriesClasses, sortedCountries, userDecision);
 	}
 

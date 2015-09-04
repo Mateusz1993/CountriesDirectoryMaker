@@ -12,7 +12,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 import de.heinfricke.countriesmapper.utils.InformationHandler;
-import de.heinfricke.countriesmapper.utils.Worker;
+import de.heinfricke.countriesmapper.utils.CountriesStructure;
 import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 import de.heinfricke.countriesmapper.utils.UsernameOrPasswordException;
 
@@ -49,8 +49,8 @@ public class FileUploadHandler extends HttpServlet {
 					}
 				}
 
-				Worker worker = new Worker();
-				worker.countryPreparerAndFileMakerRun(stream, true, informationHandler, userDecision);
+				CountriesStructure worker = new CountriesStructure();
+				worker.prepareCountriesStructure(stream, true, informationHandler, userDecision);
 			}
 		} catch (UsernameOrPasswordException e) {
 			response.setStatus(401);

@@ -71,8 +71,8 @@ public class FileUploadHandler extends HttpServlet {
 
 					DirectoriesActivity userDecision = returnUserDecision(directoriesDecision);
 
-					Worker worker = new Worker();
-					worker.countryPreparerAndFileMakerRun(stream, true, informationHandler, userDecision);
+					CountriesStructure worker = new CountriesStructure();
+					worker.prepareCountriesStructure(stream, true, informationHandler, userDecision);
 
 					request.getRequestDispatcher("/result.jsp").forward(request, response);
 				} catch (IOException e) {
