@@ -1,6 +1,7 @@
 package de.heinfricke.countriesmapper.fileoperations;
 
 import java.io.*;
+import java.net.SocketException;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.xml.bind.JAXBException;
@@ -31,15 +32,12 @@ public class FileUploadHandler extends HttpServlet {
 	 */
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-		InformationHandler informationHandler = new InformationHandler(request.getHeader("FTP-Path"),
-				request.getHeader("FTP-Host"), request.getHeader("FTP-Port"), request.getHeader("FTP-User"),
-				request.getHeader("FTP-Password"), ProgramTask.WORK_ON_FTP,
-				Boolean.valueOf(request.getHeader("FTP-XML")), Boolean.valueOf(request.getHeader("FTP-CSV")));
-
-		DirectoriesActivity userDecision = returnUserDecision(request);
-
 		try {
+			InformationHandler informationHandler = new InformationHandler(request.getHeader("FTP-Path"),
+					request.getHeader("FTP-Host"), request.getHeader("FTP-Port"), request.getHeader("FTP-User"),
+					request.getHeader("FTP-Password"), ProgramTask.WORK_ON_FTP, XMLcreate(request), CSVcreate(request));
+
+			DirectoriesActivity userDecision = returnUserDecision(request);
 			if (ServletFileUpload.isMultipartContent(request)) {
 				List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
 				InputStream stream = null;
@@ -51,8 +49,10 @@ public class FileUploadHandler extends HttpServlet {
 				}
 
 				Worker worker = new Worker();
-				worker.countryPreparerAndFileMakerrRun(stream, true, informationHandler, userDecision);
+				worker.countryPreparerAndFileMakerRun(stream, true, informationHandler, userDecision);
 			}
+		} catch (SocketException e) {
+			response.setStatus(401);
 		} catch (IOException e) {
 			response.setStatus(400);
 		} catch (FileUploadException e) {
@@ -71,16 +71,59 @@ public class FileUploadHandler extends HttpServlet {
 	 *            As first parameter it takes HttpServletRequest.
 	 * @return This method returns user decision about destination of
 	 *         directories.
+	 * @throws IOException
 	 */
-	private DirectoriesActivity returnUserDecision(HttpServletRequest request) {
+	private DirectoriesActivity returnUserDecision(HttpServletRequest request) throws IOException {
 		DirectoriesActivity userDecision;
-		if (request.getHeader("FTP-DirActiv").toLowerCase().equals("delete")) {
+		if (request.getHeader("FTP-ExistingFilesActivity").toLowerCase().equals("delete")) {
 			userDecision = DirectoriesActivity.DELETE;
-		} else if (request.getHeader("FTP-DirActiv").toLowerCase().equals("replace")) {
+		} else if (request.getHeader("FTP-ExistingFilesActivity").toLowerCase().equals("replace")) {
 			userDecision = DirectoriesActivity.REPLACE;
-		} else {
+		} else if (request.getHeader("FTP-ExistingFilesActivity").toLowerCase().equals("add")) {
 			userDecision = DirectoriesActivity.ADD_NEW_CONTENTS;
+		} else {
+			throw new IOException();
 		}
 		return userDecision;
+	}
+
+	/**
+	 * This method returns true if user wants to have XML file with
+	 * informations, false if user doesn't want to have XML file or it throws
+	 * IOException if user writes wrong command.
+	 * 
+	 * @param request
+	 *            As first parameter it takes HttpServletRequest object.
+	 * @return It returns boolean or IOException.
+	 * @throws IOException
+	 */
+	private boolean XMLcreate(HttpServletRequest request) throws IOException {
+		if (request.getHeader("FTP-XML").toLowerCase().equals("true")) {
+			return true;
+		} else if (request.getHeader("FTP-XML").toLowerCase().equals("false")) {
+			return false;
+		} else {
+			throw new IOException();
+		}
+	}
+
+	/**
+	 * This method returns true if user wants to have CSV file with
+	 * informations, false if user doesn't want to have CSV file or it throws
+	 * IOException if user writes wrong command.
+	 * 
+	 * @param request
+	 *            As first parameter it takes HttpServletRequest object.
+	 * @return It returns boolean or IOException.
+	 * @throws IOException
+	 */
+	private boolean CSVcreate(HttpServletRequest request) throws IOException {
+		if (request.getHeader("FTP-CSV").toLowerCase().equals("true")) {
+			return true;
+		} else if (request.getHeader("FTP-CSV").toLowerCase().equals("false")) {
+			return false;
+		} else {
+			throw new IOException();
+		}
 	}
 }

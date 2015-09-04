@@ -33,7 +33,7 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	String port;
 	String username;
 	String password;
-	
+
 	public FTPFileMaker(FTPConnection ftpConnection) {
 		this.ftpConnection = ftpConnection;
 	}
@@ -47,6 +47,8 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 	 */
 	public void createFiles(List<GroupOfCountries> listOfGroupedCountriesClasses, String path) throws IOException {
 		for (GroupOfCountries groupedCountries : listOfGroupedCountriesClasses) {
+			checkDirectoryExists(path);
+
 			String pathToGroupFolder = (path + File.separator + groupedCountries.getName());
 			createDirectory(pathToGroupFolder);
 			for (Country countries : groupedCountries.getCountriesList()) {
@@ -54,6 +56,25 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 				createDirectory(pathToSingleFile);
 			}
 		}
+	}
+
+	/**
+	 * This method checks if directory exists at FTP server.
+	 * 
+	 * @param dirPath
+	 *            As first parameter it takes path to directory.
+	 * @return It returns boolean if directory exists and throws IOExceptio id
+	 *         doesn't exist.
+	 * @throws IOException
+	 */
+	private boolean checkDirectoryExists(String dirPath) throws IOException {
+		FTPClient client = ftpConnection.getClient();
+		client.changeWorkingDirectory(dirPath);
+		int returnCode = client.getReplyCode();
+		if (returnCode == 550) {
+			throw new IOException();
+		}
+		return true;
 	}
 
 	/**
@@ -85,7 +106,7 @@ public class FTPFileMaker extends XMLMaker implements Maker {
 		FTPClient client = ftpConnection.getClient();
 		byte[] bytes = baos.toByteArray();
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-		client.storeFile(path + File.separator + "Information.csv", bais);
+		client.storeFile(path + File.separator + "Informations.csv", bais);
 	}
 
 	/*

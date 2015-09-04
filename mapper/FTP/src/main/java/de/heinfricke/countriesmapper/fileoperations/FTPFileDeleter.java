@@ -7,7 +7,6 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 import de.heinfricke.countriesmapper.utils.FTPConnection;
-import de.heinfricke.countriesmapper.utils.UserInputs;
 
 /**
  * This class has methods used for deleting files on FTP server.
@@ -32,7 +31,7 @@ public class FTPFileDeleter extends Deleter {
 		super(userDecision);
 		this.ftpConnection = ftpConnection;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -47,5 +46,27 @@ public class FTPFileDeleter extends Deleter {
 			ftpConnection.removeDirectory(pathOfGorupDirectory + File.separator + file.getName());
 		}
 		ftpConnection.removeDirectory(pathOfGorupDirectory);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Deleter#deleteCSVFile(java.
+	 * lang.String)
+	 */
+	public void deleteCSVFile(String pathToFile) throws IOException {
+		ftpConnection.removeFile(pathToFile + File.separator + "Informations.csv");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Deleter#deleteXMLFile(java.
+	 * lang.String)
+	 */
+	public void deleteXMLFile(String pathToFile) throws IOException {
+		ftpConnection.removeFile(pathToFile + File.separator + "Informations.xml");
 	}
 }

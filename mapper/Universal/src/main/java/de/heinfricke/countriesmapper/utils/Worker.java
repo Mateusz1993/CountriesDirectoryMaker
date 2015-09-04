@@ -26,7 +26,7 @@ import de.heinfricke.countriesmapper.utils.InformationHandler.ProgramTask;
 
 public class Worker {
 
-	public void countryPreparerAndFileMakerrRun(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
+	public void countryPreparerAndFileMakerRun(InputStream in, boolean useRestCountriesFetch, InformationHandler informationsHandler,
 			DirectoriesActivity userDecision) throws IOException, JAXBException, JSONException, RuntimeException {
 
 		// Read all countries to "Set".
@@ -137,6 +137,10 @@ public class Worker {
 			ftpConnection.makeConnection(informationsHandler.getHost(), informationsHandler.getPort(),
 					informationsHandler.getFTPUser(), informationsHandler.getFTPPassword());
 			deleter = new FTPFileDeleter(ftpConnection, userDecision);
+		}
+		if (userDecision == DirectoriesActivity.DELETE){
+			deleter.deleteCSVFile(informationsHandler.getOutputPath());
+			deleter.deleteXMLFile(informationsHandler.getOutputPath());
 		}
 		return deleter;
 	}

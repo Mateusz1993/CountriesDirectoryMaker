@@ -29,9 +29,10 @@ body {
 		<form name="form1" id="form1" action="upload" method="post"
 			enctype="multipart/form-data">
 			<table>
+				<tr>
+					<td width="150px">Chose your file:</td>
+					<td><input type="file" size="50" name="file1"></td>
 				</tr>
-				<td width="150px">Chose your file:</td>
-				<td><input type="file" size="50" name="file1"></td>
 				<tr>
 					<td><br /></td>
 				</tr>

@@ -28,7 +28,7 @@ public class CountriesDirectoryMake {
 			InputStream in = new FileInputStream(cmd.getOptionValue("i"));
 
 			Worker worker = new Worker();
-			worker.countryPreparerAndFileMakerrRun(in, cliVariables.getRestCountriesFetch(), cliVariables, userDecision);
+			worker.countryPreparerAndFileMakerRun(in, cliVariables.getRestCountriesFetch(), cliVariables, userDecision);
 
 		} catch (IllegalArgumentException e) {
 			System.out.println("Unknown value. Please use D, R or A as your decision.");

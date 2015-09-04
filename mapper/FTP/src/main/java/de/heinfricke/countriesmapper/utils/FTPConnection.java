@@ -86,6 +86,7 @@ public class FTPConnection {
 			System.out.println("Could not login to the server.");
 			client.logout();
 			client.disconnect();
+			throw new SocketException();
 		}
 	}
 
@@ -109,6 +110,17 @@ public class FTPConnection {
 	 */
 	public void removeDirectory(String pathToDirectory) throws IOException {
 		client.removeDirectory(pathToDirectory);
+	}
+	
+	/**
+	 * This method removes old files.
+	 * 
+	 * @param pathToFile
+	 *            Path to file which must be deleted.
+	 * @throws IOException
+	 */
+	public void removeFile(String pathToFile) throws IOException {
+		client.deleteFile(pathToFile);
 	}
 
 	/**

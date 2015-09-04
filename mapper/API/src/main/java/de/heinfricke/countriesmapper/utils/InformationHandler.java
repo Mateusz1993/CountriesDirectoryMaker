@@ -66,7 +66,6 @@ public class InformationHandler {
 	public InformationHandler(String outputPath, String host, String port, String ftpUser,
 			String ftpPassword, ProgramTask programTask, boolean xml, boolean csv) {
 		this.ftp = true;
-		this.inputFile = inputFile;
 		this.outputPath = outputPath;
 		this.programTask = programTask;
 		this.host = host;

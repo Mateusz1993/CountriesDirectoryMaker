@@ -1,9 +1,9 @@
 package de.heinfricke.countriesmapper.fileoperations;
 
 import java.io.File;
+import java.io.IOException;
 
 import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
-import de.heinfricke.countriesmapper.utils.UserInputs;
 
 /**
  * This class has methods used for deleting local files.
@@ -57,5 +57,29 @@ public class LocalFileDeleter extends Deleter {
 
 	protected File createFile(String pathOfGorupDirectory) {
 		return new File(pathOfGorupDirectory);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Deleter#deleteCSVFile(java.
+	 * lang.String)
+	 */
+	public void deleteCSVFile(String pathToFile) throws IOException {
+		File csvFile = new File(pathToFile + File.separator + "Information.csv");
+		csvFile.delete();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * de.heinfricke.countriesmapper.fileoperations.Deleter#deleteXMLFile(java.
+	 * lang.String)
+	 */
+	public void deleteXMLFile(String pathToFile) throws IOException {
+		File xmlFile = new File(pathToFile + File.separator + "Informations.xml");
+		xmlFile.delete();
 	}
 }

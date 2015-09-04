@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.heinfricke.countriesmapper.preparer.GroupOfCountries;
-import de.heinfricke.countriesmapper.utils.UserInputs;
 import de.heinfricke.countriesmapper.utils.DirectoriesActivity;
 
 /**
@@ -20,9 +19,8 @@ public abstract class Deleter {
 	/**
 	 * User decision about destination of files.
 	 */
-	private UserInputs userInputs;
 	private DirectoriesActivity userDecision;
-	
+
 	/**
 	 * This method is used for deleting files on local system, FTP server etc.
 	 * 
@@ -31,6 +29,24 @@ public abstract class Deleter {
 	 * @throws IOException
 	 */
 	abstract void deleteFiles(String pathOfGorupDirectory) throws IOException;
+
+	/**
+	 * This method delete "Informations.csv" file located in path given by user.
+	 * 
+	 * @param pathToFile
+	 *            As first parameter it takes path to "Informations.csv" file.
+	 * @throws IOException
+	 */
+	public abstract void deleteCSVFile(String pathToFile) throws IOException;
+
+	/**
+	 * This method delete "Infromations.xml" file located in path given by user.
+	 * 
+	 * @param pathToFile
+	 *            As first parameter it takes path to "Informations.xml" file.
+	 * @throws IOException
+	 */
+	public abstract void deleteXMLFile(String pathToFile) throws IOException;
 
 	/**
 	 * This constructor is used because we need to know if user want to delete

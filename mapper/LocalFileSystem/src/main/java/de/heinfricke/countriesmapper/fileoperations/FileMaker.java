@@ -50,7 +50,7 @@ public class FileMaker extends XMLMaker implements Maker {
 	 */
 	public void createCSVFile(List<GroupOfCountries> listOfGroupedCountriesClasses, String path, CSVMaker csvMaker)
 			throws IOException {
-		CSVWriter csvWriter = new CSVWriter(new FileWriter(path + File.separator + "Information.csv"));
+		CSVWriter csvWriter = new CSVWriter(new FileWriter(path + File.separator + "Informations.csv"));
 		csvMaker.prepareInformations(listOfGroupedCountriesClasses, csvWriter);
 	}
 
